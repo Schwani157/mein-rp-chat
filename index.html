@@ -3,97 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KI Ü18 Roleplay</title>
-    <!-- Telegram Web App SDK -->
+    <title>Charakter-Erstellung & Auswahl</title>
     <script src="https://telegram.org"></script>
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; background: #121212; color: #e0e0e0; padding: 20px; margin: 0; }
-        .screen { display: none; text-align: center; max-width: 500px; margin: auto; }
-        .active { display: block; }
-        #chat-box { height: 400px; overflow-y: auto; border: 1px solid #2d2d2d; background: #1a1a1a; padding: 15px; margin-bottom: 15px; text-align: left; border-radius: 8px; }
-        .user { color: #4ba3e3; margin: 8px 0; } 
-        .ai { color: #ff6b6b; margin: 8px 0; }
-        .system { color: #888; font-style: italic; }
-        .input-area { display: flex; gap: 10px; }
-        input { flex-grow: 1; padding: 12px; background: #2a2a2a; border: 1px solid #3d3d3d; color: #fff; border-radius: 6px; }
-        button { padding: 12px 20px; background: #0088cc; color: #fff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
-        .btn-danger { background: #d9534f; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #121212; color: #e0e0e0; padding: 20px; margin: 0; text-align: center; }
+        .container { max-width: 500px; margin: auto; }
+        .char-card { background: #1a1a1a; border: 1px solid #2d2d2d; padding: 15px; margin: 15px 0; border-radius: 10px; cursor: pointer; transition: 0.2s; }
+        .char-card:hover { border-color: #0088cc; background: #222; }
+        .char-card h3 { margin: 0 0 5px 0; color: #fff; }
+        .char-card p { margin: 0; font-size: 14px; color: #aaa; }
+        input, textarea, button { width: 100%; padding: 12px; margin: 10px 0; box-sizing: border-box; border-radius: 6px; }
+        input, textarea { background: #2a2a2a; border: 1px solid #3d3d3d; color: #fff; }
+        button { background: #0088cc; color: #fff; border: none; font-weight: bold; cursor: pointer; }
+        .create-box { background: #1a1a1a; border: 1px solid #2d2d2d; padding: 15px; border-radius: 10px; margin-top: 25px; text-align: left; }
     </style>
 </head>
 <body>
+    <div class="container">
+        <h2 id="welcome">Charakter-Menü</h2>
+        <p>Wähle einen fertigen Charakter oder erstelle deinen eigenen für das Ü18-Roleplay.</p>
 
-    <!-- 1. Screen: Altersprüfung -->
-    <div id="age-screen" class="screen active">
-        <h2>⚠️ Achtung: Ü18 Bereich</h2>
-        <p>Dieses KI-Roleplay enthält explizite (NSFW) Inhalte und ist für Minderjährige strengstens untersagt.</p>
-        <p>Bist du mindestens 18 Jahre alt?</p>
-        <button onclick="verifyAge(true)">Ja, ich bin 18+</button>
-        <button class="btn-danger" onclick="verifyAge(false)">Nein, abbrechen</button>
-    </div>
+        <!-- Vorhandene Charaktere -->
+        <div class="char-card" onclick="selectCharacter('Luna', 'Eine geheimnisvolle Vampirin mit düsteren Absichten.')">
+            <h3>Luna 🧛‍♀️</h3>
+            <p>Eine geheimnisvolle Vampirin mit düsteren Absichten.</p>
+        </div>
+        <div class="char-card" onclick="selectCharacter('Leon', 'Ein charmanter Cyber-Rebell aus der Unterstadt.')">
+            <h3>Leon 🤖</h3>
+            <p>Ein charmanter Cyber-Rebell aus der Unterstadt.</p>
+        </div>
 
-    <!-- 2. Screen: Das Roleplay-Interface -->
-    <div id="rp-screen" class="screen">
-        <h3 id="welcome">Lade Charakter...</h3>
-        <div id="chat-box"></div>
-        <div class="input-area">
-            <input type="text" id="user-input" placeholder="Deine Aktion oder Nachricht...">
-            <button onclick="sendMessage()">Senden</button>
+        <!-- Eigener Charakter erstellen -->
+        <div class="create-box">
+            <h3>✍️ Eigenen Charakter erstellen</h3>
+            <label>Name:</label>
+            <input type="text" id="custom-name" placeholder="z.B. Sarah">
+            <label>Persönlichkeit / Aussehen (Ü18):</label>
+            <textarea id="custom-prompt" rows="3" placeholder="Beschreibe Charakterzüge, Vorlieben, Kleidung..."></textarea>
+            <button onclick="createCustomCharacter()">Diesen Charakter starten</button>
         </div>
     </div>
 
     <script>
         const tg = window.Telegram.WebApp;
         tg.ready();
-        tg.expand(); // Macht das Fenster groß
+        tg.expand();
 
-        let chatHistory = [];
-        // HIER SPÄTER DIE URL DEINES GEHOSTETEN BACKENDS EINTRAGEN:
-        const BACKEND_URL = "https://render.com"; 
+        // Hier deine echte Render-URL einfügen:
+        const BACKEND_URL = "https://onrender.com"; 
 
         if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-            document.getElementById('welcome').innerText = `Roleplay-Chat für ${tg.initDataUnsafe.user.first_name}`;
+            document.getElementById('welcome').innerText = `Hallo, ${tg.initDataUnsafe.user.first_name}!`;
         }
 
-        function verifyAge(isAdult) {
-            if (isAdult) {
-                document.getElementById('age-screen').classList.remove('active');
-                document.getElementById('rp-screen').classList.add('active');
-                appendMessage("System", "Der Charakter wartet auf deinen Einstieg. Schreibe eine Nachricht oder beschreibe eine Situation.", "system");
-            } else {
-                tg.close(); // Schließt die Web-App sofort
+        // Funktion, wenn man einen fertigen Charakter anklickt
+        function selectCharacter(name, description) {
+            alert(`Du hast ${name} ausgewählt! Das Roleplay startet jetzt im Chat.`);
+            
+            // Daten zurück an den Telegram-Chat senden
+            tg.sendData(JSON.stringify({ action: "start_rp", charName: name, charPrompt: description }));
+        }
+
+        // Funktion für einen komplett eigenen Charakter
+        function createCustomCharacter() {
+            const name = document.getElementById('custom-name').value.trim();
+            const prompt = document.getElementById('custom-prompt').value.trim();
+
+            if(!name || !prompt) {
+                alert("Bitte fülle beide Felder aus!");
+                return;
             }
-        }
 
-        async function sendMessage() {
-            const inputField = document.getElementById('user-input');
-            const message = inputField.value.trim();
-            if(!message) return;
-
-            appendMessage("Du", message, "user");
-            inputField.value = "";
-
-            try {
-                const response = await fetch(BACKEND_URL, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ userMessage: message, chatHistory: chatHistory })
-                });
-                
-                const data = await response.json();
-                appendMessage("Charakter", data.reply, "ai");
-                
-                // Verlauf für das KI-Gedächtnis sichern
-                chatHistory.push({ role: "user", content: message });
-                chatHistory.push({ role: "assistant", content: data.reply });
-            } catch (e) {
-                appendMessage("System", "Fehler: Verbindung zum KI-Server fehlgeschlagen.", "system");
-            }
-        }
-
-        function appendMessage(sender, text, className) {
-            const box = document.getElementById('chat-box');
-            box.innerHTML += `<div class="${className}"><strong>${sender}:</strong> ${text}</div>`;
-            box.scrollTop = box.scrollHeight; // Automatisch nach unten scrollen
+            alert(`Dein eigener Charakter ${name} wurde erstellt!`);
+            tg.sendData(JSON.stringify({ action: "start_rp", charName: name, charPrompt: prompt }));
         }
     </script>
 </body>
