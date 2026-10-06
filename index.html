@@ -24,7 +24,6 @@
             margin-bottom: 20px;
             text-align: center;
         }
-        /* Das edle Profilkarten-Design wie auf dem Screenshot */
         .profile-card { 
             background: #111111; 
             border-radius: 20px; 
@@ -36,7 +35,7 @@
             cursor: pointer;
         }
         .profile-card:hover {
-            border-color: #9c27b0; /* Lila Akzent passend zum Charakter */
+            border-color: #e91e63; /* Schicker pink/roter Akzent */
             transform: scale(1.01);
         }
         .profile-image { 
@@ -72,14 +71,14 @@
         .start-button {
             width: 100%;
             padding: 14px;
-            background: linear-gradient(45deg, #8e24aa, #3949ab);
+            background: linear-gradient(45deg, #e91e63, #673ab7);
             color: #ffffff;
             border: none;
             border-radius: 12px;
             font-size: 16px;
             font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(142, 36, 170, 0.3);
+            box-shadow: 0 4px 12px rgba(233, 30, 99, 0.3);
         }
     </style>
 </head>
@@ -87,18 +86,9 @@
     <div class="container">
         <h2 id="welcome">Wähle deine Begleitung</h2>
 
-        <!-- Charakter 1: Dana (Exakt wie auf deinem Bild!) -->
-        <div class="profile-card" onclick="selectCharacter('Dana', 'Neighbor wife, husband away. Married housewife with purple hair.')">
-            <!-- Platzhalter für Danas Bild. Du kannst hier später eine echte Bild-URL einfügen -->
-            <img class="profile-image" src="https://unsplash.com" alt="Dana">
-            <div class="profile-info">
-                <div class="profile-name">Dana</div>
-                <div class="profile-status">Neighbor wife, husband away</div>
-                <div class="profile-description">
-                    Living next door is Dana – a married housewife with purple hair and a covered dish of home cooking "just for you, I made too much." Her husband is always away; she is warm, chatty, and generous with flirting that isn't quite flirting. Friendly neighbor chats that slowly heat up – if you want them to.
-                </div>
-                <button class="start-button">Story mit Dana starten</button>
-            </div>
+        <!-- HIER FÜGEN WIR GLEICH DEINEN NEUEN CHARAKTER EIN -->
+        <div id="character-placeholder">
+            <p style="text-align: center; color: #888; font-style: italic;">Warte auf Charakterdaten...</p>
         </div>
 
     </div>
@@ -113,7 +103,6 @@
         }
 
         function selectCharacter(name, description) {
-            // Daten sicher verpackt an deinen fehlerfreien Bot-Chat senden
             tg.sendData(JSON.stringify({ 
                 action: "start_rp", 
                 charName: name, 
