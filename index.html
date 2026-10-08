@@ -6,7 +6,6 @@
     <title>CYBER AI RP - Core Interface</title>
     <script src="https://telegram.org"></script>
     <style>
-        }
         /* --- CORE CONFIG & PREMIUM SPACE BACKGROUND --- */
         body { 
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
@@ -21,6 +20,7 @@
             background-attachment: fixed;
             background-repeat: no-repeat;
         }
+
         .container { 
             max-width: 500px; 
             margin: auto; 
@@ -87,6 +87,7 @@
             border-radius: 50%;
             box-shadow: 0 0 8px #ff00ff;
         }
+
         /* --- PREMIUM MILCHGLAS CONTROLS --- */
         .search-wrapper {
             position: relative;
@@ -112,6 +113,7 @@
             color: #8e8e93;
             font-size: 14px;
         }
+        
         .round-filter-btn {
             width: 44px;
             height: 44px;
@@ -188,7 +190,7 @@
         }
         .card-text-zone {
             position: absolute; bottom: 0; left: 0; right: 0; padding: 14px;
-            background: linear-gradient(0deg, rgba(2,2,8,0.95) 0%, rgba(2,2,8,0.4) 60%, transparent 100%); text-align: left; z-index: 3;
+            background: linear-gradient(0deg, rgba(2,2,8,0.85) 0%, rgba(2,2,8,0.4) 60%, transparent 100%); text-align: left; z-index: 3;
         }
         .char-name { font-size: 16px; font-weight: 800; color: rgba(255, 255, 255, 0.6); margin-bottom: 3px; }
         .char-status-row { display: flex; align-items: center; gap: 4px; font-size: 11px; color: #8e8e93; }
@@ -198,13 +200,14 @@
             width: 100%; height: 3px; background: linear-gradient(90deg, transparent, #ff00ff, transparent); position: absolute; top: 0; animation: scanMove 4s linear infinite; opacity: 0.15; z-index: 2;
         }
         @keyframes scanMove { 0% { top: 0%; } 50% { top: 100%; } 100% { top: 0%; } }
-        }
+
         /* --- SCREEN 2: CHATS --- */
         .chat-list-container { margin-bottom: 110px; }
         .no-chats-placeholder {
             padding: 30px; text-align: center; color: #8e8e93; font-size: 14px; font-style: italic;
             background: rgba(255, 255, 255, 0.03); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.08);
         }
+
         /* --- SCREEN 3: PROFIL-MENÜ --- */
         .section-headline { font-size: 18px; font-weight: 700; color: #fff; text-align: left; margin: 25px 0 12px 0; }
         .story-profile-box {
@@ -245,11 +248,10 @@
             border: 1px solid rgba(255,255,255,0.05);
         }
         .arrow-right-indicator { color: #8e8e93; font-weight: bold; font-size: 14px; }
-        }
+
         /* --- PREMIUM SLIDING BOTTOM NAVIGATION --- */
         .bottom-nav {
-            position: fixed; bottom: 15px; left: 15px; right: 15px
-        }
+            position: fixed; bottom: 15px; left: 15px; right: 15px; 
 background: rgba(10, 10, 16, 0.85); border: 1px solid rgba(255,255,255,0.06);
 border-radius: 30px; height: 60px; display: flex; z-index: 900;
 max-width: 470px; margin: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.6);
@@ -266,21 +268,19 @@ position: relative; flex: 1; height: 100%; display: flex; justify-content: cente
 font-size: 12px; color: #8e8e93; cursor: pointer; font-weight: 700; letter-spacing: 0.5px; z-index: 2; transition: color 0.25s ease;
 }
 .nav-link.active { color: #ffffff; }
-}
+
+
+
 ✦ CYBER AI RP
 Deine Charaktere. Deine Geschichten. Deine Welt.
 Hallo | Spieler
  Lust zu chatten?
 🔍
-}        
+
 ♀
-}
 ♂
-}
 ⇅
-}        
 Offiziell
-}        
 Favoriten
 
 ⚡
@@ -327,17 +327,15 @@ Story-Einstellungen
 🕒Folgt in Kürze
 ➔
 
+ 
 Entdecken
 Chats
 Profil
 const tg = window.Telegram.WebApp;
-tg.ready(); 
-
-// Zwingt Telegram, die App sofort sichtbar zu machen
+tg.ready();
 setTimeout(() => {
-    tg.expand();
-}, 100);
 tg.expand();
+}, 150);
 if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
 document.getElementById('username').innerText = tg.initDataUnsafe.user.first_name;
 }
