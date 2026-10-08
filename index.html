@@ -3,112 +3,244 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Charakter-Auswahl</title>
+    <title>CYBER AI RP - Interface</title>
     <script src="https://telegram.org"></script>
     <style>
+        /* --- CORE CONFIG & PREMIUM SPACE BACKGROUND --- */
         body { 
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-            background: #000000; 
+            background: #020208; 
             color: #ffffff; 
             padding: 0; 
             margin: 0; 
+            overflow-x: hidden;
+            background-image: url('https://pinimg.com');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
         }
+
         .container { 
             max-width: 500px; 
             margin: auto; 
             padding: 15px;
+            box-sizing: border-box;
         }
-        h2 {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            text-align: center;
+
+        /* --- SCRIPT-BASED SCREEN SWITCHING --- */
+        .view-screen {
+            display: none;
         }
-        .profile-card { 
-            background: #111111; 
-            border-radius: 20px; 
-            overflow: hidden; 
-            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-            margin-bottom: 25px;
-            border: 1px solid #222222;
-            transition: transform 0.2s, border-color 0.2s;
-            cursor: pointer;
-        }
-        .profile-card:hover {
-            border-color: #e91e63; /* Schicker pink/roter Akzent */
-            transform: scale(1.01);
-        }
-        .profile-image { 
-            width: 100%; 
-            height: auto; 
-            aspect-ratio: 4 / 5;
-            object-fit: cover; 
+        .view-screen.active {
             display: block;
         }
-        .profile-info { 
-            padding: 20px; 
-            text-align: left;
-            background: linear-gradient(180deg, #111111 0%, #070707 100%);
-        }
-        .profile-name { 
-            font-size: 28px; 
-            font-weight: 800; 
-            margin: 0 0 4px 0; 
+
+        /* --- GLOBAL APP HEADER --- */
+        .app-branding {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 18px;
+            font-weight: 900;
+            letter-spacing: 1px;
             color: #ffffff;
+            margin-bottom: 2px;
         }
-        .profile-status { 
-            font-size: 15px; 
-            color: #b0b0b0; 
-            margin: 0 0 15px 0;
-            font-weight: 500;
+        .app-branding span {
+            color: #ff00ff;
+            text-shadow: 0 0 10px #ff00ff;
         }
-        .profile-description { 
-            font-size: 15px; 
-            line-height: 1.5; 
-            color: #e0e0e0; 
+        .app-subtitle {
+            font-size: 10px;
+            color: #a0a0ab;
             margin: 0 0 20px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        .start-button {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(45deg, #e91e63, #673ab7);
-            color: #ffffff;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 700;
+
+        .user-welcome-zone {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .user-welcome-zone h1 {
+            font-size: 24px;
+            margin: 0;
+            font-weight: 800;
+        }
+        .user-welcome-zone h1 span {
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 400;
+        }
+        .status-dot-line {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: #e4e4e7;
+            margin-top: 5px;
+        }
+        .pink-dot {
+            width: 8px;
+            height: 8px;
+            background: #ff00ff;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #ff00ff;
+        }
+
+        /* --- PREMIUM MILCHGLAS CONTROLS --- */
+        .search-wrapper {
+            position: relative;
+            margin-bottom: 15px;
+            display: flex;
+            gap: 8px;
+        }
+        .search-bar {
+            flex-grow: 1;
+            padding: 12px 18px 12px 42px;
+            background: rgba(10, 10, 20, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            color: #fff;
+            font-size: 14px;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+        }
+        .search-icon-placeholder {
+            position: absolute;
+            left: 16px;
+            top: 13px;
+            color: #8e8e93;
+            font-size: 14px;
+        }
+        
+        /* Runde Filter-Buttons wie im Screenshot */
+        .round-filter-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(233, 30, 99, 0.3);
+            font-size: 16px;
+            flex-shrink: 0;
+            backdrop-filter: blur(15px);
         }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h2 id="welcome">Wähle deine Begleitung</h2>
-
-        <!-- HIER FÜGEN WIR GLEICH DEINEN NEUEN CHARAKTER EIN -->
-        <div id="character-placeholder">
-            <p style="text-align: center; color: #888; font-style: italic;">Warte auf Charakterdaten...</p>
-        </div>
-
-    </div>
-
-    <script>
-        const tg = window.Telegram.WebApp;
-        tg.ready();
-        tg.expand();
-
-        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-            document.getElementById('welcome').innerText = `Verfügbare Charaktere für ${tg.initDataUnsafe.user.first_name}`;
+        .round-filter-btn.pink-bg {
+            background: linear-gradient(135deg, #e91e63, #9c27b0);
+            border: none;
         }
 
-        function selectCharacter(name, description) {
-            tg.sendData(JSON.stringify({ 
-                action: "start_rp", 
-                charName: name, 
-                charPrompt: description 
-            }));
+        .filter-row-sub {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
         }
-    </script>
-</body>
-</html>
+        .sub-tabs {
+            display: flex;
+            gap: 8px;
+        }
+        .sub-tab {
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+        }
+        .sub-tab.active { background: linear-gradient(45deg, #e91e63, #9c27b0); color: #fff; }
+        .sub-tab.inactive { background: rgba(255, 255, 255, 0.08); color: #a0a0ab; }
+
+        /* --- SCREEN 1: AUTOMATISCHES CHARAKTER GRID (2x2) --- */
+        .character-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-bottom: 110px;
+        }
+        .transparent-card {
+            position: relative;
+            background: rgba(4, 4, 16, 0.4); 
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            aspect-ratio: 9 / 13; 
+            transition: all 0.25s ease;
+            cursor: pointer;
+        }
+        .transparent-card:hover {
+            border-color: #00ffcc;
+            transform: translateY(-2px);
+        }
+        .card-image { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 1; }
+        .card-plus-icon {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-size: 32px; color: rgba(255, 255, 255, 0.4); z-index: 2;
+        }
+        .fav-heart-btn {
+            position: absolute; top: 12px; right: 12px; width: 32px; height: 32px;
+            border-radius: 50%; background: rgba(0,0,0,0.4); display: flex; justify-content: center;
+            align-items: center; color: #fff; font-size: 14px; z-index: 4; border: 1px solid rgba(255,255,255,0.1);
+        }
+        .card-text-zone {
+            position: absolute; bottom: 0; left: 0; right: 0; padding: 14px;
+            background: linear-gradient(0deg, rgba(2,2,8,0.95) 0%, rgba(2,2,8,0.4) 60%, transparent 100%); text-align: left; z-index: 3;
+        }
+        .char-name { font-size: 16px; font-weight: 800; color: #ffffff; margin-bottom: 3px; }
+        .char-status-row { display: flex; align-items: center; gap: 4px; font-size: 11px; color: #b0b0b0; }
+        .char-dot { width: 6px; height: 6px; background: #ff00ff; border-radius: 50%; }
+
+        /* --- SCREEN 2: CHATS (TRANSPARENTE CARD LISTENSTIL) --- */
+        .chat-list-container { margin-bottom: 110px; }
+        .chat-row {
+            display: flex; align-items: center; background: rgba(4, 4, 16, 0.4); border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 20px; padding: 14px; margin-bottom: 12px; backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            cursor: pointer; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); transition: all 0.2s;
+        }
+        .chat-row:hover { border-color: #9c27b0; }
+        .chat-avatar-wrap { width: 54px; height: 54px; margin-right: 14px; flex-shrink: 0; }
+        .chat-avatar { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 1.5px solid rgba(255, 255, 255, 0.15); }
+        .chat-details { flex-grow: 1; text-align: left; overflow: hidden; }
+        .chat-meta-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+        .chat-char-name { font-size: 16px; font-weight: 700; color: #00ffcc; text-shadow: 0 0 5px rgba(0,255,204,0.2); }
+        .chat-timestamp { font-size: 11px; color: #8e8e93; }
+        .chat-preview-wrap { display: flex; justify-content: space-between; align-items: center; }
+        .chat-preview-text { font-size: 13px; color: #d1d1d6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .chat-unread-dot { width: 8px; height: 8px; background: #ff00ff; border-radius: 50%; flex-shrink: 0; margin-left: 8px; box-shadow: 0 0 6px #ff00ff; }
+
+        /* --- SCREEN 3: PROFIL-MENÜ (EXAKT WIE SCREENSHOT) --- */
+        .section-headline { font-size: 18px; font-weight: 700; color: #fff; text-align: left; margin: 25px 0 12px 0; }
+        
+        /* Die "Du in der Geschichte"-Box */
+        .story-profile-box {
+            display: flex; background: rgba(4, 4, 16, 0.4); border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 24px; padding: 18px; gap: 18px; backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+        .user-pic-container {
+            width: 110px; aspect-ratio: 3/4; background: rgba(255,255,255,0.1); border-radius: 16px;
+            position: relative; flex-shrink: 0; overflow: hidden; border: 1px solid rgba(255,255,255,0.15);
+        }
+        .user-pic-bg-dummy {
+            width: 100%; height: 100%; background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(0,0,0,0.4));
+        }
+        .edit-pencil-btn {
+            position: absolute; bottom: 8px; right: 8px; width: 28px; height: 28px;
+            background: rgba(0, 0, 0, 0.6); border-radius: 50%; display: flex; justify-content: center;
+            align-items: center; color: #fff; font-size: 12px; border: 1px solid rgba(255,255,255,0.2);
+        }
+        .status-bars-stack {
+            flex-grow: 1; display: flex; flex-direction: column; justify-content: center; gap: 10px;
+        }
+        .horizontal-dummy-bar {
+            height: 12px; background: rgba(255, 255, 255, 0.15); border-radius: 6px; width: 100%;
+        }
+        .horizontal-dummy-bar:nth-child(2) { width: 85%; background: rgba(255, 255, 255, 0.1); }
