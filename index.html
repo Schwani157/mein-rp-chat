@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CYBER AI RP - Interface</title>
+    <title>CYBER AI RP - Interface Skeleton</title>
     <script src="https://telegram.org"></script>
     <style>
         /* --- CORE CONFIG & PREMIUM SPACE BACKGROUND --- */
@@ -114,7 +114,6 @@
             font-size: 14px;
         }
         
-        /* Runde Filter-Buttons wie im Screenshot */
         .round-filter-btn {
             width: 44px;
             height: 44px;
@@ -156,7 +155,7 @@
         .sub-tab.active { background: linear-gradient(45deg, #e91e63, #9c27b0); color: #fff; }
         .sub-tab.inactive { background: rgba(255, 255, 255, 0.08); color: #a0a0ab; }
 
-        /* --- SCREEN 1: AUTOMATISCHES CHARAKTER GRID (2x2) --- */
+        /* --- SCREEN 1: 6 LEERE TRANSPARENTE KÄSTCHEN IM RASTER --- */
         .character-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -165,14 +164,14 @@
         }
         .transparent-card {
             position: relative;
-            background: rgba(4, 4, 16, 0.4); 
+            background: rgba(255, 255, 255, 0.05); 
             border-radius: 24px;
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.12);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            aspect-ratio: 9 / 13; 
+            aspect-ratio: 9 / 14; 
             transition: all 0.25s ease;
             cursor: pointer;
         }
@@ -180,10 +179,9 @@
             border-color: #00ffcc;
             transform: translateY(-2px);
         }
-        .card-image { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 1; }
         .card-plus-icon {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            font-size: 32px; color: rgba(255, 255, 255, 0.4); z-index: 2;
+            font-size: 32px; color: rgba(255, 255, 255, 0.3); z-index: 2;
         }
         .fav-heart-btn {
             position: absolute; top: 12px; right: 12px; width: 32px; height: 32px;
@@ -196,41 +194,42 @@
         }
         .char-name { font-size: 16px; font-weight: 800; color: #ffffff; margin-bottom: 3px; }
         .char-status-row { display: flex; align-items: center; gap: 4px; font-size: 11px; color: #b0b0b0; }
-        .char-dot { width: 6px; height: 6px; background: #ff00ff; border-radius: 50%; }
+        .char-dot { width: 6px; height: 6px; background: #00ffcc; border-radius: 50%; }
+
+        .scan-line {
+            width: 100%; height: 3px; background: linear-gradient(90deg, transparent, #ff00ff, transparent); position: absolute; top: 0; animation: scanMove 4s linear infinite; opacity: 0.15; z-index: 2;
+        }
+        @keyframes scanMove { 0% { top: 0%; } 50% { top: 100%; } 100% { top: 0%; } }
 
         /* --- SCREEN 2: CHATS (TRANSPARENTE CARD LISTENSTIL) --- */
         .chat-list-container { margin-bottom: 110px; }
         .chat-row {
-            display: flex; align-items: center; background: rgba(4, 4, 16, 0.4); border: 1px solid rgba(255, 255, 255, 0.12);
+            display: flex; align-items: center; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 20px; padding: 14px; margin-bottom: 12px; backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             cursor: pointer; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); transition: all 0.2s;
         }
         .chat-row:hover { border-color: #9c27b0; }
-        .chat-avatar-wrap { width: 54px; height: 54px; margin-right: 14px; flex-shrink: 0; }
-        .chat-avatar { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 1.5px solid rgba(255, 255, 255, 0.15); }
+        .chat-avatar-wrap { width: 54px; height: 54px; margin-right: 14px; flex-shrink: 0; border-radius: 50%; background: rgba(255,255,255,0.1); border: 1.5px solid rgba(255,255,255,0.15); display: flex; justify-content: center; align-items: center; font-size: 20px; color: rgba(255,255,255,0.4); }
         .chat-details { flex-grow: 1; text-align: left; overflow: hidden; }
         .chat-meta-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
         .chat-char-name { font-size: 16px; font-weight: 700; color: #00ffcc; text-shadow: 0 0 5px rgba(0,255,204,0.2); }
         .chat-timestamp { font-size: 11px; color: #8e8e93; }
         .chat-preview-wrap { display: flex; justify-content: space-between; align-items: center; }
-        .chat-preview-text { font-size: 13px; color: #d1d1d6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .chat-unread-dot { width: 8px; height: 8px; background: #ff00ff; border-radius: 50%; flex-shrink: 0; margin-left: 8px; box-shadow: 0 0 6px #ff00ff; }
+        .chat-preview-text { font-size: 13px; color: #a0a0ab; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        /* --- SCREEN 3: PROFIL-MENÜ (EXAKT WIE SCREENSHOT) --- */
+        /* --- SCREEN 3: PROFIL-MENÜ --- */
         .section-headline { font-size: 18px; font-weight: 700; color: #fff; text-align: left; margin: 25px 0 12px 0; }
-        
-        /* Die "Du in der Geschichte"-Box */
         .story-profile-box {
-            display: flex; background: rgba(4, 4, 16, 0.4); border: 1px solid rgba(255, 255, 255, 0.12);
+            display: flex; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 24px; padding: 18px; gap: 18px; backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
         }
         .user-pic-container {
-            width: 110px; aspect-ratio: 3/4; background: rgba(255,255,255,0.1); border-radius: 16px;
-            position: relative; flex-shrink: 0; overflow: hidden; border: 1px solid rgba(255,255,255,0.15);
+            width: 110px; aspect-ratio: 3/4; background: rgba(255,255,255,0.08); border-radius: 16px;
+            position: relative; flex-shrink: 0; overflow: hidden; border: 1px solid rgba(255,255,255,0.12);
         }
         .user-pic-bg-dummy {
-            width: 100%; height: 100%; background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(0,0,0,0.4));
+            width: 100%; height: 100%; background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(0,0,0,0.3));
         }
         .edit-pencil-btn {
             position: absolute; bottom: 8px; right: 8px; width: 28px; height: 28px;
@@ -241,6 +240,40 @@
             flex-grow: 1; display: flex; flex-direction: column; justify-content: center; gap: 10px;
         }
         .horizontal-dummy-bar {
-            height: 12px; background: rgba(255, 255, 255, 0.15); border-radius: 6px; width: 100%;
+            height: 12px; background: rgba(255, 2 55, 255, 0.15); border-radius: 6px; width: 100%;
         }
         .horizontal-dummy-bar:nth-child(2) { width: 85%; background: rgba(255, 255, 255, 0.1); }
+
+        }
+        .horizontal-dummy-bar:nth-child(3) { width: 60%; background: rgba(255, 255, 255, 0.08); }
+.setting-clickable-row {
+display: flex; align-items: center; justify-content: space-between; background: rgba(255, 255, 255, 0.05);
+border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 20px; padding: 16px;
+backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); cursor: pointer; margin-bottom: 110px;
+}
+.setting-left-side { display: flex; align-items: center; gap: 12px; font-size: 15px; font-weight: 600; }
+.clock-icon-wrap {
+width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.08);
+display: flex; justify-content: center; align-items: center; font-size: 16px; color: #a0a0ab;
+border: 1px solid rgba(255,255,255,0.05);
+}
+.arrow-right-indicator { color: #8e8e93; font-weight: bold; font-size: 14px; }
+/* --- PREMIUM SLIDING BOTTOM NAVIGATION --- */
+.bottom-nav {
+position: fixed; bottom: 15px; left: 15px; right: 15px;
+background: rgba(10, 10, 16, 0.85); border: 1px solid rgba(255,255,255,0.06);
+border-radius: 30px; height: 60px; display: flex; z-index: 900;
+max-width: 470px; margin: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+}
+.nav-slider {
+position: absolute; top: 5px; height: 50px; width: calc(33.33% - 10px);
+background: linear-gradient(135deg, #e91e63, #9c27b0); border-radius: 25px; z-index: 1;
+transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); box-shadow: 0 4px 12px rgba(233, 30, 99, 0.3);
+transform: translateX(5px);
+}
+.nav-link {
+position: relative; flex: 1; height: 100%; display: flex; justify-content: center; align-items: center;
+font-size: 12px; color: #8e8e93; cursor: pointer; font-weight: 700; letter-spacing: 0.5px; z-index: 2; transition: color 0.25s ease;
+}
+.nav-link.active { color: #ffffff; }
