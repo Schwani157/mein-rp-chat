@@ -331,7 +331,12 @@ Entdecken
 Chats
 Profil
 const tg = window.Telegram.WebApp;
-tg.ready();
+tg.ready(); 
+
+// Zwingt Telegram, die App sofort sichtbar zu machen
+setTimeout(() => {
+    tg.expand();
+}, 100);
 tg.expand();
 if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
 document.getElementById('username').innerText = tg.initDataUnsafe.user.first_name;
