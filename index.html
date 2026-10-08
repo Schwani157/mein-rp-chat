@@ -347,83 +347,6 @@
 
 
         /* =========================================
-           EMPTY STATES
-        ========================================= */
-
-        .empty-box {
-            display: flex;
-
-            flex-direction: column;
-
-            align-items: center;
-
-            justify-content: center;
-
-            min-height: 240px;
-
-            padding: 30px;
-
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.11);
-
-            border-radius: 22px;
-
-            background:
-                rgba(7, 5, 18, 0.52);
-
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-
-            text-align: center;
-
-            box-shadow:
-                0 15px 35px
-                rgba(0, 0, 0, 0.2);
-        }
-
-        .empty-icon {
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            width: 62px;
-            height: 62px;
-
-            margin-bottom: 15px;
-
-            border-radius: 20px;
-
-            background:
-                rgba(176, 100, 255, 0.14);
-
-            border:
-                1px solid
-                rgba(200, 145, 255, 0.25);
-
-            font-size: 27px;
-        }
-
-        .empty-title {
-            font-size: 17px;
-            font-weight: 700;
-
-            margin-bottom: 7px;
-        }
-
-        .empty-text {
-            max-width: 280px;
-
-            color:
-                rgba(255, 255, 255, 0.56);
-
-            font-size: 13px;
-            line-height: 1.5;
-        }
-
-
-        /* =========================================
            TABS
         ========================================= */
 
@@ -477,6 +400,553 @@
                 rgba(175, 103, 255, 0.23);
 
             color: #ffffff;
+        }
+
+
+        /* =========================================
+           CHARAKTER-GRID
+        ========================================= */
+
+        .character-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 14px;
+
+            width: 100%;
+        }
+
+
+        /* =========================================
+           CHARAKTER-KARTE
+        ========================================= */
+
+        .character-card {
+            position: relative;
+
+            min-width: 0;
+
+            overflow: hidden;
+
+            border-radius: 22px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.18);
+
+            background:
+                rgba(8, 5, 20, 0.62);
+
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+
+            box-shadow:
+                0 12px 30px
+                rgba(0, 0, 0, 0.25);
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+        .character-card:active {
+            transform: scale(0.97);
+        }
+
+        .character-card:hover {
+            border-color:
+                rgba(218, 140, 255, 0.5);
+        }
+
+
+        /* =========================================
+           CHARAKTER-BILD
+        ========================================= */
+
+        .character-image-wrapper {
+            position: relative;
+
+            width: 100%;
+
+            aspect-ratio: 0.78;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(80, 50, 110, 0.5),
+                    rgba(15, 15, 35, 0.8)
+                );
+        }
+
+        .character-image {
+            width: 100%;
+            height: 100%;
+
+            display: block;
+
+            object-fit: cover;
+
+            object-position: center;
+        }
+
+
+        /* =========================================
+           BILD-VERLAUF
+        ========================================= */
+
+        .character-image-wrapper::after {
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            height: 45%;
+
+            background:
+                linear-gradient(
+                    to bottom,
+                    transparent,
+                    rgba(5, 3, 14, 0.92)
+                );
+
+            pointer-events: none;
+        }
+
+
+        /* =========================================
+           FAVORITEN-BUTTON
+        ========================================= */
+
+        .favorite-button {
+            position: absolute;
+
+            top: 10px;
+            right: 10px;
+
+            z-index: 5;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            width: 38px;
+            height: 38px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.28);
+
+            border-radius: 50%;
+
+            background:
+                rgba(10, 7, 20, 0.55);
+
+            color: #ffffff;
+
+            font-size: 20px;
+
+            cursor: pointer;
+
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+
+            transition:
+                transform 0.15s ease,
+                color 0.15s ease;
+        }
+
+        .favorite-button:active {
+            transform: scale(0.9);
+        }
+
+        .favorite-button.active {
+            color: #ff58d2;
+
+            text-shadow:
+                0 0 10px
+                rgba(255, 70, 210, 0.7);
+        }
+
+
+        /* =========================================
+           CHARAKTER-INFORMATION
+        ========================================= */
+
+        .character-info {
+            position: relative;
+
+            z-index: 3;
+
+            margin-top: -28px;
+
+            padding:
+                0
+                14px
+                15px;
+        }
+
+        .character-name {
+            font-size: 17px;
+
+            font-weight: 800;
+
+            line-height: 1.2;
+        }
+
+        .character-role {
+            display: flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            margin-top: 6px;
+
+            color:
+                rgba(255, 255, 255, 0.7);
+
+            font-size: 11px;
+
+            font-weight: 600;
+        }
+
+        .role-dot {
+            width: 7px;
+            height: 7px;
+
+            flex-shrink: 0;
+
+            border-radius: 50%;
+
+            background: #ff3fc9;
+
+            box-shadow:
+                0 0 8px
+                rgba(255, 63, 201, 0.7);
+        }
+
+
+        /* =========================================
+           LEERE CHARAKTER-KARTE
+        ========================================= */
+
+        .empty-character-card {
+            position: relative;
+
+            min-width: 0;
+
+            overflow: hidden;
+
+            aspect-ratio: 0.78;
+
+            border-radius: 22px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.12);
+
+            background:
+                rgba(8, 5, 20, 0.48);
+
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .empty-character-plus {
+            position: absolute;
+
+            top: 50%;
+            left: 50%;
+
+            transform:
+                translate(-50%, -50%);
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            width: 64px;
+            height: 64px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.24);
+
+            border-radius: 50%;
+
+            background:
+                rgba(40, 25, 60, 0.45);
+
+            color: #ffffff;
+
+            font-size: 35px;
+
+            font-weight: 300;
+
+            box-shadow:
+                0 0 20px
+                rgba(180, 100, 255, 0.12);
+        }
+
+
+        /* =========================================
+           CHARAKTER-DETAILSEITE
+        ========================================= */
+
+        #pageCharacter {
+            padding:
+                0
+                0
+                30px;
+        }
+
+        .character-detail {
+            width: 100%;
+        }
+
+
+        /* =========================================
+           DETAIL HEADER
+        ========================================= */
+
+        .detail-topbar {
+            position: absolute;
+
+            top: 18px;
+            left: 16px;
+            right: 16px;
+
+            z-index: 20;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .detail-round-button {
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            width: 42px;
+            height: 42px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.22);
+
+            border-radius: 50%;
+
+            background:
+                rgba(5, 4, 15, 0.58);
+
+            color: #ffffff;
+
+            font-size: 20px;
+
+            cursor: pointer;
+
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+
+        .detail-back {
+            font-size: 25px;
+        }
+
+
+        /* =========================================
+           DETAIL BILD
+        ========================================= */
+
+        .detail-image-wrapper {
+            position: relative;
+
+            width: 100%;
+
+            height: 470px;
+
+            overflow: hidden;
+        }
+
+        .detail-image {
+            width: 100%;
+            height: 100%;
+
+            display: block;
+
+            object-fit: cover;
+
+            object-position: center top;
+        }
+
+        .detail-image-wrapper::after {
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    to bottom,
+                    rgba(3, 2, 11, 0.05) 30%,
+                    rgba(3, 2, 11, 0.15) 45%,
+                    rgba(3, 2, 11, 0.96) 100%
+                );
+
+            pointer-events: none;
+        }
+
+
+        /* =========================================
+           DETAIL CONTENT
+        ========================================= */
+
+        .detail-content {
+            position: relative;
+
+            margin-top: -105px;
+
+            z-index: 5;
+
+            padding:
+                0
+                20px
+                30px;
+        }
+
+        .detail-name {
+            font-size: 31px;
+
+            font-weight: 850;
+
+            line-height: 1.1;
+
+            text-shadow:
+                0 2px 10px
+                rgba(0, 0, 0, 0.5);
+        }
+
+        .detail-role {
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            margin-top: 8px;
+
+            color:
+                rgba(255, 255, 255, 0.76);
+
+            font-size: 14px;
+
+            font-weight: 600;
+        }
+
+        .detail-role .role-dot {
+            width: 8px;
+            height: 8px;
+        }
+
+
+        .detail-description-box {
+            margin-top: 24px;
+
+            padding:
+                18px;
+
+            border-radius: 18px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.12);
+
+            background:
+                rgba(8, 5, 20, 0.58);
+
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+
+            box-shadow:
+                0 12px 30px
+                rgba(0, 0, 0, 0.2);
+        }
+
+        .detail-description-title {
+            margin-bottom: 9px;
+
+            font-size: 13px;
+
+            font-weight: 750;
+
+            color:
+                rgba(255, 255, 255, 0.58);
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.7px;
+        }
+
+        .detail-description {
+            color:
+                rgba(255, 255, 255, 0.78);
+
+            font-size: 14px;
+
+            line-height: 1.65;
+        }
+
+
+        /* =========================================
+           START-BUTTON
+        ========================================= */
+
+        .start-chat-button {
+            width: 100%;
+
+            margin-top: 18px;
+
+            padding:
+                15px
+                18px;
+
+            border: none;
+
+            border-radius: 16px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #c457ff,
+                    #8b52ff
+                );
+
+            color: #ffffff;
+
+            font-size: 14px;
+
+            font-weight: 750;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 10px 28px
+                rgba(157, 76, 255, 0.28);
         }
 
 
@@ -639,8 +1109,6 @@
             border-bottom:
                 1px solid
                 rgba(255, 255, 255, 0.07);
-
-            cursor: pointer;
         }
 
         .setting-row:last-child {
@@ -810,17 +1278,18 @@
             -webkit-backdrop-filter: blur(18px);
         }
 
-
         .age-gate.hidden {
             display: none;
         }
-
 
         .age-card {
             width: 100%;
             max-width: 390px;
 
-            padding: 30px 24px 24px;
+            padding:
+                30px
+                24px
+                24px;
 
             border-radius: 26px;
 
@@ -850,22 +1319,22 @@
                 ease-out;
         }
 
-
         @keyframes ageCardIn {
 
             from {
                 opacity: 0;
-                transform: scale(0.94)
-                           translateY(10px);
+                transform:
+                    scale(0.94)
+                    translateY(10px);
             }
 
             to {
                 opacity: 1;
-                transform: scale(1)
-                           translateY(0);
+                transform:
+                    scale(1)
+                    translateY(0);
             }
         }
-
 
         .age-icon {
             display: flex;
@@ -901,7 +1370,6 @@
                 rgba(170, 100, 255, 0.16);
         }
 
-
         .age-title {
             font-size: 25px;
 
@@ -909,7 +1377,6 @@
 
             margin-bottom: 12px;
         }
-
 
         .age-text {
             color:
@@ -921,7 +1388,6 @@
 
             margin-bottom: 22px;
         }
-
 
         .age-warning {
             padding:
@@ -947,7 +1413,6 @@
             line-height: 1.45;
         }
 
-
         .age-button {
             width: 100%;
 
@@ -962,17 +1427,7 @@
             font-weight: 700;
 
             cursor: pointer;
-
-            transition:
-                transform 0.15s ease,
-                opacity 0.15s ease;
         }
-
-
-        .age-button:active {
-            transform: scale(0.97);
-        }
-
 
         .age-confirm {
             margin-bottom: 9px;
@@ -990,12 +1445,6 @@
                 0 8px 25px
                 rgba(135, 80, 255, 0.25);
         }
-
-
-        .age-confirm:hover {
-            opacity: 0.92;
-        }
-
 
         .age-deny {
             color:
@@ -1037,7 +1486,6 @@
 
             html,
             body {
-
                 background-size: cover;
 
                 background-position:
@@ -1048,7 +1496,6 @@
             }
 
             .background-layer {
-
                 background-size: cover;
 
                 background-position:
@@ -1100,14 +1547,12 @@
                 auf eigene Verantwortung erfolgt.
             </div>
 
-
             <button
                 class="age-button age-confirm"
                 onclick="confirmAge()"
             >
                 Ich bin 18 oder älter
             </button>
-
 
             <button
                 class="age-button age-deny"
@@ -1166,6 +1611,8 @@
             </div>
 
 
+            <!-- Suche -->
+
             <div class="search-box">
 
                 <div class="search-icon">
@@ -1173,13 +1620,17 @@
                 </div>
 
                 <input
+                    id="characterSearch"
                     type="text"
-                    placeholder="Charakter suchen..."
+                    placeholder="Wen suchst du?"
                     autocomplete="off"
+                    oninput="searchCharacters()"
                 >
 
             </div>
 
+
+            <!-- Geschlecht -->
 
             <div class="filter-row">
 
@@ -1194,18 +1645,27 @@
                     class="filter-button"
                     onclick="setFilter(this)"
                 >
-                    ♀ Weiblich
+                    ♀
                 </button>
 
                 <button
                     class="filter-button"
                     onclick="setFilter(this)"
                 >
-                    ♂ Männlich
+                    ♂
+                </button>
+
+                <button
+                    class="filter-button"
+                    onclick="setFilter(this)"
+                >
+                    ↕
                 </button>
 
             </div>
 
+
+            <!-- Tabs -->
 
             <div class="tabs">
 
@@ -1226,19 +1686,100 @@
             </div>
 
 
-            <div class="empty-box">
+            <!-- Charaktere -->
 
-                <div class="empty-icon">
-                    ✦
+            <div
+                id="characterGrid"
+                class="character-grid"
+            >
+
+
+                <!-- =================================
+                     ELENA
+                ================================== -->
+
+                <div
+                    class="character-card"
+                    data-name="Elena Hartman"
+                    onclick="openCharacter('elena')"
+                >
+
+                    <div class="character-image-wrapper">
+
+                        <img
+                            class="character-image"
+                            src="./images/Elena%20Hartman.jpg"
+                            alt="Elena Hartman"
+                        >
+
+
+                        <button
+                            class="favorite-button"
+                            id="favoriteElena"
+                            onclick="toggleFavorite(event, 'elena')"
+                            aria-label="Elena favorisieren"
+                        >
+                            ♡
+                        </button>
+
+                    </div>
+
+
+                    <div class="character-info">
+
+                        <div class="character-name">
+                            Elena Hartman
+                        </div>
+
+                        <div class="character-role">
+
+                            <span class="role-dot"></span>
+
+                            Girlfriend
+
+                        </div>
+
+                    </div>
+
                 </div>
 
-                <div class="empty-title">
-                    Noch keine Charaktere
+
+                <!-- =================================
+                     LEERE KARTE 2
+                ================================== -->
+
+                <div class="empty-character-card">
+
+                    <div class="empty-character-plus">
+                        +
+                    </div>
+
                 </div>
 
-                <div class="empty-text">
-                    Deine Charaktere werden hier erscheinen.
-                    Dieser Bereich ist bereit für deine erste Geschichte.
+
+                <!-- =================================
+                     LEERE KARTE 3
+                ================================== -->
+
+                <div class="empty-character-card">
+
+                    <div class="empty-character-plus">
+                        +
+                    </div>
+
+                </div>
+
+
+                <!-- =================================
+                     LEERE KARTE 4
+                ================================== -->
+
+                <div class="empty-character-card">
+
+                    <div class="empty-character-plus">
+                        +
+                    </div>
+
                 </div>
 
             </div>
@@ -1442,27 +1983,115 @@
 
                 </div>
 
+            </div>
 
-                <div
-                    class="setting-row"
-                    onclick="adultSettings()"
-                >
+        </main>
 
-                    <div class="setting-left">
 
-                        <div class="setting-name">
-                            18+ Einstellungen
+        <!-- =====================================
+             CHARAKTER-DETAILSEITE
+        ====================================== -->
+
+        <main
+            id="pageCharacter"
+            class="page"
+        >
+
+            <div class="character-detail">
+
+
+                <!-- =================================
+                     DETAIL TOPBAR
+                ================================== -->
+
+                <div class="detail-topbar">
+
+                    <button
+                        class="detail-round-button detail-back"
+                        onclick="closeCharacter()"
+                        aria-label="Zurück"
+                    >
+                        ‹
+                    </button>
+
+
+                    <button
+                        class="detail-round-button"
+                        id="detailFavorite"
+                        onclick="toggleDetailFavorite()"
+                        aria-label="Favorisieren"
+                    >
+                        ♡
+                    </button>
+
+                </div>
+
+
+                <!-- =================================
+                     ELENA BILD
+                ================================== -->
+
+                <div class="detail-image-wrapper">
+
+                    <img
+                        class="detail-image"
+                        src="./images/Elena%20Hartman.jpg"
+                        alt="Elena Hartman"
+                    >
+
+                </div>
+
+
+                <!-- =================================
+                     ELENA INFORMATION
+                ================================== -->
+
+                <div class="detail-content">
+
+                    <div class="detail-name">
+                        Elena Hartman
+                    </div>
+
+
+                    <div class="detail-role">
+
+                        <span class="role-dot"></span>
+
+                        Girlfriend
+
+                    </div>
+
+
+                    <div class="detail-description-box">
+
+                        <div class="detail-description-title">
+                            Über Elena
                         </div>
 
-                        <div class="setting-description">
-                            Altersfreigabe verwalten
+                        <div class="detail-description">
+                            Elena, 24, ist eine selbstbewusste und
+                            warmherzige Frau mit einem neugierigen
+                            Geist und einer verspielten Seite. Mit
+                            ihren braunen Haaren, den haselnussbraunen
+                            Augen und ihrem entspannten Stil fällt sie
+                            auf, ohne es darauf anzulegen. Sie ist sehr
+                            freundlich und offen, kann aber stur werden,
+                            wenn sie sich etwas in den Kopf gesetzt hat.
+                            Hinter ihrer ruhigen Art steckt eine
+                            aufmerksame Persönlichkeit, die Gespräche,
+                            spontane Momente und die kleinen Geheimnisse
+                            anderer Menschen liebt.
                         </div>
 
                     </div>
 
-                    <div class="setting-arrow">
-                        ›
-                    </div>
+
+                    <button
+                        class="start-chat-button"
+                        onclick="startChat()"
+                    >
+                        Geschichte mit Elena beginnen
+                    </button>
 
                 </div>
 
@@ -1477,7 +2106,10 @@
          BOTTOM NAVIGATION
     ========================================== -->
 
-    <nav class="bottom-navigation">
+    <nav
+        id="bottomNavigation"
+        class="bottom-navigation"
+    >
 
         <button
             id="navDiscover"
@@ -1609,21 +2241,14 @@
                 document.getElementById("ageGate");
 
 
-            const mainApp =
-                document.getElementById("mainApp");
-
-
             if (confirmed === "true") {
 
                 ageGate.classList.add("hidden");
-
-                mainApp.style.display = "block";
 
             } else {
 
                 ageGate.classList.remove("hidden");
 
-                mainApp.style.display = "block";
             }
         }
 
@@ -1644,11 +2269,6 @@
 
 
         function denyAge() {
-
-            /*
-             * Keine Weiterleitung zu externen Seiten.
-             * Die App bleibt gesperrt.
-             */
 
             const card =
                 document.querySelector(".age-card");
@@ -1685,23 +2305,6 @@
         }
 
 
-        function resetAgeConfirmation() {
-
-            localStorage.removeItem(
-                AGE_KEY
-            );
-
-
-            document
-                .getElementById("ageGate")
-                .classList
-                .remove("hidden");
-
-
-            location.reload();
-        }
-
-
         checkAgeConfirmation();
 
 
@@ -1715,7 +2318,8 @@
 
                 "pageDiscover",
                 "pageChats",
-                "pageProfile"
+                "pageProfile",
+                "pageCharacter"
 
             ];
 
@@ -1761,16 +2365,38 @@
             });
 
 
-            const navId =
-                "nav" +
-                page.charAt(0).toUpperCase() +
-                page.slice(1);
+            if (page !== "character") {
+
+                const navId =
+                    "nav" +
+                    page.charAt(0).toUpperCase() +
+                    page.slice(1);
 
 
-            document
-                .getElementById(navId)
-                .classList
-                .add("active");
+                document
+                    .getElementById(navId)
+                    .classList
+                    .add("active");
+
+            }
+
+
+            const navigation =
+                document.getElementById(
+                    "bottomNavigation"
+                );
+
+
+            if (page === "character") {
+
+                navigation.style.display =
+                    "none";
+
+            } else {
+
+                navigation.style.display =
+                    "flex";
+            }
 
 
             window.scrollTo({
@@ -1780,6 +2406,170 @@
                 behavior: "smooth"
 
             });
+        }
+
+
+        /* =====================================
+           CHARAKTER ÖFFNEN
+        ====================================== */
+
+        function openCharacter(character) {
+
+            if (character === "elena") {
+
+                updateDetailFavorite();
+
+                changePage("character");
+
+            }
+        }
+
+
+        /* =====================================
+           CHARAKTER SCHLIESSEN
+        ====================================== */
+
+        function closeCharacter() {
+
+            changePage("discover");
+
+        }
+
+
+        /* =====================================
+           FAVORITEN
+        ====================================== */
+
+        let elenaFavorite = false;
+
+
+        function toggleFavorite(event, character) {
+
+            event.stopPropagation();
+
+
+            if (character !== "elena") {
+                return;
+            }
+
+
+            elenaFavorite =
+                !elenaFavorite;
+
+
+            updateFavoriteButton();
+
+            updateDetailFavorite();
+        }
+
+
+        function updateFavoriteButton() {
+
+            const button =
+                document.getElementById(
+                    "favoriteElena"
+                );
+
+
+            if (elenaFavorite) {
+
+                button.textContent = "♥";
+
+                button.classList.add("active");
+
+            } else {
+
+                button.textContent = "♡";
+
+                button.classList.remove("active");
+
+            }
+        }
+
+
+        function toggleDetailFavorite() {
+
+            elenaFavorite =
+                !elenaFavorite;
+
+
+            updateFavoriteButton();
+
+            updateDetailFavorite();
+        }
+
+
+        function updateDetailFavorite() {
+
+            const button =
+                document.getElementById(
+                    "detailFavorite"
+                );
+
+
+            if (elenaFavorite) {
+
+                button.textContent = "♥";
+
+                button.classList.add("active");
+
+            } else {
+
+                button.textContent = "♡";
+
+                button.classList.remove("active");
+
+            }
+        }
+
+
+        /* =====================================
+           SUCHE
+        ====================================== */
+
+        function searchCharacters() {
+
+            const search =
+                document
+                    .getElementById(
+                        "characterSearch"
+                    )
+                    .value
+                    .toLowerCase()
+                    .trim();
+
+
+            const cards =
+                document.querySelectorAll(
+                    ".character-card"
+                );
+
+
+            cards.forEach(function(card) {
+
+                const name =
+                    card
+                        .dataset
+                        .name
+                        .toLowerCase();
+
+
+                if (
+                    name.includes(search) ||
+                    search === ""
+                ) {
+
+                    card.style.display =
+                        "block";
+
+                } else {
+
+                    card.style.display =
+                        "none";
+                }
+
+            });
+
         }
 
 
@@ -1866,36 +2656,16 @@
 
 
         /* =====================================
-           18+ EINSTELLUNGEN
+           CHAT STARTEN
         ====================================== */
 
-        function adultSettings() {
+        function startChat() {
 
-            const confirmed =
-                localStorage.getItem(AGE_KEY);
+            alert(
+                "Das Chat-System kommt als nächster Schritt."
+            );
 
-
-            if (confirmed === "true") {
-
-                const change =
-                    confirm(
-                        "Möchtest du die 18+-Bestätigung zurücksetzen?"
-                    );
-
-
-                if (change) {
-
-                    resetAgeConfirmation();
-                }
-
-            } else {
-
-                alert(
-                    "Die 18+-Bestätigung ist aktuell nicht aktiviert."
-                );
-            }
         }
-
 
     </script>
 
