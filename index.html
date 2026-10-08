@@ -637,7 +637,7 @@
 
 
         /* =========================================
-           LEERE CHARAKTER-KARTE
+           LEERE CHARAKTER-KARTEN
         ========================================= */
 
         .empty-character-card {
@@ -867,8 +867,7 @@
         .detail-description-box {
             margin-top: 24px;
 
-            padding:
-                18px;
+            padding: 18px;
 
             border-radius: 18px;
 
@@ -1323,6 +1322,7 @@
 
             from {
                 opacity: 0;
+
                 transform:
                     scale(0.94)
                     translateY(10px);
@@ -1330,6 +1330,7 @@
 
             to {
                 opacity: 1;
+
                 transform:
                     scale(1)
                     translateY(0);
@@ -1481,7 +1482,6 @@
             }
         }
 
-
         @media (min-width: 1000px) {
 
             html,
@@ -1508,6 +1508,7 @@
 
 
 <body>
+
 
     <!-- =========================================
          HINTERGRUND
@@ -1611,8 +1612,6 @@
             </div>
 
 
-            <!-- Suche -->
-
             <div class="search-box">
 
                 <div class="search-icon">
@@ -1629,8 +1628,6 @@
 
             </div>
 
-
-            <!-- Geschlecht -->
 
             <div class="filter-row">
 
@@ -1665,8 +1662,6 @@
             </div>
 
 
-            <!-- Tabs -->
-
             <div class="tabs">
 
                 <button
@@ -1686,7 +1681,9 @@
             </div>
 
 
-            <!-- Charaktere -->
+            <!-- =================================
+                 CHARAKTER-GRID
+            ================================== -->
 
             <div
                 id="characterGrid"
@@ -1694,9 +1691,7 @@
             >
 
 
-                <!-- =================================
-                     ELENA
-                ================================== -->
+                <!-- ELENA -->
 
                 <div
                     class="character-card"
@@ -1708,10 +1703,9 @@
 
                         <img
                             class="character-image"
-                            src="./images/Elena%20Hartman.jpg"
+                            src="https://raw.githubusercontent.com/Schwani157/mein-rp-chat/main/Elena%20Hartman.jpg"
                             alt="Elena Hartman"
                         >
-
 
                         <button
                             class="favorite-button"
@@ -1744,9 +1738,7 @@
                 </div>
 
 
-                <!-- =================================
-                     LEERE KARTE 2
-                ================================== -->
+                <!-- LEERE KARTE 2 -->
 
                 <div class="empty-character-card">
 
@@ -1757,9 +1749,7 @@
                 </div>
 
 
-                <!-- =================================
-                     LEERE KARTE 3
-                ================================== -->
+                <!-- LEERE KARTE 3 -->
 
                 <div class="empty-character-card">
 
@@ -1770,9 +1760,7 @@
                 </div>
 
 
-                <!-- =================================
-                     LEERE KARTE 4
-                ================================== -->
+                <!-- LEERE KARTE 4 -->
 
                 <div class="empty-character-card">
 
@@ -2000,10 +1988,6 @@
             <div class="character-detail">
 
 
-                <!-- =================================
-                     DETAIL TOPBAR
-                ================================== -->
-
                 <div class="detail-topbar">
 
                     <button
@@ -2027,24 +2011,20 @@
                 </div>
 
 
-                <!-- =================================
-                     ELENA BILD
-                ================================== -->
+                <!-- ELENA BILD -->
 
                 <div class="detail-image-wrapper">
 
                     <img
                         class="detail-image"
-                        src="./images/Elena%20Hartman.jpg"
+                        src="https://raw.githubusercontent.com/Schwani157/mein-rp-chat/main/Elena%20Hartman.jpg"
                         alt="Elena Hartman"
                     >
 
                 </div>
 
 
-                <!-- =================================
-                     ELENA INFORMATION
-                ================================== -->
+                <!-- ELENA INFORMATION -->
 
                 <div class="detail-content">
 
@@ -2184,6 +2164,7 @@
             tg.ready();
 
             tg.expand();
+
         }
 
 
@@ -2217,6 +2198,7 @@
                 .getElementById("profileName")
                 .textContent =
                 firstName;
+
         }
 
 
@@ -2243,13 +2225,18 @@
 
             if (confirmed === "true") {
 
-                ageGate.classList.add("hidden");
+                ageGate
+                    .classList
+                    .add("hidden");
 
             } else {
 
-                ageGate.classList.remove("hidden");
+                ageGate
+                    .classList
+                    .remove("hidden");
 
             }
+
         }
 
 
@@ -2265,13 +2252,16 @@
                 .getElementById("ageGate")
                 .classList
                 .add("hidden");
+
         }
 
 
         function denyAge() {
 
             const card =
-                document.querySelector(".age-card");
+                document.querySelector(
+                    ".age-card"
+                );
 
 
             card.innerHTML = `
@@ -2302,6 +2292,7 @@
                 </button>
 
             `;
+
         }
 
 
@@ -2396,6 +2387,7 @@
 
                 navigation.style.display =
                     "flex";
+
             }
 
 
@@ -2406,6 +2398,7 @@
                 behavior: "smooth"
 
             });
+
         }
 
 
@@ -2422,6 +2415,7 @@
                 changePage("character");
 
             }
+
         }
 
 
@@ -2443,7 +2437,10 @@
         let elenaFavorite = false;
 
 
-        function toggleFavorite(event, character) {
+        function toggleFavorite(
+            event,
+            character
+        ) {
 
             event.stopPropagation();
 
@@ -2460,6 +2457,7 @@
             updateFavoriteButton();
 
             updateDetailFavorite();
+
         }
 
 
@@ -2473,17 +2471,22 @@
 
             if (elenaFavorite) {
 
-                button.textContent = "♥";
+                button.textContent =
+                    "♥";
 
-                button.classList.add("active");
+                button.classList
+                    .add("active");
 
             } else {
 
-                button.textContent = "♡";
+                button.textContent =
+                    "♡";
 
-                button.classList.remove("active");
+                button.classList
+                    .remove("active");
 
             }
+
         }
 
 
@@ -2496,6 +2499,7 @@
             updateFavoriteButton();
 
             updateDetailFavorite();
+
         }
 
 
@@ -2509,17 +2513,22 @@
 
             if (elenaFavorite) {
 
-                button.textContent = "♥";
+                button.textContent =
+                    "♥";
 
-                button.classList.add("active");
+                button.classList
+                    .add("active");
 
             } else {
 
-                button.textContent = "♡";
+                button.textContent =
+                    "♡";
 
-                button.classList.remove("active");
+                button.classList
+                    .remove("active");
 
             }
+
         }
 
 
@@ -2566,6 +2575,7 @@
 
                     card.style.display =
                         "none";
+
                 }
 
             });
@@ -2599,6 +2609,7 @@
 
             button.classList
                 .add("active");
+
         }
 
 
@@ -2628,6 +2639,7 @@
 
             button.classList
                 .add("active");
+
         }
 
 
@@ -2640,6 +2652,7 @@
             alert(
                 "Die Profilbearbeitung kommt später."
             );
+
         }
 
 
@@ -2652,6 +2665,7 @@
             alert(
                 "Die App-Einstellungen kommen später."
             );
+
         }
 
 
