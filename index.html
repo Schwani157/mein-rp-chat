@@ -282,13 +282,17 @@ tg.ready(); tg.expand();
 if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
 document.getElementById('username').innerText = tg.initDataUnsafe.user.first_name;
 }
-function switchView(index, screenId, element) {
-const slider = document.getElementById('nav-slider');
-if (index === 0) slider.style.transform = "translateX(5px)";
-else if (index === 1) slider.style.transform = "translateX(calc(100% + 15px))";
-else if (index === 2) slider.style.transform = "translateX(calc(200% + 25px))";
-document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
-element.classList.add('active');
-document.querySelectorAll('.view-screen').forEach(screen => screen.classList.remove('active'));
-document.getElementById(screenId).classList.add('active');
+function confirmAndStart() {
+    if(!activeScenario) return;
+
+    // Verpackt die Daten sauber für deinen Render-Server
+    const payload = {
+        action: "start_scenario",
+        scenarioTitle: activeScenario.title,
+        scenarioIntro: activeScenario.intro,
+        scenarioImage: activeScenario.img
+    };
+
+    tg.sendData(JSON.stringify(payload));
 }
+    
