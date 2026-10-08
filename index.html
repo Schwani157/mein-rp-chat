@@ -27,7 +27,6 @@
         html {
             width: 100%;
             min-height: 100%;
-
             background-color: #03020b;
 
             background-image:
@@ -38,7 +37,6 @@
             background-position: center top;
             background-repeat: no-repeat;
         }
-
 
         body {
             width: 100%;
@@ -54,7 +52,6 @@
                 sans-serif;
 
             color: #ffffff;
-
             overflow-x: hidden;
 
             background-color: #03020b;
@@ -70,11 +67,10 @@
 
 
         /* =========================================
-           FESTE HINTERGRUND-EBENE
+           HINTERGRUND
         ========================================= */
 
         .background-layer {
-
             position: fixed;
 
             top: 0;
@@ -86,7 +82,6 @@
             height: 100vh;
 
             z-index: 0;
-
             pointer-events: none;
 
             background-color: #03020b;
@@ -121,13 +116,10 @@
         ========================================= */
 
         .app {
-
             position: relative;
-
             z-index: 1;
 
             width: 100%;
-
             min-height: 100vh;
 
             padding-bottom: 95px;
@@ -139,7 +131,6 @@
         ========================================= */
 
         .top-header {
-
             width: 100%;
 
             padding:
@@ -150,13 +141,9 @@
             text-align: center;
         }
 
-
         .logo {
-
             font-size: 22px;
-
             font-weight: 800;
-
             letter-spacing: 1.5px;
 
             text-shadow:
@@ -164,15 +151,11 @@
                 0 0 20px rgba(166, 110, 255, 0.4);
         }
 
-
         .logo span {
-
             color: #c58cff;
         }
 
-
         .subtitle {
-
             margin-top: 5px;
 
             font-size: 11px;
@@ -189,7 +172,6 @@
         ========================================= */
 
         .page {
-
             display: none;
 
             width: 100%;
@@ -200,9 +182,7 @@
                 20px;
         }
 
-
         .page.active {
-
             display: block;
         }
 
@@ -212,19 +192,14 @@
         ========================================= */
 
         .page-title {
-
             margin-top: 12px;
-
             margin-bottom: 18px;
 
             font-size: 28px;
-
             font-weight: 800;
         }
 
-
         .greeting {
-
             margin-top: 15px;
 
             font-size: 15px;
@@ -233,19 +208,14 @@
                 rgba(255, 255, 255, 0.72);
         }
 
-
         .greeting strong {
-
             color: #ffffff;
         }
 
-
         .main-question {
-
             margin-top: 3px;
 
             font-size: 27px;
-
             font-weight: 800;
         }
 
@@ -255,17 +225,13 @@
         ========================================= */
 
         .search-box {
-
             display: flex;
-
             align-items: center;
 
             width: 100%;
-
             height: 48px;
 
             margin-top: 20px;
-
             margin-bottom: 16px;
 
             padding:
@@ -282,7 +248,6 @@
                 rgba(8, 6, 20, 0.62);
 
             backdrop-filter: blur(15px);
-
             -webkit-backdrop-filter: blur(15px);
 
             box-shadow:
@@ -290,23 +255,17 @@
                 rgba(0, 0, 0, 0.18);
         }
 
-
         .search-icon {
-
             margin-right: 10px;
 
             font-size: 18px;
-
             opacity: 0.7;
         }
 
-
         .search-box input {
-
             width: 100%;
 
             border: none;
-
             outline: none;
 
             background: transparent;
@@ -316,9 +275,7 @@
             font-size: 14px;
         }
 
-
         .search-box input::placeholder {
-
             color:
                 rgba(255, 255, 255, 0.48);
         }
@@ -329,7 +286,6 @@
         ========================================= */
 
         .filter-row {
-
             display: flex;
 
             gap: 8px;
@@ -343,15 +299,11 @@
             scrollbar-width: none;
         }
 
-
         .filter-row::-webkit-scrollbar {
-
             display: none;
         }
 
-
         .filter-button {
-
             flex-shrink: 0;
 
             padding:
@@ -371,19 +323,15 @@
                 rgba(255, 255, 255, 0.72);
 
             font-size: 12px;
-
             font-weight: 600;
 
             cursor: pointer;
 
             backdrop-filter: blur(12px);
-
             -webkit-backdrop-filter: blur(12px);
         }
 
-
         .filter-button.active {
-
             background:
                 rgba(176, 100, 255, 0.25);
 
@@ -403,7 +351,6 @@
         ========================================= */
 
         .empty-box {
-
             display: flex;
 
             flex-direction: column;
@@ -426,7 +373,6 @@
                 rgba(7, 5, 18, 0.52);
 
             backdrop-filter: blur(15px);
-
             -webkit-backdrop-filter: blur(15px);
 
             text-align: center;
@@ -436,17 +382,13 @@
                 rgba(0, 0, 0, 0.2);
         }
 
-
         .empty-icon {
-
             display: flex;
 
             align-items: center;
-
             justify-content: center;
 
             width: 62px;
-
             height: 62px;
 
             margin-bottom: 15px;
@@ -463,26 +405,20 @@
             font-size: 27px;
         }
 
-
         .empty-title {
-
             font-size: 17px;
-
             font-weight: 700;
 
             margin-bottom: 7px;
         }
 
-
         .empty-text {
-
             max-width: 280px;
 
             color:
                 rgba(255, 255, 255, 0.56);
 
             font-size: 13px;
-
             line-height: 1.5;
         }
 
@@ -492,13 +428,11 @@
         ========================================= */
 
         .tabs {
-
             display: flex;
 
             width: 100%;
 
             margin-top: 4px;
-
             margin-bottom: 20px;
 
             padding: 4px;
@@ -513,13 +447,10 @@
                 rgba(255, 255, 255, 0.1);
 
             backdrop-filter: blur(12px);
-
             -webkit-backdrop-filter: blur(12px);
         }
 
-
         .tab {
-
             flex: 1;
 
             padding:
@@ -536,15 +467,12 @@
                 rgba(255, 255, 255, 0.58);
 
             font-size: 12px;
-
             font-weight: 600;
 
             cursor: pointer;
         }
 
-
         .tab.active {
-
             background:
                 rgba(175, 103, 255, 0.23);
 
@@ -557,7 +485,6 @@
         ========================================= */
 
         .profile-card {
-
             width: 100%;
 
             margin-top: 18px;
@@ -574,7 +501,6 @@
                 rgba(7, 5, 18, 0.58);
 
             backdrop-filter: blur(16px);
-
             -webkit-backdrop-filter: blur(16px);
 
             box-shadow:
@@ -582,9 +508,7 @@
                 rgba(0, 0, 0, 0.22);
         }
 
-
         .profile-top {
-
             display: flex;
 
             align-items: center;
@@ -592,17 +516,13 @@
             gap: 15px;
         }
 
-
         .profile-avatar {
-
             display: flex;
 
             align-items: center;
-
             justify-content: center;
 
             width: 62px;
-
             height: 62px;
 
             flex-shrink: 0;
@@ -623,23 +543,16 @@
             font-size: 27px;
         }
 
-
         .profile-info {
-
             min-width: 0;
         }
 
-
         .profile-name {
-
             font-size: 18px;
-
             font-weight: 750;
         }
 
-
         .profile-status {
-
             margin-top: 4px;
 
             font-size: 12px;
@@ -648,9 +561,7 @@
                 rgba(255, 255, 255, 0.55);
         }
 
-
         .edit-button {
-
             width: 100%;
 
             margin-top: 18px;
@@ -669,7 +580,6 @@
             color: #ffffff;
 
             font-size: 13px;
-
             font-weight: 650;
 
             cursor: pointer;
@@ -681,13 +591,10 @@
         ========================================= */
 
         .section-title {
-
             margin-top: 25px;
-
             margin-bottom: 10px;
 
             font-size: 13px;
-
             font-weight: 700;
 
             color:
@@ -698,9 +605,7 @@
             letter-spacing: 0.8px;
         }
 
-
         .settings-card {
-
             width: 100%;
 
             overflow: hidden;
@@ -715,13 +620,10 @@
                 rgba(7, 5, 18, 0.56);
 
             backdrop-filter: blur(15px);
-
             -webkit-backdrop-filter: blur(15px);
         }
 
-
         .setting-row {
-
             display: flex;
 
             align-items: center;
@@ -741,15 +643,11 @@
             cursor: pointer;
         }
 
-
         .setting-row:last-child {
-
             border-bottom: none;
         }
 
-
         .setting-left {
-
             display: flex;
 
             flex-direction: column;
@@ -757,26 +655,19 @@
             gap: 3px;
         }
 
-
         .setting-name {
-
             font-size: 13px;
-
             font-weight: 650;
         }
 
-
         .setting-description {
-
             font-size: 11px;
 
             color:
                 rgba(255, 255, 255, 0.45);
         }
 
-
         .setting-arrow {
-
             color:
                 rgba(255, 255, 255, 0.35);
 
@@ -789,15 +680,12 @@
         ========================================= */
 
         .bottom-navigation {
-
             position: fixed;
 
             z-index: 20;
 
             left: 12px;
-
             right: 12px;
-
             bottom: 12px;
 
             height: 68px;
@@ -805,7 +693,6 @@
             display: flex;
 
             align-items: center;
-
             justify-content: space-around;
 
             padding: 5px;
@@ -820,7 +707,6 @@
                 rgba(5, 4, 16, 0.76);
 
             backdrop-filter: blur(20px);
-
             -webkit-backdrop-filter: blur(20px);
 
             box-shadow:
@@ -831,9 +717,7 @@
                 rgba(255, 255, 255, 0.05);
         }
 
-
         .nav-button {
-
             position: relative;
 
             display: flex;
@@ -841,11 +725,9 @@
             flex-direction: column;
 
             align-items: center;
-
             justify-content: center;
 
             width: 33.33%;
-
             height: 58px;
 
             border: none;
@@ -862,21 +744,15 @@
                 transform 0.2s ease;
         }
 
-
         .nav-button.active {
-
             color: #ffffff;
         }
 
-
         .nav-button:active {
-
             transform: scale(0.94);
         }
 
-
         .nav-icon {
-
             font-size: 21px;
 
             line-height: 1;
@@ -884,17 +760,12 @@
             margin-bottom: 5px;
         }
 
-
         .nav-label {
-
             font-size: 10px;
-
             font-weight: 650;
         }
 
-
         .nav-button.active::after {
-
             content: "";
 
             position: absolute;
@@ -902,7 +773,6 @@
             bottom: 1px;
 
             width: 25px;
-
             height: 3px;
 
             border-radius: 20px;
@@ -916,23 +786,243 @@
 
 
         /* =========================================
-           LAPTOP / DESKTOP
+           18+ OVERLAY
+        ========================================= */
+
+        .age-gate {
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 1000;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            background:
+                rgba(2, 1, 10, 0.82);
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+
+
+        .age-gate.hidden {
+            display: none;
+        }
+
+
+        .age-card {
+            width: 100%;
+            max-width: 390px;
+
+            padding: 30px 24px 24px;
+
+            border-radius: 26px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.16);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(25, 17, 45, 0.96),
+                    rgba(7, 5, 18, 0.97)
+                );
+
+            box-shadow:
+                0 25px 70px
+                rgba(0, 0, 0, 0.55),
+
+                0 0 35px
+                rgba(170, 100, 255, 0.12);
+
+            text-align: center;
+
+            animation:
+                ageCardIn
+                0.35s
+                ease-out;
+        }
+
+
+        @keyframes ageCardIn {
+
+            from {
+                opacity: 0;
+                transform: scale(0.94)
+                           translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1)
+                           translateY(0);
+            }
+        }
+
+
+        .age-icon {
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            width: 78px;
+            height: 78px;
+
+            margin:
+                0
+                auto
+                20px;
+
+            border-radius: 24px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(188, 106, 255, 0.3),
+                    rgba(93, 101, 255, 0.22)
+                );
+
+            border:
+                1px solid
+                rgba(215, 170, 255, 0.35);
+
+            font-size: 32px;
+
+            box-shadow:
+                0 0 25px
+                rgba(170, 100, 255, 0.16);
+        }
+
+
+        .age-title {
+            font-size: 25px;
+
+            font-weight: 800;
+
+            margin-bottom: 12px;
+        }
+
+
+        .age-text {
+            color:
+                rgba(255, 255, 255, 0.68);
+
+            font-size: 13px;
+
+            line-height: 1.55;
+
+            margin-bottom: 22px;
+        }
+
+
+        .age-warning {
+            padding:
+                11px
+                13px;
+
+            margin-bottom: 20px;
+
+            border-radius: 13px;
+
+            background:
+                rgba(255, 255, 255, 0.055);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.08);
+
+            color:
+                rgba(255, 255, 255, 0.55);
+
+            font-size: 11px;
+
+            line-height: 1.45;
+        }
+
+
+        .age-button {
+            width: 100%;
+
+            min-height: 48px;
+
+            border: none;
+
+            border-radius: 14px;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.15s ease,
+                opacity 0.15s ease;
+        }
+
+
+        .age-button:active {
+            transform: scale(0.97);
+        }
+
+
+        .age-confirm {
+            margin-bottom: 9px;
+
+            color: #ffffff;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #a85cff,
+                    #744cff
+                );
+
+            box-shadow:
+                0 8px 25px
+                rgba(135, 80, 255, 0.25);
+        }
+
+
+        .age-confirm:hover {
+            opacity: 0.92;
+        }
+
+
+        .age-deny {
+            color:
+                rgba(255, 255, 255, 0.62);
+
+            background:
+                rgba(255, 255, 255, 0.06);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.1);
+        }
+
+
+        /* =========================================
+           DESKTOP
         ========================================= */
 
         @media (min-width: 700px) {
 
             .app {
-
                 max-width: 700px;
-
                 margin: 0 auto;
             }
 
-
             .bottom-navigation {
-
                 left: 50%;
-
                 right: auto;
 
                 width: 676px;
@@ -942,10 +1032,6 @@
             }
         }
 
-
-        /* =========================================
-           EXTRA DESKTOP BACKGROUND FIX
-        ========================================= */
 
         @media (min-width: 1000px) {
 
@@ -961,11 +1047,9 @@
                     fixed;
             }
 
-
             .background-layer {
 
-                background-size:
-                    cover;
+                background-size: cover;
 
                 background-position:
                     center center;
@@ -986,10 +1070,65 @@
 
 
     <!-- =========================================
+         18+ ALTERSBESTÄTIGUNG
+    ========================================== -->
+
+    <div
+        id="ageGate"
+        class="age-gate"
+    >
+
+        <div class="age-card">
+
+            <div class="age-icon">
+                🔞
+            </div>
+
+            <div class="age-title">
+                18+ Bereich
+            </div>
+
+            <div class="age-text">
+                CYBER AI RP enthält Inhalte und Geschichten,
+                die ausschließlich für Erwachsene bestimmt sind.
+                Bitte bestätige, dass du mindestens 18 Jahre alt bist.
+            </div>
+
+            <div class="age-warning">
+                Mit deiner Bestätigung erklärst du, dass du
+                mindestens 18 Jahre alt bist und die Nutzung
+                auf eigene Verantwortung erfolgt.
+            </div>
+
+
+            <button
+                class="age-button age-confirm"
+                onclick="confirmAge()"
+            >
+                Ich bin 18 oder älter
+            </button>
+
+
+            <button
+                class="age-button age-deny"
+                onclick="denyAge()"
+            >
+                Ich bin unter 18
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
          APP
     ========================================== -->
 
-    <div class="app">
+    <div
+        id="mainApp"
+        class="app"
+    >
 
 
         <!-- =====================================
@@ -1316,7 +1455,7 @@
                         </div>
 
                         <div class="setting-description">
-                            Inhalte und Altersfreigabe
+                            Altersfreigabe verwalten
                         </div>
 
                     </div>
@@ -1339,7 +1478,6 @@
     ========================================== -->
 
     <nav class="bottom-navigation">
-
 
         <button
             id="navDiscover"
@@ -1418,7 +1556,7 @@
 
 
         /* =====================================
-           TELEGRAM BENUTZER
+           BENUTZERNAME
         ====================================== */
 
         function loadTelegramUser() {
@@ -1428,7 +1566,6 @@
 
 
             if (!user) {
-
                 return;
             }
 
@@ -1452,6 +1589,120 @@
 
 
         loadTelegramUser();
+
+
+        /* =====================================
+           18+ SYSTEM
+        ====================================== */
+
+        const AGE_KEY =
+            "cyber_ai_rp_age_confirmed";
+
+
+        function checkAgeConfirmation() {
+
+            const confirmed =
+                localStorage.getItem(AGE_KEY);
+
+
+            const ageGate =
+                document.getElementById("ageGate");
+
+
+            const mainApp =
+                document.getElementById("mainApp");
+
+
+            if (confirmed === "true") {
+
+                ageGate.classList.add("hidden");
+
+                mainApp.style.display = "block";
+
+            } else {
+
+                ageGate.classList.remove("hidden");
+
+                mainApp.style.display = "block";
+            }
+        }
+
+
+        function confirmAge() {
+
+            localStorage.setItem(
+                AGE_KEY,
+                "true"
+            );
+
+
+            document
+                .getElementById("ageGate")
+                .classList
+                .add("hidden");
+        }
+
+
+        function denyAge() {
+
+            /*
+             * Keine Weiterleitung zu externen Seiten.
+             * Die App bleibt gesperrt.
+             */
+
+            const card =
+                document.querySelector(".age-card");
+
+
+            card.innerHTML = `
+
+                <div class="age-icon">
+                    🔒
+                </div>
+
+                <div class="age-title">
+                    Zugang nicht möglich
+                </div>
+
+                <div class="age-text">
+                    CYBER AI RP ist ausschließlich für
+                    Personen ab 18 Jahren vorgesehen.
+                </div>
+
+                <div class="age-warning">
+                    Du kannst die Anwendung nicht betreten,
+                    wenn du unter 18 Jahre alt bist.
+                </div>
+
+                <button
+                    class="age-button age-deny"
+                    onclick="location.reload()"
+                >
+                    Zurück
+                </button>
+
+            `;
+        }
+
+
+        function resetAgeConfirmation() {
+
+            localStorage.removeItem(
+                AGE_KEY
+            );
+
+
+            document
+                .getElementById("ageGate")
+                .classList
+                .remove("hidden");
+
+
+            location.reload();
+        }
+
+
+        checkAgeConfirmation();
 
 
         /* =====================================
@@ -1620,9 +1871,29 @@
 
         function adultSettings() {
 
-            alert(
-                "Die 18+ Einstellungen kommen später."
-            );
+            const confirmed =
+                localStorage.getItem(AGE_KEY);
+
+
+            if (confirmed === "true") {
+
+                const change =
+                    confirm(
+                        "Möchtest du die 18+-Bestätigung zurücksetzen?"
+                    );
+
+
+                if (change) {
+
+                    resetAgeConfirmation();
+                }
+
+            } else {
+
+                alert(
+                    "Die 18+-Bestätigung ist aktuell nicht aktiviert."
+                );
+            }
         }
 
 
