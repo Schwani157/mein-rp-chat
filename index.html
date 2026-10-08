@@ -1,2687 +1,760 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    >
-
-    <title>CYBER AI RP</title>
-
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
-    <style>
-
-        /* =========================================
-           GRUNDLAGEN
-        ========================================= */
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            width: 100%;
-            min-height: 100%;
-            background-color: #03020b;
+const express = require('express');
+const cors = require('cors');
+const { Telegraf, Markup } = require('telegraf');
 
-            background-image:
-                url("./HintergrundCyperAi.jpg"),
-                url("https://raw.githubusercontent.com/Schwani157/mein-rp-chat/main/HintergrundCyperAi.jpg");
+/* =========================================================
+   KONFIGURATION
+========================================================= */
 
-            background-size: cover;
-            background-position: center top;
-            background-repeat: no-repeat;
-        }
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
-        body {
-            width: 100%;
-            min-height: 100vh;
+const WEB_APP_URL =
+    'https://schwani157.github.io/mein-rp-chat/';
 
-            font-family:
-                -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                Roboto,
-                Helvetica,
-                Arial,
-                sans-serif;
+const ELENA_OPENING_IMAGE =
+    'https://raw.githubusercontent.com/Schwani157/mein-rp-chat/main/Elena%20Hartman%20EN.jpg';
 
-            color: #ffffff;
-            overflow-x: hidden;
 
-            background-color: #03020b;
+/* =========================================================
+   SERVER
+========================================================= */
 
-            background-image:
-                url("./HintergrundCyperAi.jpg"),
-                url("https://raw.githubusercontent.com/Schwani157/mein-rp-chat/main/HintergrundCyperAi.jpg");
+const app = express();
 
-            background-size: cover;
-            background-position: center top;
-            background-repeat: no-repeat;
-        }
+app.use(cors());
+app.use(express.json());
 
 
-        /* =========================================
-           HINTERGRUND
-        ========================================= */
+/* =========================================================
+   TELEGRAM BOT
+========================================================= */
 
-        .background-layer {
-            position: fixed;
+const bot = new Telegraf(
+    TELEGRAM_BOT_TOKEN
+);
 
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
 
-            width: 100vw;
-            height: 100vh;
+/* =========================================================
+   BENUTZER-SESSIONS
+========================================================= */
 
-            z-index: 0;
-            pointer-events: none;
+const userSessions = {};
 
-            background-color: #03020b;
 
-            background-image:
-                linear-gradient(
-                    rgba(2, 1, 10, 0.12),
-                    rgba(2, 1, 10, 0.12)
-                ),
-                url("./HintergrundCyperAi.jpg"),
-                url("https://raw.githubusercontent.com/Schwani157/mein-rp-chat/main/HintergrundCyperAi.jpg");
+/* =========================================================
+   ELENA
+========================================================= */
 
-            background-size:
-                cover,
-                cover,
-                cover;
+const elenaDescription = `
+Elena Hartman ist 24 Jahre alt.
 
-            background-position:
-                center top,
-                center top,
-                center top;
+Elena ist eine selbstbewusste und warmherzige Frau
+mit einem neugierigen Geist und einer verspielten Seite.
 
-            background-repeat:
-                no-repeat,
-                no-repeat,
-                no-repeat;
-        }
+Mit ihren braunen Haaren, den haselnussbraunen Augen
+und ihrem entspannten Stil fällt sie auf, ohne es
+darauf anzulegen.
 
+Sie ist sehr freundlich und offen, kann aber stur werden,
+wenn sie sich etwas in den Kopf gesetzt hat.
 
-        /* =========================================
-           APP
-        ========================================= */
+Hinter ihrer ruhigen Art steckt eine aufmerksame
+Persönlichkeit, die Gespräche, spontane Momente und
+die kleinen Geheimnisse anderer Menschen liebt.
 
-        .app {
-            position: relative;
-            z-index: 1;
+Elena wirkt natürlich und lebendig.
+Sie führt Gespräche aktiv weiter, stellt selbst Fragen,
+reagiert auf Aussagen des Nutzers und lässt die Geschichte
+nicht wie einen Frage-Antwort-Test wirken.
 
-            width: 100%;
-            min-height: 100vh;
+Sie darf humorvoll, neugierig, verspielt und gelegentlich
+leicht frech sein.
 
-            padding-bottom: 95px;
-        }
+Sie bleibt immer Elena Hartman und bricht ihre Rolle nicht.
+`;
 
 
-        /* =========================================
-           HEADER
-        ========================================= */
+/* =========================================================
+   ELENAS ERÖFFNUNGSSZENE
+========================================================= */
 
-        .top-header {
-            width: 100%;
+const elenaOpeningMessage = `
+*Es ist später Abend. Draußen liegt die Stadt bereits unter dem warmen Schein der Straßenlaternen, während vereinzelte Autos über die nasse Straße ziehen. Elena sitzt seit einer Weile auf ihrem Bett und hat ihren Laptop vor sich stehen. Eigentlich wollte sie schon vor einer Stunde etwas für den nächsten Tag erledigen, doch stattdessen ist sie bei irgendeinem völlig belanglosen Video hängen geblieben. Neben ihr steht eine halbvolle Tasse Tee, die längst nicht mehr wirklich warm ist.*
 
-            padding:
-                22px
-                20px
-                10px;
+*Ein leises Klopfen an ihrer Tür lässt sie schließlich aufsehen.*
 
-            text-align: center;
-        }
+„Hm?“
 
-        .logo {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: 1.5px;
+*Sie wartet einen Moment, doch als keine Antwort kommt, zieht sie eine Augenbraue hoch. Elena legt den Laptop beiseite, steht auf und geht zur Tür. Als sie sie öffnet, entdeckt sie dich davor. Für einen kurzen Augenblick wirkt sie überrascht. Dann erscheint dieses typische, leicht amüsierte Lächeln auf ihrem Gesicht.*
 
-            text-shadow:
-                0 0 8px rgba(255, 255, 255, 0.3),
-                0 0 20px rgba(166, 110, 255, 0.4);
-        }
+„Du?“
 
-        .logo span {
-            color: #c58cff;
-        }
+*Sie lehnt sich mit einer Schulter gegen den Türrahmen und betrachtet dich neugierig. Ihr Blick wandert kurz über dich, bevor sie wieder deine Augen ansieht.*
 
-        .subtitle {
-            margin-top: 5px;
+„Ich wusste gar nicht, dass du heute noch auftauchst.“
 
-            font-size: 11px;
+*In ihrer Stimme liegt keine Spur von Ärger. Im Gegenteil. Sie scheint eher überrascht und gleichzeitig ein wenig erfreut darüber zu sein, dass du tatsächlich hier stehst.*
 
-            color:
-                rgba(255, 255, 255, 0.65);
+*Elena tritt einen Schritt zur Seite und deutet mit einer kleinen Handbewegung in ihr Zimmer.*
 
-            letter-spacing: 0.4px;
-        }
+„Komm rein. Du kannst ja schlecht mitten im Flur stehen bleiben.“
 
+*Während du hereinkommst, schließt sie die Tür hinter dir. Ihr Zimmer wirkt gemütlich und ein wenig chaotisch. Auf dem Schreibtisch liegen einige Notizbücher, Stifte und Kopfhörer durcheinander. An der Wand hängen Fotos, kleine Zeichnungen und Erinnerungen, die sie offenbar irgendwann einmal gesammelt hat. Eine Lichterkette taucht den Raum in ein warmes, gedämpftes Licht.*
 
-        /* =========================================
-           SEITEN
-        ========================================= */
+*Elena geht zurück zum Bett und lässt sich darauf nieder. Sie zieht ein Bein leicht an und sieht dich erwartungsvoll an.*
 
-        .page {
-            display: none;
+„Also?“
 
-            width: 100%;
+*Sie wartet absichtlich ein paar Sekunden.*
 
-            padding:
-                8px
-                16px
-                20px;
-        }
+„Was verschafft mir denn die Ehre?“
 
-        .page.active {
-            display: block;
-        }
+*Ein kleines Grinsen erscheint auf ihrem Gesicht. Sie weiß selbst, dass die Formulierung etwas übertrieben klingt, aber genau deshalb scheint sie sie zu benutzen.*
 
+„Und sag jetzt bitte nicht, dass du zufällig hier vorbeigekommen bist. Dafür ist es ein bisschen spät.“
 
-        /* =========================================
-           TITEL
-        ========================================= */
+*Sie greift nach ihrer Tasse, stellt jedoch fest, dass der Tee kalt geworden ist. Mit einem skeptischen Blick betrachtet sie die Tasse, bevor sie sie wieder auf den Tisch stellt.*
 
-        .page-title {
-            margin-top: 12px;
-            margin-bottom: 18px;
+„Perfekt. Mein Tee ist kalt.“
 
-            font-size: 28px;
-            font-weight: 800;
-        }
+*Sie sieht wieder zu dir.*
 
-        .greeting {
-            margin-top: 15px;
+„Das ist übrigens deine Schuld.“
 
-            font-size: 15px;
+*Für einen Moment hält sie völlig ernst inne, bevor sie lachen muss.*
 
-            color:
-                rgba(255, 255, 255, 0.72);
-        }
+„Keine Ahnung warum. Aber ich finde, irgendjemand muss dafür verantwortlich sein.“
 
-        .greeting strong {
-            color: #ffffff;
-        }
+*Elena rückt ein Stück zur Seite und klopft neben sich auf die Matratze.*
 
-        .main-question {
-            margin-top: 3px;
+„Setz dich.“
 
-            font-size: 27px;
-            font-weight: 800;
-        }
+*Als du dich näherst, mustert sie dich erneut. Dieses Mal etwas aufmerksamer. Ihr Gesichtsausdruck wird ruhiger.*
 
+„Du wirkst irgendwie anders als sonst.“
 
-        /* =========================================
-           SUCHFELD
-        ========================================= */
+*Sie legt den Kopf leicht schief.*
 
-        .search-box {
-            display: flex;
-            align-items: center;
+„Oder bilde ich mir das nur ein?“
 
-            width: 100%;
-            height: 48px;
+*Sie wartet auf deine Antwort, doch bevor du etwas sagen kannst, hebt sie eine Hand.*
 
-            margin-top: 20px;
-            margin-bottom: 16px;
+„Warte. Lass mich raten.“
 
-            padding:
-                0
-                15px;
+*Sie zieht eine nachdenkliche Grimasse.*
 
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.13);
+„Du hattest einen langen Tag. Irgendwas ist passiert. Du wolltest eigentlich längst nach Hause, hast dann aber beschlossen, noch irgendwo vorbeizuschauen.“
 
-            border-radius: 15px;
+*Sie hält kurz inne.*
 
-            background:
-                rgba(8, 6, 20, 0.62);
+„Und aus irgendeinem Grund bist du ausgerechnet bei mir gelandet.“
 
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+*Ihr Grinsen wird wieder breiter.*
 
-            box-shadow:
-                0 8px 25px
-                rgba(0, 0, 0, 0.18);
-        }
+„Gar nicht so schlecht, oder?“
 
-        .search-icon {
-            margin-right: 10px;
+*Sie lehnt sich zurück und verschränkt locker die Arme.*
 
-            font-size: 18px;
-            opacity: 0.7;
-        }
+„Na gut. Vielleicht liege ich komplett daneben.“
 
-        .search-box input {
-            width: 100%;
+*Elena sieht dich einige Sekunden lang schweigend an. Dann muss sie erneut schmunzeln.*
 
-            border: none;
-            outline: none;
+„Eigentlich ist mir das sogar lieber. Ich mag es nicht, wenn ich sofort weiß, was jemand denkt.“
 
-            background: transparent;
+*Sie deutet auf den Laptop.*
 
-            color: #ffffff;
+„Ich war gerade dabei, mich erfolgreich vor allem zu drücken, was ich eigentlich machen sollte. Du hast also ziemlich gutes Timing.“
 
-            font-size: 14px;
-        }
+*Sie nimmt ein Kissen und wirft es beiläufig in deine Richtung. Es landet vor dir.*
 
-        .search-box input::placeholder {
-            color:
-                rgba(255, 255, 255, 0.48);
-        }
+„Und bevor du fragst: Nein, ich werde dir nicht erklären, warum ich seit zwanzig Minuten dasselbe Video anschaue.“
 
+*Sie grinst.*
 
-        /* =========================================
-           FILTER
-        ========================================= */
+„Das ist eine sehr komplizierte Geschichte.“
 
-        .filter-row {
-            display: flex;
+*Elena steht noch einmal auf, geht zum Schreibtisch und schiebt ein paar Dinge zur Seite. Dabei entdeckt sie ein kleines Foto, nimmt es kurz in die Hand und betrachtet es.*
 
-            gap: 8px;
+„Manchmal frage ich mich, warum wir eigentlich so viel Zeit damit verbringen, Dinge zu planen.“
 
-            width: 100%;
+*Sie legt das Foto zurück.*
 
-            margin-bottom: 20px;
+„Die besten Abende passieren meistens dann, wenn man überhaupt nichts geplant hat.“
 
-            overflow-x: auto;
+*Sie dreht sich zu dir um.*
 
-            scrollbar-width: none;
-        }
+„Also machen wir es heute einfach anders.“
 
-        .filter-row::-webkit-scrollbar {
-            display: none;
-        }
+*Elena kommt zurück und setzt sich wieder hin.*
 
-        .filter-button {
-            flex-shrink: 0;
+„Keine Pläne. Keine Erwartungen. Keine Ausreden.“
 
-            padding:
-                9px
-                14px;
+*Sie hebt eine Augenbraue.*
 
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.13);
+„Nur du, ich und ein Abend, der noch nicht entschieden hat, was aus ihm wird.“
 
-            border-radius: 12px;
+*Für einen Moment ist es still. Von draußen dringt gedämpft das Geräusch eines vorbeifahrenden Autos herein. Elena zieht die Beine etwas näher an sich und sieht dich mit einem neugierigen Ausdruck an.*
 
-            background:
-                rgba(8, 6, 20, 0.58);
+„Du darfst anfangen.“
 
-            color:
-                rgba(255, 255, 255, 0.72);
+*Sie lächelt.*
 
-            font-size: 12px;
-            font-weight: 600;
+„Erzähl mir irgendetwas. Etwas, das du normalerweise nicht einfach jedem erzählen würdest.“
 
-            cursor: pointer;
+*Sie merkt selbst, dass ihre Frage ziemlich direkt ist, aber anstatt sie zurückzunehmen, wartet sie einfach ab.*
 
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
+„Oder …“
 
-        .filter-button.active {
-            background:
-                rgba(176, 100, 255, 0.25);
+*Ein schelmisches Funkeln erscheint in ihren Augen.*
 
-            border-color:
-                rgba(205, 147, 255, 0.5);
+„Du stellst mir zuerst eine Frage.“
 
-            color: #ffffff;
+*Sie lehnt sich ein wenig nach vorne.*
 
-            box-shadow:
-                0 0 14px
-                rgba(170, 100, 255, 0.18);
-        }
+„Aber eine richtige.“
 
+„Nicht dieses langweilige Zeug wie ‚Was machst du gern?‘ oder ‚Was ist dein Lieblingsessen?‘“
 
-        /* =========================================
-           TABS
-        ========================================= */
+*Sie schüttelt leicht den Kopf.*
 
-        .tabs {
-            display: flex;
+„Ich will etwas wissen, das ich nicht schon nach fünf Minuten wieder vergessen habe.“
 
-            width: 100%;
+*Elena verschränkt die Hände und sieht dich erwartungsvoll an.*
 
-            margin-top: 4px;
-            margin-bottom: 20px;
+„Also?“
 
-            padding: 4px;
+*Sie lächelt, diesmal etwas ruhiger.*
 
-            border-radius: 14px;
+„Was willst du wirklich über mich wissen?“
+`;
 
-            background:
-                rgba(5, 4, 15, 0.58);
 
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.1);
+/* =========================================================
+   START DES BOTS
+========================================================= */
 
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
+bot.start(async (ctx) => {
 
-        .tab {
-            flex: 1;
+    const userId = ctx.from.id;
 
-            padding:
-                10px
-                5px;
+    userSessions[userId] = {
+        chatHistory: [],
+        charName: null,
+        charPrompt: null,
+        currentScenario: null,
+        storyStarted: false
+    };
 
-            border: none;
+    await ctx.reply(
+        '⚠️ Achtung: Dieser Bot enthält nicht jugendfreie Ü18-Inhalte.\n\n' +
+        'Bist du mindestens 18 Jahre alt?',
+        Markup.inlineKeyboard([
+            Markup.button.callback(
+                '🔞 Ja, ich bin 18+',
+                'verify_age_yes'
+            )
+        ])
+    );
 
-            border-radius: 10px;
+});
 
-            background: transparent;
 
-            color:
-                rgba(255, 255, 255, 0.58);
+/* =========================================================
+   ALTER BESTÄTIGEN
+========================================================= */
 
-            font-size: 12px;
-            font-weight: 600;
+bot.action('verify_age_yes', async (ctx) => {
 
-            cursor: pointer;
-        }
+    await ctx.answerCbQuery();
 
-        .tab.active {
-            background:
-                rgba(175, 103, 255, 0.23);
+    await ctx.reply(
+        'Vielen Dank für die Bestätigung!\n\n' +
+        'Öffne jetzt CYBER AI RP und wähle einen Charakter.',
+        Markup.inlineKeyboard([
+            Markup.button.webApp(
+                '🎭 Charakter-Menü öffnen',
+                WEB_APP_URL
+            )
+        ])
+    );
 
-            color: #ffffff;
-        }
+});
 
 
-        /* =========================================
-           CHARAKTER-GRID
-        ========================================= */
+/* =========================================================
+   WEB-APP DATEN
+========================================================= */
 
-        .character-grid {
-            display: grid;
+bot.on('web_app_data', async (ctx) => {
 
-            grid-template-columns:
-                repeat(2, minmax(0, 1fr));
+    const userId = ctx.from.id;
 
-            gap: 14px;
+    try {
 
-            width: 100%;
-        }
+        const data = JSON.parse(
+            ctx.message.web_app_data.data
+        );
 
 
-        /* =========================================
-           CHARAKTER-KARTE
-        ========================================= */
+        /* =================================================
+           ELENA STARTEN
+        ================================================= */
 
-        .character-card {
-            position: relative;
-
-            min-width: 0;
-
-            overflow: hidden;
-
-            border-radius: 22px;
-
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.18);
-
-            background:
-                rgba(8, 5, 20, 0.62);
-
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-
-            box-shadow:
-                0 12px 30px
-                rgba(0, 0, 0, 0.25);
-
-            cursor: pointer;
-
-            transition:
-                transform 0.2s ease,
-                border-color 0.2s ease;
-        }
-
-        .character-card:active {
-            transform: scale(0.97);
-        }
-
-        .character-card:hover {
-            border-color:
-                rgba(218, 140, 255, 0.5);
-        }
-
-
-        /* =========================================
-           CHARAKTER-BILD
-        ========================================= */
-
-        .character-image-wrapper {
-            position: relative;
-
-            width: 100%;
-
-            aspect-ratio: 0.78;
-
-            overflow: hidden;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(80, 50, 110, 0.5),
-                    rgba(15, 15, 35, 0.8)
-                );
-        }
-
-        .character-image {
-            width: 100%;
-            height: 100%;
-
-            display: block;
-
-            object-fit: cover;
-
-            object-position: center;
-        }
-
-
-        /* =========================================
-           BILD-VERLAUF
-        ========================================= */
-
-        .character-image-wrapper::after {
-            content: "";
-
-            position: absolute;
-
-            left: 0;
-            right: 0;
-            bottom: 0;
-
-            height: 45%;
-
-            background:
-                linear-gradient(
-                    to bottom,
-                    transparent,
-                    rgba(5, 3, 14, 0.92)
-                );
-
-            pointer-events: none;
-        }
-
-
-        /* =========================================
-           FAVORITEN-BUTTON
-        ========================================= */
-
-        .favorite-button {
-            position: absolute;
-
-            top: 10px;
-            right: 10px;
-
-            z-index: 5;
-
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            width: 38px;
-            height: 38px;
-
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.28);
-
-            border-radius: 50%;
-
-            background:
-                rgba(10, 7, 20, 0.55);
-
-            color: #ffffff;
-
-            font-size: 20px;
-
-            cursor: pointer;
-
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-
-            transition:
-                transform 0.15s ease,
-                color 0.15s ease;
-        }
-
-        .favorite-button:active {
-            transform: scale(0.9);
-        }
-
-        .favorite-button.active {
-            color: #ff58d2;
-
-            text-shadow:
-                0 0 10px
-                rgba(255, 70, 210, 0.7);
-        }
-
-
-        /* =========================================
-           CHARAKTER-INFORMATION
-        ========================================= */
-
-        .character-info {
-            position: relative;
-
-            z-index: 3;
-
-            margin-top: -28px;
-
-            padding:
-                0
-                14px
-                15px;
-        }
-
-        .character-name {
-            font-size: 17px;
-
-            font-weight: 800;
-
-            line-height: 1.2;
-        }
-
-        .character-role {
-            display: flex;
-
-            align-items: center;
-
-            gap: 6px;
-
-            margin-top: 6px;
-
-            color:
-                rgba(255, 255, 255, 0.7);
-
-            font-size: 11px;
-
-            font-weight: 600;
-        }
-
-        .role-dot {
-            width: 7px;
-            height: 7px;
-
-            flex-shrink: 0;
-
-            border-radius: 50%;
-
-            background: #ff3fc9;
-
-            box-shadow:
-                0 0 8px
-                rgba(255, 63, 201, 0.7);
-        }
-
-
-        /* =========================================
-           LEERE CHARAKTER-KARTEN
-        ========================================= */
-
-        .empty-character-card {
-            position: relative;
-
-            min-width: 0;
-
-            overflow: hidden;
-
-            aspect-ratio: 0.78;
-
-            border-radius: 22px;
-
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.12);
-
-            background:
-                rgba(8, 5, 20, 0.48);
-
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-
-        .empty-character-plus {
-            position: absolute;
-
-            top: 50%;
-            left: 50%;
-
-            transform:
-                translate(-50%, -50%);
-
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            width: 64px;
-            height: 64px;
-
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.24);
-
-            border-radius: 50%;
-
-            background:
-                rgba(40, 25, 60, 0.45);
-
-            color: #ffffff;
-
-            font-size: 35px;
-
-            font-weight: 300;
-
-            box-shadow:
-                0 0 20px
-                rgba(180, 100, 255, 0.12);
-        }
-
-
-        /* =========================================
-           CHARAKTER-DETAILSEITE
-        ========================================= */
-
-        #pageCharacter {
-            padding:
-                0
-                0
-                30px;
-        }
-
-        .character-detail {
-            width: 100%;
-        }
-
-
-        /* =========================================
-           DETAIL HEADER
-        ========================================= */
-
-        .detail-topbar {
-            position: absolute;
-
-            top: 18px;
-            left: 16px;
-            right: 16px;
-
-            z-index: 20;
-
-            display: flex;
-
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .detail-round-button {
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            width: 42px;
-            height: 42px;
-
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.22);
-
-            border-radius: 50%;
-
-            background:
-                rgba(5, 4, 15, 0.58);
-
-            color: #ffffff;
-
-            font-size: 20px;
-
-            cursor: pointer;
-
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-        }
-
-        .detail-back {
-            font-size: 25px;
-        }
-
-
-        /* =========================================
-           DETAIL BILD
-        ========================================= */
-
-        .detail-image-wrapper {
-            position: relative;
-
-            width: 100%;
-
-            height: 470px;
-
-            overflow: hidden;
-        }
-
-        .detail-image {
-            width: 100%;
-            height: 100%;
-
-            display: block;
-
-            object-fit: cover;
-
-            object-position: center top;
-        }
-
-        .detail-image-wrapper::after {
-            content: "";
-
-            position: absolute;
-
-            inset: 0;
-
-            background:
-                linear-gradient(
-                    to bottom,
-                    rgba(3, 2, 11, 0.05) 30%,
-                    rgba(3, 2, 11, 0.15) 45%,
-                    rgba(3, 2, 11, 0.96) 100%
-                );
-
-            pointer-events: none;
-        }
-
-
-        /* =========================================
-           DETAIL CONTENT
-        ========================================= */
-
-        .detail-content {
-            position: relative;
-
-            margin-top: -105px;
-
-            z-index: 5;
-
-            padding:
-                0
-                20px
-                30px;
-        }
-
-        .detail-name {
-            font-size: 31px;
-
-            font-weight: 850;
-
-            line-height: 1.1;
-
-            text-shadow:
-                0 2px 10px
-                rgba(0, 0, 0, 0.5);
-        }
-
-        .detail-role {
-            display: flex;
-
-            align-items: center;
-
-            gap: 8px;
-
-            margin-top: 8px;
-
-            color:
-                rgba(255, 255, 255, 0.76);
-
-            font-size: 14px;
-
-            font-weight: 600;
-        }
-
-        .detail-role .role-dot {
-            width: 8px;
-            height: 8px;
-        }
-
-
-        .detail-description-box {
-            margin-top: 24px;
-
-            padding: 18px;
-
-            border-radius: 18px;
-
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.12);
-
-            background:
-                rgba(8, 5, 20, 0.58);
-
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-
-            box-shadow:
-                0 12px 30px
-                rgba(0, 0, 0, 0.2);
-        }
-
-        .detail-description-title {
-            margin-bottom: 9px;
-
-            font-size: 13px;
-
-            font-weight: 750;
-
-            color:
-                rgba(255, 255, 255, 0.58);
-
-            text-transform: uppercase;
-
-            letter-spacing: 0.7px;
-        }
-
-        .detail-description {
-            color:
-                rgba(255, 255, 255, 0.78);
-
-            font-size: 14px;
-
-            line-height: 1.65;
-        }
-
-
-        /* =========================================
-           START-BUTTON
-        ========================================= */
-
-        .start-chat-button {
-            width: 100%;
-
-            margin-top: 18px;
-
-            padding:
-                15px
-                18px;
-
-            border: none;
-
-            border-radius: 16px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #c457ff,
-                    #8b52ff
-                );
-
-            color: #ffffff;
-
-            font-size: 14px;
-
-            font-weight: 750;
-
-            cursor: pointer;
-
-            box-shadow:
-                0 10px 28px
-                rgba(157, 76, 255, 0.28);
-        }
-
-
-        /* =========================================
-           PROFIL
-        ========================================= */
-
-        .profile-card {
-            width: 100%;
-
-            margin-top: 18px;
-
-            padding: 20px;
-
-            border-radius: 22px;
-
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.13);
-
-            background:
-                rgba(7, 5, 18, 0.58);
-
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-
-            box-shadow:
-                0 18px 40px
-                rgba(0, 0, 0, 0.22);
-        }
-
-        .profile-top {
-            display: flex;
-
-            align-items: center;
-
-            gap: 15px;
-        }
-
-        .profile-avatar {
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            width: 62px;
-            height: 62px;
-
-            flex-shrink: 0;
-
-            border-radius: 50%;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(181, 104, 255, 0.5),
-                    rgba(80, 120, 255, 0.35)
-                );
-
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.2);
-
-            font-size: 27px;
-        }
-
-        .profile-info {
-            min-width: 0;
-        }
-
-        .profile-name {
-            font-size: 18px;
-            font-weight: 750;
-        }
-
-        .profile-status {
-            margin-top: 4px;
-
-            font-size: 12px;
-
-            color:
-                rgba(255, 255, 255, 0.55);
-        }
-
-        .edit-button {
-            width: 100%;
-
-            margin-top: 18px;
-
-            padding: 12px;
-
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.14);
-
-            border-radius: 13px;
-
-            background:
-                rgba(255, 255, 255, 0.07);
-
-            color: #ffffff;
-
-            font-size: 13px;
-            font-weight: 650;
-
-            cursor: pointer;
-        }
-
-
-        /* =========================================
-           EINSTELLUNGEN
-        ========================================= */
-
-        .section-title {
-            margin-top: 25px;
-            margin-bottom: 10px;
-
-            font-size: 13px;
-            font-weight: 700;
-
-            color:
-                rgba(255, 255, 255, 0.55);
-
-            text-transform: uppercase;
-
-            letter-spacing: 0.8px;
-        }
-
-        .settings-card {
-            width: 100%;
-
-            overflow: hidden;
-
-            border-radius: 18px;
-
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.1);
-
-            background:
-                rgba(7, 5, 18, 0.56);
-
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-        }
-
-        .setting-row {
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            min-height: 58px;
-
-            padding:
-                0
-                16px;
-
-            border-bottom:
-                1px solid
-                rgba(255, 255, 255, 0.07);
-        }
-
-        .setting-row:last-child {
-            border-bottom: none;
-        }
-
-        .setting-left {
-            display: flex;
-
-            flex-direction: column;
-
-            gap: 3px;
-        }
-
-        .setting-name {
-            font-size: 13px;
-            font-weight: 650;
-        }
-
-        .setting-description {
-            font-size: 11px;
-
-            color:
-                rgba(255, 255, 255, 0.45);
-        }
-
-        .setting-arrow {
-            color:
-                rgba(255, 255, 255, 0.35);
-
-            font-size: 18px;
-        }
-
-
-        /* =========================================
-           BOTTOM NAVIGATION
-        ========================================= */
-
-        .bottom-navigation {
-            position: fixed;
-
-            z-index: 20;
-
-            left: 12px;
-            right: 12px;
-            bottom: 12px;
-
-            height: 68px;
-
-            display: flex;
-
-            align-items: center;
-            justify-content: space-around;
-
-            padding: 5px;
-
-            border-radius: 22px;
-
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.12);
-
-            background:
-                rgba(5, 4, 16, 0.76);
-
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-
-            box-shadow:
-                0 12px 35px
-                rgba(0, 0, 0, 0.35),
-
-                inset 0 1px 0
-                rgba(255, 255, 255, 0.05);
-        }
-
-        .nav-button {
-            position: relative;
-
-            display: flex;
-
-            flex-direction: column;
-
-            align-items: center;
-            justify-content: center;
-
-            width: 33.33%;
-            height: 58px;
-
-            border: none;
-
-            background: transparent;
-
-            color:
-                rgba(255, 255, 255, 0.45);
-
-            cursor: pointer;
-
-            transition:
-                color 0.2s ease,
-                transform 0.2s ease;
-        }
-
-        .nav-button.active {
-            color: #ffffff;
-        }
-
-        .nav-button:active {
-            transform: scale(0.94);
-        }
-
-        .nav-icon {
-            font-size: 21px;
-
-            line-height: 1;
-
-            margin-bottom: 5px;
-        }
-
-        .nav-label {
-            font-size: 10px;
-            font-weight: 650;
-        }
-
-        .nav-button.active::after {
-            content: "";
-
-            position: absolute;
-
-            bottom: 1px;
-
-            width: 25px;
-            height: 3px;
-
-            border-radius: 20px;
-
-            background: #c58cff;
-
-            box-shadow:
-                0 0 10px
-                rgba(197, 140, 255, 0.8);
-        }
-
-
-        /* =========================================
-           18+ OVERLAY
-        ========================================= */
-
-        .age-gate {
-            position: fixed;
-
-            inset: 0;
-
-            z-index: 1000;
-
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            padding: 20px;
-
-            background:
-                rgba(2, 1, 10, 0.82);
-
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-        }
-
-        .age-gate.hidden {
-            display: none;
-        }
-
-        .age-card {
-            width: 100%;
-            max-width: 390px;
-
-            padding:
-                30px
-                24px
-                24px;
-
-            border-radius: 26px;
-
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.16);
-
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(25, 17, 45, 0.96),
-                    rgba(7, 5, 18, 0.97)
-                );
-
-            box-shadow:
-                0 25px 70px
-                rgba(0, 0, 0, 0.55),
-
-                0 0 35px
-                rgba(170, 100, 255, 0.12);
-
-            text-align: center;
-
-            animation:
-                ageCardIn
-                0.35s
-                ease-out;
-        }
-
-        @keyframes ageCardIn {
-
-            from {
-                opacity: 0;
-
-                transform:
-                    scale(0.94)
-                    translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-
-                transform:
-                    scale(1)
-                    translateY(0);
-            }
-        }
-
-        .age-icon {
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            width: 78px;
-            height: 78px;
-
-            margin:
-                0
-                auto
-                20px;
-
-            border-radius: 24px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(188, 106, 255, 0.3),
-                    rgba(93, 101, 255, 0.22)
-                );
-
-            border:
-                1px solid
-                rgba(215, 170, 255, 0.35);
-
-            font-size: 32px;
-
-            box-shadow:
-                0 0 25px
-                rgba(170, 100, 255, 0.16);
-        }
-
-        .age-title {
-            font-size: 25px;
-
-            font-weight: 800;
-
-            margin-bottom: 12px;
-        }
-
-        .age-text {
-            color:
-                rgba(255, 255, 255, 0.68);
-
-            font-size: 13px;
-
-            line-height: 1.55;
-
-            margin-bottom: 22px;
-        }
-
-        .age-warning {
-            padding:
-                11px
-                13px;
-
-            margin-bottom: 20px;
-
-            border-radius: 13px;
-
-            background:
-                rgba(255, 255, 255, 0.055);
-
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.08);
-
-            color:
-                rgba(255, 255, 255, 0.55);
-
-            font-size: 11px;
-
-            line-height: 1.45;
-        }
-
-        .age-button {
-            width: 100%;
-
-            min-height: 48px;
-
-            border: none;
-
-            border-radius: 14px;
-
-            font-size: 14px;
-
-            font-weight: 700;
-
-            cursor: pointer;
-        }
-
-        .age-confirm {
-            margin-bottom: 9px;
-
-            color: #ffffff;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #a85cff,
-                    #744cff
-                );
-
-            box-shadow:
-                0 8px 25px
-                rgba(135, 80, 255, 0.25);
-        }
-
-        .age-deny {
-            color:
-                rgba(255, 255, 255, 0.62);
-
-            background:
-                rgba(255, 255, 255, 0.06);
-
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.1);
-        }
-
-
-        /* =========================================
-           DESKTOP
-        ========================================= */
-
-        @media (min-width: 700px) {
-
-            .app {
-                max-width: 700px;
-                margin: 0 auto;
-            }
-
-            .bottom-navigation {
-                left: 50%;
-                right: auto;
-
-                width: 676px;
-
-                transform:
-                    translateX(-50%);
-            }
-        }
-
-        @media (min-width: 1000px) {
-
-            html,
-            body {
-                background-size: cover;
-
-                background-position:
-                    center center;
-
-                background-attachment:
-                    fixed;
-            }
-
-            .background-layer {
-                background-size: cover;
-
-                background-position:
-                    center center;
-            }
-        }
-
-    </style>
-</head>
-
-
-<body>
-
-
-    <!-- =========================================
-         HINTERGRUND
-    ========================================== -->
-
-    <div class="background-layer"></div>
-
-
-    <!-- =========================================
-         18+ ALTERSBESTÄTIGUNG
-    ========================================== -->
-
-    <div
-        id="ageGate"
-        class="age-gate"
-    >
-
-        <div class="age-card">
-
-            <div class="age-icon">
-                🔞
-            </div>
-
-            <div class="age-title">
-                18+ Bereich
-            </div>
-
-            <div class="age-text">
-                CYBER AI RP enthält Inhalte und Geschichten,
-                die ausschließlich für Erwachsene bestimmt sind.
-                Bitte bestätige, dass du mindestens 18 Jahre alt bist.
-            </div>
-
-            <div class="age-warning">
-                Mit deiner Bestätigung erklärst du, dass du
-                mindestens 18 Jahre alt bist und die Nutzung
-                auf eigene Verantwortung erfolgt.
-            </div>
-
-            <button
-                class="age-button age-confirm"
-                onclick="confirmAge()"
-            >
-                Ich bin 18 oder älter
-            </button>
-
-            <button
-                class="age-button age-deny"
-                onclick="denyAge()"
-            >
-                Ich bin unter 18
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <!-- =========================================
-         APP
-    ========================================== -->
-
-    <div
-        id="mainApp"
-        class="app"
-    >
-
-
-        <!-- =====================================
-             HEADER
-        ====================================== -->
-
-        <header class="top-header">
-
-            <div class="logo">
-                ✦ CYBER <span>AI RP</span>
-            </div>
-
-            <div class="subtitle">
-                Deine Charaktere. Deine Geschichten. Deine Welt.
-            </div>
-
-        </header>
-
-
-        <!-- =====================================
-             ENTDECKEN
-        ====================================== -->
-
-        <main
-            id="pageDiscover"
-            class="page active"
-        >
-
-            <div class="greeting">
-                Hallo <strong id="userName">Spieler</strong> 👋
-            </div>
-
-            <div class="main-question">
-                Lust zu chatten?
-            </div>
-
-
-            <div class="search-box">
-
-                <div class="search-icon">
-                    🔍
-                </div>
-
-                <input
-                    id="characterSearch"
-                    type="text"
-                    placeholder="Wen suchst du?"
-                    autocomplete="off"
-                    oninput="searchCharacters()"
-                >
-
-            </div>
-
-
-            <div class="filter-row">
-
-                <button
-                    class="filter-button active"
-                    onclick="setFilter(this)"
-                >
-                    Alle
-                </button>
-
-                <button
-                    class="filter-button"
-                    onclick="setFilter(this)"
-                >
-                    ♀
-                </button>
-
-                <button
-                    class="filter-button"
-                    onclick="setFilter(this)"
-                >
-                    ♂
-                </button>
-
-                <button
-                    class="filter-button"
-                    onclick="setFilter(this)"
-                >
-                    ↕
-                </button>
-
-            </div>
-
-
-            <div class="tabs">
-
-                <button
-                    class="tab active"
-                    onclick="setTab(this)"
-                >
-                    Offiziell
-                </button>
-
-                <button
-                    class="tab"
-                    onclick="setTab(this)"
-                >
-                    Favoriten
-                </button>
-
-            </div>
-
-
-            <!-- =================================
-                 CHARAKTER-GRID
-            ================================== -->
-
-            <div
-                id="characterGrid"
-                class="character-grid"
-            >
-
-
-                <!-- ELENA -->
-
-                <div
-                    class="character-card"
-                    data-name="Elena Hartman"
-                    onclick="openCharacter('elena')"
-                >
-
-                    <div class="character-image-wrapper">
-
-                        <img
-                            class="character-image"
-                            src="https://raw.githubusercontent.com/Schwani157/mein-rp-chat/main/Elena%20Hartman.jpg"
-                            alt="Elena Hartman"
-                        >
-
-                        <button
-                            class="favorite-button"
-                            id="favoriteElena"
-                            onclick="toggleFavorite(event, 'elena')"
-                            aria-label="Elena favorisieren"
-                        >
-                            ♡
-                        </button>
-
-                    </div>
-
-
-                    <div class="character-info">
-
-                        <div class="character-name">
-                            Elena Hartman
-                        </div>
-
-                        <div class="character-role">
-
-                            <span class="role-dot"></span>
-
-                            Girlfriend
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- LEERE KARTE 2 -->
-
-                <div class="empty-character-card">
-
-                    <div class="empty-character-plus">
-                        +
-                    </div>
-
-                </div>
-
-
-                <!-- LEERE KARTE 3 -->
-
-                <div class="empty-character-card">
-
-                    <div class="empty-character-plus">
-                        +
-                    </div>
-
-                </div>
-
-
-                <!-- LEERE KARTE 4 -->
-
-                <div class="empty-character-card">
-
-                    <div class="empty-character-plus">
-                        +
-                    </div>
-
-                </div>
-
-            </div>
-
-        </main>
-
-
-        <!-- =====================================
-             CHATS
-        ====================================== -->
-
-        <main
-            id="pageChats"
-            class="page"
-        >
-
-            <div class="page-title">
-                Chats
-            </div>
-
-
-            <div class="search-box">
-
-                <div class="search-icon">
-                    🔍
-                </div>
-
-                <input
-                    type="text"
-                    placeholder="Chats durchsuchen..."
-                    autocomplete="off"
-                >
-
-            </div>
-
-
-            <div class="filter-row">
-
-                <button
-                    class="filter-button active"
-                    onclick="setFilter(this)"
-                >
-                    Alle
-                </button>
-
-                <button
-                    class="filter-button"
-                    onclick="setFilter(this)"
-                >
-                    Ungelesen
-                </button>
-
-                <button
-                    class="filter-button"
-                    onclick="setFilter(this)"
-                >
-                    Favoriten
-                </button>
-
-                <button
-                    class="filter-button"
-                    onclick="setFilter(this)"
-                >
-                    Archiviert
-                </button>
-
-            </div>
-
-
-            <div class="empty-box">
-
-                <div class="empty-icon">
-                    💬
-                </div>
-
-                <div class="empty-title">
-                    Noch keine Chats
-                </div>
-
-                <div class="empty-text">
-                    Sobald du mit einem Charakter eine Geschichte
-                    beginnst, erscheint dein Chat hier.
-                </div>
-
-            </div>
-
-        </main>
-
-
-        <!-- =====================================
-             PROFIL
-        ====================================== -->
-
-        <main
-            id="pageProfile"
-            class="page"
-        >
-
-            <div class="greeting">
-                Dein persönlicher Bereich
-            </div>
-
-            <div class="main-question">
-                Du in der Geschichte
-            </div>
-
-
-            <div class="profile-card">
-
-                <div class="profile-top">
-
-                    <div class="profile-avatar">
-                        👤
-                    </div>
-
-                    <div class="profile-info">
-
-                        <div
-                            class="profile-name"
-                            id="profileName"
-                        >
-                            Spieler
-                        </div>
-
-                        <div class="profile-status">
-                            Deine RP-Identität
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <button
-                    class="edit-button"
-                    onclick="editProfile()"
-                >
-                    Profil bearbeiten
-                </button>
-
-            </div>
-
-
-            <div class="section-title">
-                Story-Einstellungen
-            </div>
-
-
-            <div class="settings-card">
-
-                <div class="setting-row">
-
-                    <div class="setting-left">
-
-                        <div class="setting-name">
-                            Story-Einstellungen
-                        </div>
-
-                        <div class="setting-description">
-                            Folgt in Kürze
-                        </div>
-
-                    </div>
-
-                    <div class="setting-arrow">
-                        ›
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="section-title">
-                App
-            </div>
-
-
-            <div class="settings-card">
-
-                <div
-                    class="setting-row"
-                    onclick="appSettings()"
-                >
-
-                    <div class="setting-left">
-
-                        <div class="setting-name">
-                            App-Einstellungen
-                        </div>
-
-                        <div class="setting-description">
-                            Einstellungen der Anwendung
-                        </div>
-
-                    </div>
-
-                    <div class="setting-arrow">
-                        ›
-                    </div>
-
-                </div>
-
-            </div>
-
-        </main>
-
-
-        <!-- =====================================
-             CHARAKTER-DETAILSEITE
-        ====================================== -->
-
-        <main
-            id="pageCharacter"
-            class="page"
-        >
-
-            <div class="character-detail">
-
-
-                <div class="detail-topbar">
-
-                    <button
-                        class="detail-round-button detail-back"
-                        onclick="closeCharacter()"
-                        aria-label="Zurück"
-                    >
-                        ‹
-                    </button>
-
-
-                    <button
-                        class="detail-round-button"
-                        id="detailFavorite"
-                        onclick="toggleDetailFavorite()"
-                        aria-label="Favorisieren"
-                    >
-                        ♡
-                    </button>
-
-                </div>
-
-
-                <!-- ELENA BILD -->
-
-                <div class="detail-image-wrapper">
-
-                    <img
-                        class="detail-image"
-                        src="https://raw.githubusercontent.com/Schwani157/mein-rp-chat/main/Elena%20Hartman.jpg"
-                        alt="Elena Hartman"
-                    >
-
-                </div>
-
-
-                <!-- ELENA INFORMATION -->
-
-                <div class="detail-content">
-
-                    <div class="detail-name">
-                        Elena Hartman
-                    </div>
-
-
-                    <div class="detail-role">
-
-                        <span class="role-dot"></span>
-
-                        Girlfriend
-
-                    </div>
-
-
-                    <div class="detail-description-box">
-
-                        <div class="detail-description-title">
-                            Über Elena
-                        </div>
-
-                        <div class="detail-description">
-                            Elena, 24, ist eine selbstbewusste und
-                            warmherzige Frau mit einem neugierigen
-                            Geist und einer verspielten Seite. Mit
-                            ihren braunen Haaren, den haselnussbraunen
-                            Augen und ihrem entspannten Stil fällt sie
-                            auf, ohne es darauf anzulegen. Sie ist sehr
-                            freundlich und offen, kann aber stur werden,
-                            wenn sie sich etwas in den Kopf gesetzt hat.
-                            Hinter ihrer ruhigen Art steckt eine
-                            aufmerksame Persönlichkeit, die Gespräche,
-                            spontane Momente und die kleinen Geheimnisse
-                            anderer Menschen liebt.
-                        </div>
-
-                    </div>
-
-
-                    <button
-                        class="start-chat-button"
-                        onclick="startChat()"
-                    >
-                        Geschichte mit Elena beginnen
-                    </button>
-
-                </div>
-
-            </div>
-
-        </main>
-
-    </div>
-
-
-    <!-- =========================================
-         BOTTOM NAVIGATION
-    ========================================== -->
-
-    <nav
-        id="bottomNavigation"
-        class="bottom-navigation"
-    >
-
-        <button
-            id="navDiscover"
-            class="nav-button active"
-            onclick="changePage('discover')"
-        >
-
-            <div class="nav-icon">
-                ✦
-            </div>
-
-            <div class="nav-label">
-                Entdecken
-            </div>
-
-        </button>
-
-
-        <button
-            id="navChats"
-            class="nav-button"
-            onclick="changePage('chats')"
-        >
-
-            <div class="nav-icon">
-                💬
-            </div>
-
-            <div class="nav-label">
-                Chats
-            </div>
-
-        </button>
-
-
-        <button
-            id="navProfile"
-            class="nav-button"
-            onclick="changePage('profile')"
-        >
-
-            <div class="nav-icon">
-                👤
-            </div>
-
-            <div class="nav-label">
-                Profil
-            </div>
-
-        </button>
-
-    </nav>
-
-
-    <!-- =========================================
-         JAVASCRIPT
-    ========================================== -->
-
-    <script>
-
-
-        /* =====================================
-           TELEGRAM
-        ====================================== */
-
-        const tg =
-            window.Telegram?.WebApp;
-
-
-        if (tg) {
-
-            tg.ready();
-
-            tg.expand();
-
-        }
-
-
-        /* =====================================
-           BENUTZERNAME
-        ====================================== */
-
-        function loadTelegramUser() {
-
-            const user =
-                tg?.initDataUnsafe?.user;
-
-
-            if (!user) {
-                return;
-            }
-
-
-            const firstName =
-                user.first_name ||
-                "Spieler";
-
-
-            document
-                .getElementById("userName")
-                .textContent =
-                firstName;
-
-
-            document
-                .getElementById("profileName")
-                .textContent =
-                firstName;
-
-        }
-
-
-        loadTelegramUser();
-
-
-        /* =====================================
-           18+ SYSTEM
-        ====================================== */
-
-        const AGE_KEY =
-            "cyber_ai_rp_age_confirmed";
-
-
-        function checkAgeConfirmation() {
-
-            const confirmed =
-                localStorage.getItem(AGE_KEY);
-
-
-            const ageGate =
-                document.getElementById("ageGate");
-
-
-            if (confirmed === "true") {
-
-                ageGate
-                    .classList
-                    .add("hidden");
-
-            } else {
-
-                ageGate
-                    .classList
-                    .remove("hidden");
-
-            }
-
-        }
-
-
-        function confirmAge() {
-
-            localStorage.setItem(
-                AGE_KEY,
-                "true"
-            );
-
-
-            document
-                .getElementById("ageGate")
-                .classList
-                .add("hidden");
-
-        }
-
-
-        function denyAge() {
-
-            const card =
-                document.querySelector(
-                    ".age-card"
-                );
-
-
-            card.innerHTML = `
-
-                <div class="age-icon">
-                    🔒
-                </div>
-
-                <div class="age-title">
-                    Zugang nicht möglich
-                </div>
-
-                <div class="age-text">
-                    CYBER AI RP ist ausschließlich für
-                    Personen ab 18 Jahren vorgesehen.
-                </div>
-
-                <div class="age-warning">
-                    Du kannst die Anwendung nicht betreten,
-                    wenn du unter 18 Jahre alt bist.
-                </div>
-
-                <button
-                    class="age-button age-deny"
-                    onclick="location.reload()"
-                >
-                    Zurück
-                </button>
-
-            `;
-
-        }
-
-
-        checkAgeConfirmation();
-
-
-        /* =====================================
-           SEITENWECHSEL
-        ====================================== */
-
-        function changePage(page) {
-
-            const pages = [
-
-                "pageDiscover",
-                "pageChats",
-                "pageProfile",
-                "pageCharacter"
-
-            ];
-
-
-            pages.forEach(function(id) {
-
-                document
-                    .getElementById(id)
-                    .classList
-                    .remove("active");
-
-            });
-
-
-            const pageId =
-                "page" +
-                page.charAt(0).toUpperCase() +
-                page.slice(1);
-
-
-            document
-                .getElementById(pageId)
-                .classList
-                .add("active");
-
-
-            const navButtons = [
-
-                "navDiscover",
-                "navChats",
-                "navProfile"
-
-            ];
-
-
-            navButtons.forEach(function(id) {
-
-                document
-                    .getElementById(id)
-                    .classList
-                    .remove("active");
-
-            });
-
-
-            if (page !== "character") {
-
-                const navId =
-                    "nav" +
-                    page.charAt(0).toUpperCase() +
-                    page.slice(1);
-
-
-                document
-                    .getElementById(navId)
-                    .classList
-                    .add("active");
-
-            }
-
-
-            const navigation =
-                document.getElementById(
-                    "bottomNavigation"
-                );
-
-
-            if (page === "character") {
-
-                navigation.style.display =
-                    "none";
-
-            } else {
-
-                navigation.style.display =
-                    "flex";
-
-            }
-
-
-            window.scrollTo({
-
-                top: 0,
-
-                behavior: "smooth"
-
-            });
-
-        }
-
-
-        /* =====================================
-           CHARAKTER ÖFFNEN
-        ====================================== */
-
-        function openCharacter(character) {
-
-            if (character === "elena") {
-
-                updateDetailFavorite();
-
-                changePage("character");
-
-            }
-
-        }
-
-
-        /* =====================================
-           CHARAKTER SCHLIESSEN
-        ====================================== */
-
-        function closeCharacter() {
-
-            changePage("discover");
-
-        }
-
-
-        /* =====================================
-           FAVORITEN
-        ====================================== */
-
-        let elenaFavorite = false;
-
-
-        function toggleFavorite(
-            event,
-            character
+        if (
+            data.action === 'start_scenario' &&
+            data.charName === 'Elena Hartman'
         ) {
 
-            event.stopPropagation();
+            console.log(
+                `Elena wird für User ${userId} gestartet.`
+            );
 
 
-            if (character !== "elena") {
-                return;
-            }
+            /*
+             * Neue Session
+             */
+
+            userSessions[userId] = {
+
+                chatHistory: [],
+
+                charName: 'Elena Hartman',
+
+                charPrompt:
+                    elenaDescription,
+
+                currentScenario:
+                    'Elena - Eröffnung',
+
+                storyStarted: true
+
+            };
 
 
-            elenaFavorite =
-                !elenaFavorite;
+            /*
+             * 1. BILD SENDEN
+             */
 
-
-            updateFavoriteButton();
-
-            updateDetailFavorite();
-
-        }
-
-
-        function updateFavoriteButton() {
-
-            const button =
-                document.getElementById(
-                    "favoriteElena"
-                );
-
-
-            if (elenaFavorite) {
-
-                button.textContent =
-                    "♥";
-
-                button.classList
-                    .add("active");
-
-            } else {
-
-                button.textContent =
-                    "♡";
-
-                button.classList
-                    .remove("active");
-
-            }
-
-        }
-
-
-        function toggleDetailFavorite() {
-
-            elenaFavorite =
-                !elenaFavorite;
-
-
-            updateFavoriteButton();
-
-            updateDetailFavorite();
-
-        }
-
-
-        function updateDetailFavorite() {
-
-            const button =
-                document.getElementById(
-                    "detailFavorite"
-                );
-
-
-            if (elenaFavorite) {
-
-                button.textContent =
-                    "♥";
-
-                button.classList
-                    .add("active");
-
-            } else {
-
-                button.textContent =
-                    "♡";
-
-                button.classList
-                    .remove("active");
-
-            }
-
-        }
-
-
-        /* =====================================
-           SUCHE
-        ====================================== */
-
-        function searchCharacters() {
-
-            const search =
-                document
-                    .getElementById(
-                        "characterSearch"
-                    )
-                    .value
-                    .toLowerCase()
-                    .trim();
-
-
-            const cards =
-                document.querySelectorAll(
-                    ".character-card"
-                );
-
-
-            cards.forEach(function(card) {
-
-                const name =
-                    card
-                        .dataset
-                        .name
-                        .toLowerCase();
-
-
-                if (
-                    name.includes(search) ||
-                    search === ""
-                ) {
-
-                    card.style.display =
-                        "block";
-
-                } else {
-
-                    card.style.display =
-                        "none";
-
+            await ctx.replyWithPhoto(
+                {
+                    url: ELENA_OPENING_IMAGE
                 }
+            );
+
+
+            /*
+             * 2. ERÖFFNUNGSNACHRICHT SENDEN
+             */
+
+            await ctx.reply(
+                elenaOpeningMessage
+            );
+
+
+            /*
+             * Eröffnungsnachricht in die
+             * Gesprächshistorie aufnehmen.
+             *
+             * Die KI weiß dadurch später,
+             * was bereits passiert ist.
+             */
+
+            userSessions[userId].chatHistory.push({
+
+                role: 'assistant',
+
+                content:
+                    elenaOpeningMessage
 
             });
 
+
+            console.log(
+                `Elena-Eröffnung für User ${userId} gesendet.`
+            );
+
+
+            return;
         }
 
 
-        /* =====================================
-           FILTER
-        ====================================== */
+        /* =================================================
+           ALLGEMEINES SZENARIO
+        ================================================= */
 
-        function setFilter(button) {
+        if (data.action === 'start_scenario') {
 
-            const parent =
-                button.parentElement;
+            const charName =
+                data.charName || 'Elena Hartman';
+
+            const scenarioTitle =
+                data.scenarioTitle || 'Neue Geschichte';
+
+            const scenarioIntro =
+                data.scenarioIntro || '';
 
 
-            const buttons =
-                parent.querySelectorAll(
-                    ".filter-button"
+            userSessions[userId] = {
+
+                chatHistory: [],
+
+                charName: charName,
+
+                charPrompt:
+                    elenaDescription +
+                    '\n\nAktuelles Szenario: ' +
+                    scenarioTitle +
+                    '\n\nSzenario: ' +
+                    scenarioIntro,
+
+                currentScenario:
+                    scenarioTitle,
+
+                storyStarted: true
+
+            };
+
+
+            if (data.scenarioImage) {
+
+                await ctx.replyWithPhoto({
+                    url: data.scenarioImage
+                });
+
+            }
+
+
+            if (scenarioIntro) {
+
+                await ctx.reply(
+                    scenarioIntro
                 );
 
+            }
 
-            buttons.forEach(function(item) {
 
-                item.classList
-                    .remove("active");
+            userSessions[userId].chatHistory.push({
+
+                role: 'assistant',
+
+                content: scenarioIntro
+
+            });
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            'Fehler bei web_app_data:',
+            error
+        );
+
+        await ctx.reply(
+            'Beim Starten der Geschichte ist ein Fehler aufgetreten.'
+        );
+
+    }
+
+});
+
+
+/* =========================================================
+   TEXT-CHAT
+========================================================= */
+
+bot.on('text', async (ctx) => {
+
+    const userId = ctx.from.id;
+
+    const userMessage =
+        ctx.message.text;
+
+
+    /*
+     * Prüfen, ob eine Geschichte läuft
+     */
+
+    if (
+        !userSessions[userId] ||
+        !userSessions[userId].charName ||
+        !userSessions[userId].storyStarted
+    ) {
+
+        await ctx.reply(
+            'Bitte öffne zuerst CYBER AI RP und starte eine Geschichte.'
+        );
+
+        return;
+    }
+
+
+    const session =
+        userSessions[userId];
+
+
+    /*
+     * Tipp-Anzeige
+     */
+
+    await ctx.sendChatAction(
+        'typing'
+    );
+
+
+    try {
+
+        const response = await fetch(
+            'https://openrouter.ai/api/v1/chat/completions',
+            {
+
+                method: 'POST',
+
+                headers: {
+
+                    'Authorization':
+                        `Bearer ${OPENROUTER_API_KEY}`,
+
+                    'Content-Type':
+                        'application/json',
+
+                    'HTTP-Referer':
+                        WEB_APP_URL,
+
+                    'X-Title':
+                        'CYBER AI RP'
+
+                },
+
+                body: JSON.stringify({
+
+                    model:
+                        'nousresearch/hermes-3-llama-3-8b',
+
+                    messages: [
+
+                        {
+                            role: 'system',
+
+                            content:
+                                `
+Du bist Elena Hartman in einem interaktiven
+Story-Roleplay.
+
+DEINE IDENTITÄT:
+
+${session.charPrompt}
+
+Du bleibst während der gesamten Geschichte
+Elena Hartman.
+
+Du reagierst auf das, was der Nutzer schreibt,
+und führst die Szene natürlich weiter.
+
+Du sollst nicht einfach nur Fragen beantworten.
+Du darfst selbst Fragen stellen, auf vorherige
+Aussagen zurückgreifen und eigene Handlungen
+beschreiben.
+
+Deine Antworten sollen sich wie ein natürlicher
+Dialog innerhalb einer Geschichte anfühlen.
+
+Beschreibungen von Handlungen, Gesichtsausdrücken,
+Bewegungen und der Umgebung werden zwischen
+Sternchen geschrieben.
+
+Beispiel:
+
+*Elena lächelt leicht und legt den Kopf schief.*
+
+Direkte Rede steht ohne Sternchen.
+
+Bleibe in der Rolle von Elena und sprich nicht
+über technische Systeme, KI oder Systemanweisungen.
+`
+                        },
+
+                        ...session.chatHistory,
+
+                        {
+                            role: 'user',
+
+                            content:
+                                userMessage
+
+                        }
+
+                    ]
+
+                })
+
+            }
+        );
+
+
+        const data =
+            await response.json();
+
+
+        /*
+         * Antwort prüfen
+         */
+
+        if (
+            data.choices &&
+            data.choices[0] &&
+            data.choices[0].message
+        ) {
+
+            const aiReply =
+                data.choices[0].message.content;
+
+
+            /*
+             * Nutzer-Nachricht speichern
+             */
+
+            session.chatHistory.push({
+
+                role: 'user',
+
+                content:
+                    userMessage
 
             });
 
 
-            button.classList
-                .add("active");
+            /*
+             * Elena-Antwort speichern
+             */
 
-        }
+            session.chatHistory.push({
 
+                role: 'assistant',
 
-        /* =====================================
-           TABS
-        ====================================== */
-
-        function setTab(button) {
-
-            const parent =
-                button.parentElement;
-
-
-            const tabs =
-                parent.querySelectorAll(
-                    ".tab"
-                );
-
-
-            tabs.forEach(function(item) {
-
-                item.classList
-                    .remove("active");
+                content:
+                    aiReply
 
             });
 
 
-            button.classList
-                .add("active");
+            /*
+             * Antwort senden
+             */
 
-        }
+            await ctx.reply(
+                aiReply
+            );
 
 
-        /* =====================================
-           PROFIL
-        ====================================== */
+        } else {
 
-        function editProfile() {
+            console.error(
+                'OpenRouter Antwort:',
+                data
+            );
 
-            alert(
-                "Die Profilbearbeitung kommt später."
+            await ctx.reply(
+                'Elena überlegt noch...'
             );
 
         }
 
 
-        /* =====================================
-           APP EINSTELLUNGEN
-        ====================================== */
+    } catch (error) {
 
-        function appSettings() {
+        console.error(
+            'KI-Fehler:',
+            error
+        );
 
-            alert(
-                "Die App-Einstellungen kommen später."
-            );
+        await ctx.reply(
+            'Es ist ein Fehler bei der Verbindung zur KI aufgetreten.'
+        );
 
-        }
+    }
+
+});
 
 
-        /* =====================================
-           CHAT STARTEN
-        ====================================== */
+/* =========================================================
+   SERVER-STATUS
+========================================================= */
 
-        function startChat() {
+app.get('/', (req, res) => {
 
-            alert(
-                "Das Chat-System kommt als nächster Schritt."
-            );
+    res.send(
+        'CYBER AI RP Backend läuft!'
+    );
 
-        }
+});
 
-    </script>
 
-</body>
-</html>
+/* =========================================================
+   SERVER START
+========================================================= */
+
+const PORT =
+    process.env.PORT || 10000;
+
+
+app.listen(
+    PORT,
+    '0.0.0.0',
+    () => {
+
+        console.log(
+            `CYBER AI RP Server läuft auf Port ${PORT}`
+        );
+
+    }
+);
+
+
+/* =========================================================
+   TELEGRAM BOT START
+========================================================= */
+
+bot.launch({
+
+    dropPendingUpdates: true
+
+});
+
+
+console.log(
+    'Telegram Bot gestartet.'
+);
+
+
+/* =========================================================
+   SAUBERES HERUNTERFAHREN
+========================================================= */
+
+process.once(
+    'SIGINT',
+    () => {
+
+        console.log(
+            'Bot wird beendet...'
+        );
+
+        bot.stop('SIGINT');
+
+    }
+);
+
+
+process.once(
+    'SIGTERM',
+    () => {
+
+        console.log(
+            'Bot wird beendet...'
+        );
+
+        bot.stop('SIGTERM');
+
+    }
+);
