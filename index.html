@@ -1,2113 +1,1284 @@
 <!DOCTYPE html>
 <html lang="de">
-
 <head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
+
+    <title>CYBER AI RP</title>
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+            background: #03020b;
+        }
+
+        body {
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Helvetica,
+                Arial,
+                sans-serif;
+
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* =========================================
+           HINTERGRUND
+        ========================================= */
+
+        .background-layer {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+
+            background:
+                linear-gradient(
+                    rgba(2, 1, 10, 0.12),
+                    rgba(2, 1, 10, 0.12)
+                ),
+                url("https://raw.githubusercontent.com/Schwani157/mein-rp-chat/main/HintergrundCyperAi.jpg");
+
+            background-size: cover;
+            background-position: center top;
+            background-repeat: no-repeat;
+        }
+
+        /* =========================================
+           APP
+        ========================================= */
+
+        .app {
+            position: relative;
+            z-index: 1;
+
+            width: 100%;
+            min-height: 100vh;
+
+            padding-bottom: 95px;
+        }
+
+        /* =========================================
+           HEADER
+        ========================================= */
+
+        .top-header {
+            width: 100%;
+            padding: 22px 20px 10px;
+
+            text-align: center;
+        }
 
-<meta charset="UTF-8">
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+
+            text-shadow:
+                0 0 8px rgba(255, 255, 255, 0.3),
+                0 0 20px rgba(166, 110, 255, 0.4);
+        }
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
->
+        .logo span {
+            color: #c58cff;
+        }
 
-<title>CYBER AI RP</title>
+        .subtitle {
+            margin-top: 5px;
 
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.65);
 
+            letter-spacing: 0.4px;
+        }
 
-<style>
+        /* =========================================
+           SEITEN
+        ========================================= */
 
-/* =========================================================
-   GRUNDLAGEN
-========================================================= */
+        .page {
+            display: none;
 
-* {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-}
+            width: 100%;
+            padding: 8px 16px 20px;
+        }
 
-html,
-body {
-    margin: 0;
-    padding: 0;
-    min-height: 100%;
-}
+        .page.active {
+            display: block;
+        }
 
-body {
+        /* =========================================
+           TITEL
+        ========================================= */
 
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        Helvetica,
-        Arial,
-        sans-serif;
+        .page-title {
+            margin-top: 12px;
+            margin-bottom: 18px;
 
-    color: #ffffff;
+            font-size: 28px;
+            font-weight: 800;
+        }
 
-    min-height: 100vh;
+        .greeting {
+            margin-top: 15px;
 
-    overflow-x: hidden;
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.72);
+        }
 
-    /*
-       DEIN CYBER-GALAXY-HINTERGRUND
-    */
+        .greeting strong {
+            color: #ffffff;
+        }
 
-    background-color: #03020b;
+        .main-question {
+            margin-top: 3px;
 
-    background-image:
-    linear-gradient(
-        rgba(2, 1, 10, 0.12),
-        rgba(2, 1, 10, 0.12)
-    ),
-    url("./images/HintergrundCyperAi.jpg");
+            font-size: 27px;
+            font-weight: 800;
+        }
 
-background-size: cover;
-background-position: center top;
-background-attachment: fixed;
-background-repeat: no-repeat;
-}
+        /* =========================================
+           SUCHFELD
+        ========================================= */
 
+        .search-box {
+            display: flex;
+            align-items: center;
 
-/* =========================================================
-   APP
-========================================================= */
+            width: 100%;
+            height: 48px;
 
-.app {
+            margin-top: 20px;
+            margin-bottom: 16px;
 
-    width: 100%;
+            padding: 0 15px;
 
-    max-width: 500px;
+            border: 1px solid rgba(255, 255, 255, 0.13);
+            border-radius: 15px;
 
-    min-height: 100vh;
+            background: rgba(8, 6, 20, 0.62);
 
-    margin: 0 auto;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
 
-    padding:
-        calc(18px + env(safe-area-inset-top))
-        15px
-        calc(105px + env(safe-area-inset-bottom))
-        15px;
+            box-shadow:
+                0 8px 25px rgba(0, 0, 0, 0.18);
+        }
 
-}
+        .search-icon {
+            margin-right: 10px;
 
+            font-size: 18px;
+            opacity: 0.7;
+        }
 
-/* =========================================================
-   HEADER
-========================================================= */
+        .search-box input {
+            width: 100%;
 
-.app-header {
+            border: none;
+            outline: none;
 
-    margin-bottom: 10px;
+            background: transparent;
 
-}
+            color: #ffffff;
 
-.logo {
+            font-size: 14px;
+        }
 
-    font-size: 22px;
+        .search-box input::placeholder {
+            color: rgba(255, 255, 255, 0.48);
+        }
 
-    font-weight: 900;
+        /* =========================================
+           FILTER
+        ========================================= */
 
-    letter-spacing: 0.5px;
+        .filter-row {
+            display: flex;
+            gap: 8px;
 
-    text-shadow:
-        0 0 12px rgba(255,255,255,0.25);
+            width: 100%;
 
-}
+            margin-bottom: 20px;
 
-.logo-ai {
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
 
-    color: #ff35d0;
+        .filter-row::-webkit-scrollbar {
+            display: none;
+        }
 
-    text-shadow:
-        0 0 12px #ff00cc;
+        .filter-button {
+            flex-shrink: 0;
 
-}
+            padding: 9px 14px;
 
-.logo-rp {
+            border: 1px solid rgba(255, 255, 255, 0.13);
+            border-radius: 12px;
 
-    color: #a765ff;
+            background: rgba(8, 6, 20, 0.58);
 
-    text-shadow:
-        0 0 12px #8c32ff;
+            color: rgba(255, 255, 255, 0.72);
 
-}
+            font-size: 12px;
+            font-weight: 600;
 
-.subtitle {
+            cursor: pointer;
 
-    margin-top: 2px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
 
-    font-size: 11px;
+        .filter-button.active {
+            background: rgba(176, 100, 255, 0.25);
 
-    color: #e1dcec;
+            border-color: rgba(205, 147, 255, 0.5);
 
-    text-shadow:
-        0 2px 8px rgba(0,0,0,0.9);
+            color: #ffffff;
 
-}
+            box-shadow:
+                0 0 14px rgba(170, 100, 255, 0.18);
+        }
 
+        /* =========================================
+           EMPTY STATES
+        ========================================= */
 
-/* =========================================================
-   SEITEN
-========================================================= */
+        .empty-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
 
-.page {
+            min-height: 240px;
 
-    display: none;
+            padding: 30px;
 
-    animation:
-        pageIn 0.25s ease;
+            border: 1px solid rgba(255, 255, 255, 0.11);
+            border-radius: 22px;
 
-}
+            background: rgba(7, 5, 18, 0.52);
 
-.page.active {
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
 
-    display: block;
+            text-align: center;
 
-}
+            box-shadow:
+                0 15px 35px rgba(0, 0, 0, 0.2);
+        }
 
-@keyframes pageIn {
+        .empty-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-    from {
+            width: 62px;
+            height: 62px;
 
-        opacity: 0;
+            margin-bottom: 15px;
 
-        transform:
-            translateY(5px);
+            border-radius: 20px;
 
-    }
+            background: rgba(176, 100, 255, 0.14);
 
-    to {
+            border: 1px solid rgba(200, 145, 255, 0.25);
 
-        opacity: 1;
+            font-size: 27px;
+        }
 
-        transform:
-            translateY(0);
+        .empty-title {
+            font-size: 17px;
+            font-weight: 700;
 
-    }
+            margin-bottom: 7px;
+        }
 
-}
+        .empty-text {
+            max-width: 280px;
 
+            color: rgba(255, 255, 255, 0.56);
 
-/* =========================================================
-   WILLKOMMEN
-========================================================= */
+            font-size: 13px;
+            line-height: 1.5;
+        }
 
-.welcome {
+        /* =========================================
+           TABS
+        ========================================= */
 
-    margin-top: 32px;
+        .tabs {
+            display: flex;
 
-    margin-bottom: 22px;
+            width: 100%;
 
-}
+            margin-top: 4px;
+            margin-bottom: 20px;
 
-.welcome h1 {
+            padding: 4px;
 
-    margin: 0;
+            border-radius: 14px;
 
-    font-size: 27px;
+            background: rgba(5, 4, 15, 0.58);
 
-    font-weight: 800;
+            border: 1px solid rgba(255, 255, 255, 0.1);
 
-}
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
 
-.welcome-divider {
+        .tab {
+            flex: 1;
 
-    color: #ff21c4;
+            padding: 10px 5px;
 
-}
+            border: none;
+            border-radius: 10px;
 
-.online-line {
+            background: transparent;
 
-    display: flex;
+            color: rgba(255, 255, 255, 0.58);
 
-    align-items: center;
+            font-size: 12px;
+            font-weight: 600;
 
-    gap: 8px;
+            cursor: pointer;
+        }
 
-    margin-top: 5px;
+        .tab.active {
+            background: rgba(175, 103, 255, 0.23);
 
-    font-size: 14px;
+            color: #ffffff;
+        }
 
-    color: #f0ecf7;
+        /* =========================================
+           PROFIL
+        ========================================= */
 
-}
+        .profile-card {
+            width: 100%;
 
-.online-dot {
+            margin-top: 18px;
 
-    width: 9px;
+            padding: 20px;
 
-    height: 9px;
+            border-radius: 22px;
 
-    border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.13);
 
-    background: #ff1fc4;
+            background: rgba(7, 5, 18, 0.58);
 
-    box-shadow:
-        0 0 10px #ff1fc4;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
 
-}
+            box-shadow:
+                0 18px 40px rgba(0, 0, 0, 0.22);
+        }
 
+        .profile-top {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
 
-/* =========================================================
-   GLASS-EFFEKT
-========================================================= */
+        .profile-avatar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-.glass {
+            width: 62px;
+            height: 62px;
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,0.11),
-            rgba(255,255,255,0.035)
-        );
+            flex-shrink: 0;
 
-    border:
-        1px solid
-        rgba(255,255,255,0.24);
+            border-radius: 50%;
 
-    box-shadow:
-        0 12px 35px
-        rgba(0,0,0,0.38),
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(181, 104, 255, 0.5),
+                    rgba(80, 120, 255, 0.35)
+                );
 
-        inset 0 0 30px
-        rgba(255,255,255,0.025);
+            border: 1px solid rgba(255, 255, 255, 0.2);
 
-    backdrop-filter:
-        blur(18px);
+            font-size: 27px;
+        }
 
-    -webkit-backdrop-filter:
-        blur(18px);
+        .profile-info {
+            min-width: 0;
+        }
 
-}
+        .profile-name {
+            font-size: 18px;
+            font-weight: 750;
+        }
 
+        .profile-status {
+            margin-top: 4px;
 
-/* =========================================================
-   SUCHFELD
-========================================================= */
+            font-size: 12px;
 
-.search-row {
+            color: rgba(255, 255, 255, 0.55);
+        }
 
-    display: flex;
+        .edit-button {
+            width: 100%;
 
-    align-items: center;
+            margin-top: 18px;
 
-    gap: 8px;
+            padding: 12px;
 
-    margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 13px;
 
-}
+            background: rgba(255, 255, 255, 0.07);
 
-.search-box {
+            color: #ffffff;
 
-    position: relative;
+            font-size: 13px;
+            font-weight: 650;
 
-    flex: 1;
+            cursor: pointer;
+        }
 
-}
+        /* =========================================
+           EINSTELLUNGEN
+        ========================================= */
 
-.search-box input {
+        .section-title {
+            margin-top: 25px;
+            margin-bottom: 10px;
 
-    width: 100%;
+            font-size: 13px;
+            font-weight: 700;
 
-    height: 50px;
+            color: rgba(255, 255, 255, 0.55);
 
-    padding:
-        0 16px 0 47px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
 
-    border-radius: 27px;
+        .settings-card {
+            width: 100%;
 
-    border:
-        1px solid
-        rgba(255,255,255,0.25);
+            overflow: hidden;
 
-    outline: none;
+            border-radius: 18px;
 
-    color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
 
-    font-size: 14px;
+            background: rgba(7, 5, 18, 0.56);
 
-    background:
-        rgba(8,4,24,0.68);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+        }
 
-    backdrop-filter:
-        blur(18px);
+        .setting-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
 
-    -webkit-backdrop-filter:
-        blur(18px);
+            min-height: 58px;
 
-}
+            padding: 0 16px;
 
-.search-box input::placeholder {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        }
 
-    color: #c8c2d9;
+        .setting-row:last-child {
+            border-bottom: none;
+        }
 
-}
+        .setting-left {
+            display: flex;
+            flex-direction: column;
 
-.search-icon {
+            gap: 3px;
+        }
 
-    position: absolute;
+        .setting-name {
+            font-size: 13px;
+            font-weight: 650;
+        }
 
-    left: 17px;
+        .setting-description {
+            font-size: 11px;
 
-    top: 12px;
+            color: rgba(255, 255, 255, 0.45);
+        }
 
-    font-size: 22px;
+        .setting-arrow {
+            color: rgba(255, 255, 255, 0.35);
 
-    color: #d2cce1;
+            font-size: 18px;
+        }
 
-}
+        /* =========================================
+           BOTTOM NAVIGATION
+        ========================================= */
 
+        .bottom-navigation {
+            position: fixed;
 
-/* =========================================================
-   FILTER BUTTONS
-========================================================= */
+            z-index: 20;
 
-.round-button {
+            left: 12px;
+            right: 12px;
+            bottom: 12px;
 
-    width: 50px;
+            height: 68px;
 
-    height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
 
-    flex-shrink: 0;
+            padding: 5px;
 
-    border-radius: 50%;
+            border-radius: 22px;
 
-    border:
-        1px solid
-        rgba(255,255,255,0.25);
+            border: 1px solid rgba(255, 255, 255, 0.12);
 
-    color: white;
+            background: rgba(5, 4, 16, 0.76);
 
-    background:
-        rgba(7,4,22,0.68);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
 
-    font-size: 19px;
+            box-shadow:
+                0 12px 35px rgba(0, 0, 0, 0.35),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
 
-    display: flex;
+        .nav-button {
+            position: relative;
 
-    align-items: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
 
-    justify-content: center;
+            width: 33.33%;
+            height: 58px;
 
-    cursor: pointer;
+            border: none;
 
-    backdrop-filter:
-        blur(15px);
+            background: transparent;
 
-    -webkit-backdrop-filter:
-        blur(15px);
+            color: rgba(255, 255, 255, 0.45);
 
-}
+            cursor: pointer;
 
-.round-button.active {
+            transition:
+                color 0.2s ease,
+                transform 0.2s ease;
+        }
 
-    background:
-        linear-gradient(
-            135deg,
-            #ff2bc1,
-            #9d31ff
-        );
+        .nav-button.active {
+            color: #ffffff;
+        }
 
-    border-color:
-        transparent;
+        .nav-button:active {
+            transform: scale(0.94);
+        }
 
-    box-shadow:
-        0 0 20px
-        rgba(255,0,210,0.35);
+        .nav-icon {
+            font-size: 21px;
 
-}
+            line-height: 1;
 
+            margin-bottom: 5px;
+        }
 
-/* =========================================================
-   TABS
-========================================================= */
+        .nav-label {
+            font-size: 10px;
 
-.tabs {
+            font-weight: 650;
+        }
 
-    display: flex;
+        .nav-button.active::after {
+            content: "";
 
-    gap: 10px;
+            position: absolute;
 
-    margin-bottom: 20px;
+            bottom: 1px;
 
-}
+            width: 25px;
+            height: 3px;
 
-.tab {
+            border-radius: 20px;
 
-    padding:
-        10px 22px;
+            background: #c58cff;
 
-    border-radius: 24px;
+            box-shadow:
+                0 0 10px rgba(197, 140, 255, 0.8);
+        }
 
-    border:
-        1px solid
-        rgba(255,255,255,0.22);
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
 
-    color: #d8d2e6;
+        @media (min-width: 700px) {
 
-    background:
-        rgba(8,4,24,0.62);
+            .app {
+                max-width: 700px;
+                margin: 0 auto;
+            }
 
-    font-size: 13px;
+            .bottom-navigation {
+                left: 50%;
 
-    font-weight: 700;
+                right: auto;
 
-    cursor: pointer;
+                width: 676px;
 
-}
-
-.tab.active {
-
-    color: white;
-
-    border-color:
-        transparent;
-
-    background:
-        linear-gradient(
-            135deg,
-            #ff2bc1,
-            #a131ff
-        );
-
-    box-shadow:
-        0 0 20px
-        rgba(255,0,210,0.30);
-
-}
-
-
-/* =========================================================
-   ENTDECKEN
-========================================================= */
-
-.empty-discover {
-
-    min-height: 390px;
-
-    border-radius: 26px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    text-align: center;
-
-    padding: 30px;
-
-    position: relative;
-
-    overflow: hidden;
-
-}
-
-.empty-discover::before {
-
-    content: "";
-
-    position: absolute;
-
-    width: 250px;
-
-    height: 250px;
-
-    border-radius: 50%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(255,0,210,0.25),
-            transparent 70%
-        );
-
-    top: 20%;
-
-    left: 20%;
-
-    filter: blur(20px);
-
-}
-
-.empty-content {
-
-    position: relative;
-
-    z-index: 2;
-
-}
-
-.empty-icon {
-
-    font-size: 45px;
-
-    color: #d78cff;
-
-    margin-bottom: 15px;
-
-    text-shadow:
-        0 0 18px
-        rgba(210,100,255,0.8);
-
-}
-
-.empty-title {
-
-    font-size: 18px;
-
-    font-weight: 800;
-
-    margin-bottom: 8px;
-
-}
-
-.empty-text {
-
-    color: #d2ccdf;
-
-    font-size: 13px;
-
-    line-height: 1.5;
-
-}
-
-
-/* =========================================================
-   CHATS
-========================================================= */
-
-.page-title {
-
-    margin-top: 32px;
-
-    margin-bottom: 18px;
-
-    font-size: 28px;
-
-    font-weight: 800;
-
-}
-
-.chat-search {
-
-    margin-bottom: 18px;
-
-}
-
-.chat-filters {
-
-    display: flex;
-
-    gap: 9px;
-
-    overflow-x: auto;
-
-    padding-bottom: 5px;
-
-    margin-bottom: 22px;
-
-}
-
-.chat-filter {
-
-    flex-shrink: 0;
-
-    padding:
-        10px 20px;
-
-    border-radius: 24px;
-
-    border:
-        1px solid
-        rgba(255,255,255,0.23);
-
-    background:
-        rgba(8,4,24,0.65);
-
-    color: #dcd6e9;
-
-    font-size: 13px;
-
-    font-weight: 700;
-
-}
-
-.chat-filter.active {
-
-    color: white;
-
-    border-color:
-        transparent;
-
-    background:
-        linear-gradient(
-            135deg,
-            #ff2bc1,
-            #9e30ff
-        );
-
-}
-
-
-/* =========================================================
-   LEERE CHATS
-========================================================= */
-
-.empty-chats {
-
-    min-height: 380px;
-
-    border-radius: 26px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    text-align: center;
-
-    padding: 30px;
-
-}
-
-.empty-chats-icon {
-
-    font-size: 45px;
-
-    margin-bottom: 14px;
-
-    color: #c58bff;
-
-    text-shadow:
-        0 0 18px
-        rgba(190,90,255,0.7);
-
-}
-
-.empty-chats-title {
-
-    font-size: 18px;
-
-    font-weight: 800;
-
-    margin-bottom: 7px;
-
-}
-
-.empty-chats-text {
-
-    color: #cec8dc;
-
-    font-size: 13px;
-
-}
-
-
-/* =========================================================
-   PROFIL
-========================================================= */
-
-.profile-title {
-
-    margin-top: 32px;
-
-    margin-bottom: 18px;
-
-    font-size: 27px;
-
-    font-weight: 800;
-
-}
-
-.profile-card {
-
-    display: flex;
-
-    gap: 18px;
-
-    padding: 18px;
-
-    border-radius: 26px;
-
-    min-height: 180px;
-
-    margin-bottom: 28px;
-
-}
-
-.profile-picture {
-
-    position: relative;
-
-    width: 105px;
-
-    height: 140px;
-
-    flex-shrink: 0;
-
-    border-radius: 18px;
-
-    overflow: hidden;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,0.15),
-            rgba(30,10,55,0.55)
-        );
-
-    border:
-        1px solid
-        rgba(255,255,255,0.28);
-
-}
-
-.profile-picture::before {
-
-    content: "";
-
-    position: absolute;
-
-    inset: 0;
-
-    background:
-        radial-gradient(
-            circle at 50% 35%,
-            rgba(255,255,255,0.22),
-            transparent 25%
-        ),
-        linear-gradient(
-            145deg,
-            rgba(160,60,255,0.25),
-            rgba(20,30,100,0.25)
-        );
-
-}
-
-.edit-button {
-
-    position: absolute;
-
-    right: 8px;
-
-    bottom: 8px;
-
-    width: 32px;
-
-    height: 32px;
-
-    border-radius: 50%;
-
-    border:
-        1px solid
-        rgba(255,255,255,0.25);
-
-    color: white;
-
-    background:
-        rgba(0,0,0,0.65);
-
-    z-index: 2;
-
-    cursor: pointer;
-
-}
-
-.profile-lines {
-
-    flex: 1;
-
-    display: flex;
-
-    flex-direction: column;
-
-    justify-content: center;
-
-    gap: 13px;
-
-}
-
-.profile-line {
-
-    height: 12px;
-
-    border-radius: 10px;
-
-    background:
-        rgba(255,255,255,0.16);
-
-}
-
-.profile-line:nth-child(1) {
-
-    width: 55%;
-
-}
-
-.profile-line:nth-child(2) {
-
-    width: 90%;
-
-}
-
-.profile-line:nth-child(3) {
-
-    width: 65%;
-
-}
-
-
-/* =========================================================
-   STORY EINSTELLUNGEN
-========================================================= */
-
-.section-title {
-
-    margin-bottom: 12px;
-
-    font-size: 20px;
-
-    font-weight: 800;
-
-}
-
-.setting-row {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    padding: 16px;
-
-    min-height: 68px;
-
-    border-radius: 22px;
-
-    margin-bottom: 12px;
-
-    cursor: pointer;
-
-}
-
-.setting-left {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 13px;
-
-    font-size: 14px;
-
-    font-weight: 650;
-
-}
-
-.setting-icon {
-
-    width: 40px;
-
-    height: 40px;
-
-    flex-shrink: 0;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    border-radius: 50%;
-
-    background:
-        rgba(255,255,255,0.10);
-
-    border:
-        1px solid
-        rgba(255,255,255,0.18);
-
-}
-
-.setting-arrow {
-
-    font-size: 24px;
-
-    color: #ded8ea;
-
-}
-
-
-/* =========================================================
-   BOTTOM NAVIGATION
-========================================================= */
-
-.bottom-navigation {
-
-    position: fixed;
-
-    left: 15px;
-
-    right: 15px;
-
-    bottom:
-        calc(14px + env(safe-area-inset-bottom));
-
-    max-width: 470px;
-
-    height: 68px;
-
-    margin: auto;
-
-    display: flex;
-
-    border-radius: 35px;
-
-    overflow: hidden;
-
-    background:
-        rgba(7,4,18,0.91);
-
-    border:
-        1px solid
-        rgba(255,255,255,0.22);
-
-    box-shadow:
-        0 15px 40px
-        rgba(0,0,0,0.65);
-
-    backdrop-filter:
-        blur(22px);
-
-    -webkit-backdrop-filter:
-        blur(22px);
-
-    z-index: 9999;
-
-}
-
-
-/* =========================================================
-   AKTIVER NAV-BEREICH
-========================================================= */
-
-.nav-active {
-
-    position: absolute;
-
-    top: 5px;
-
-    bottom: 5px;
-
-    left: 5px;
-
-    width:
-        calc(33.333% - 10px);
-
-    border-radius: 30px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #ff26bc,
-            #9631ff
-        );
-
-    box-shadow:
-        0 0 25px
-        rgba(255,0,210,0.38);
-
-    transition:
-        transform 0.3s ease;
-
-}
-
-
-/* =========================================================
-   NAVIGATION BUTTONS
-========================================================= */
-
-.nav-item {
-
-    position: relative;
-
-    z-index: 2;
-
-    flex: 1;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 3px;
-
-    color: #c9c3d8;
-
-    font-size: 12px;
-
-    font-weight: 700;
-
-    cursor: pointer;
-
-}
-
-.nav-item.active {
-
-    color: white;
-
-}
-
-.nav-icon {
-
-    font-size: 23px;
-
-    line-height: 1;
-
-}
-
-
-/* =========================================================
-   KLEINE HANDYS
-========================================================= */
-
-@media (max-width: 390px) {
-
-    .app {
-
-        padding-left: 11px;
-
-        padding-right: 11px;
-
-    }
-
-    .round-button {
-
-        width: 44px;
-
-        height: 44px;
-
-    }
-
-    .tab {
-
-        padding:
-            9px 16px;
-
-    }
-
-}
-
-
-/* =========================================================
-   GRÖSSERE BILDSCHIRME
-========================================================= */
-
-@media (min-width: 700px) {
-
-    .app {
-
-        max-width: 520px;
-
-    }
-
-}
-
-</style>
-
+                transform: translateX(-50%);
+            }
+        }
+    </style>
 </head>
-
 
 <body>
 
+    <!-- =========================================
+         HINTERGRUND
+    ========================================= -->
 
-<!-- =========================================================
-     APP
-========================================================= -->
-
-<div class="app">
-
-
-    <!-- =====================================================
-         GEMEINSAMER HEADER
-    ====================================================== -->
-
-    <header class="app-header">
-
-        <div class="logo">
-
-            ✦ CYBER
-            <span class="logo-ai">AI</span>
-            <span class="logo-rp">RP</span>
-
-        </div>
+    <div class="background-layer"></div>
 
 
-        <div class="subtitle">
+    <!-- =========================================
+         APP
+    ========================================= -->
 
-            Deine Charaktere.
-            Deine Geschichten.
-            Deine Welt.
+    <div class="app">
 
-        </div>
+        <!-- =====================================
+             HEADER
+        ====================================== -->
 
-    </header>
+        <header class="top-header">
 
-
-
-    <!-- =====================================================
-         SEITE 1
-         ENTDECKEN
-    ====================================================== -->
-
-    <main
-        id="pageDiscover"
-        class="page active"
-    >
-
-
-        <!-- BEGRÜSSUNG -->
-
-        <div class="welcome">
-
-            <h1>
-
-                Hallo
-
-                <span class="welcome-divider">
-                    |
-                </span>
-
-                <span id="username">
-                    Spieler
-                </span>
-
-            </h1>
-
-
-            <div class="online-line">
-
-                <span class="online-dot"></span>
-
-                Lust zu chatten?
-
+            <div class="logo">
+                ✦ CYBER <span>AI RP</span>
             </div>
 
-        </div>
+            <div class="subtitle">
+                Deine Charaktere. Deine Geschichten. Deine Welt.
+            </div>
+
+        </header>
 
 
+        <!-- =====================================
+             ENTDECKEN
+        ====================================== -->
 
-        <!-- SUCHE -->
+        <main
+            id="pageDiscover"
+            class="page active"
+        >
 
-        <div class="search-row">
+            <div class="greeting">
+                Hallo <strong id="userName">Spieler</strong> 👋
+            </div>
 
+            <div class="main-question">
+                Lust zu chatten?
+            </div>
+
+
+            <!-- Suche -->
 
             <div class="search-box">
 
-                <span class="search-icon">
+                <div class="search-icon">
                     🔍
-                </span>
-
+                </div>
 
                 <input
                     type="text"
-                    placeholder="Wen suchst du?"
+                    placeholder="Charakter suchen..."
+                    autocomplete="off"
                 >
 
             </div>
 
 
-            <button
-                id="femaleFilter"
-                class="round-button active"
-                onclick="toggleFilter(this)"
-            >
+            <!-- Geschlecht -->
 
-                ♀
+            <div class="filter-row">
 
-            </button>
+                <button
+                    class="filter-button active"
+                    onclick="setFilter(this)"
+                >
+                    Alle
+                </button>
 
+                <button
+                    class="filter-button"
+                    onclick="setFilter(this)"
+                >
+                    ♀ Weiblich
+                </button>
 
-            <button
-                id="maleFilter"
-                class="round-button"
-                onclick="toggleFilter(this)"
-            >
+                <button
+                    class="filter-button"
+                    onclick="setFilter(this)"
+                >
+                    ♂ Männlich
+                </button>
 
-                ♂
-
-            </button>
-
-
-            <button
-                class="round-button"
-                onclick="openSortMenu()"
-            >
-
-                ⇅
-
-            </button>
+            </div>
 
 
-        </div>
+            <!-- Tabs -->
+
+            <div class="tabs">
+
+                <button
+                    class="tab active"
+                    onclick="setTab(this)"
+                >
+                    Offiziell
+                </button>
+
+                <button
+                    class="tab"
+                    onclick="setTab(this)"
+                >
+                    Favoriten
+                </button>
+
+            </div>
 
 
+            <!-- Noch keine Charaktere -->
 
-        <!-- OFFIZIELL / FAVORITEN -->
-
-        <div class="tabs">
-
-
-            <button
-                class="tab active"
-                onclick="selectDiscoverTab(this)"
-            >
-
-                Offiziell
-
-            </button>
-
-
-            <button
-                class="tab"
-                onclick="selectDiscoverTab(this)"
-            >
-
-                Favoriten
-
-            </button>
-
-
-        </div>
-
-
-
-        <!--
-            HIER KOMMEN SPÄTER DIE CHARAKTERE HIN.
-
-            Vorerst bleibt dieser Bereich leer.
-        -->
-
-        <div
-            class="empty-discover glass"
-        >
-
-            <div class="empty-content">
-
+            <div class="empty-box">
 
                 <div class="empty-icon">
-
-                    ◇
-
+                    ✦
                 </div>
-
 
                 <div class="empty-title">
-
                     Noch keine Charaktere
-
                 </div>
-
 
                 <div class="empty-text">
-
-                    Die Charaktere werden später
-                    hier erscheinen.
-
+                    Deine Charaktere werden hier erscheinen.
+                    Dieser Bereich ist bereit für deine erste Geschichte.
                 </div>
-
 
             </div>
 
-        </div>
+        </main>
 
 
-    </main>
+        <!-- =====================================
+             CHATS
+        ====================================== -->
 
-
-
-    <!-- =====================================================
-         SEITE 2
-         CHATS
-    ====================================================== -->
-
-    <main
-        id="pageChats"
-        class="page"
-    >
-
-
-        <div class="page-title">
-
-            Chats
-
-        </div>
-
-
-
-        <!-- CHAT SUCHE -->
-
-        <div
-            class="search-box chat-search"
+        <main
+            id="pageChats"
+            class="page"
         >
 
-            <span class="search-icon">
-
-                🔍
-
-            </span>
+            <div class="page-title">
+                Chats
+            </div>
 
 
-            <input
-                type="text"
-                placeholder="Chats durchsuchen ..."
-            >
+            <!-- Suche -->
 
-        </div>
+            <div class="search-box">
 
+                <div class="search-icon">
+                    🔍
+                </div>
 
+                <input
+                    type="text"
+                    placeholder="Chats durchsuchen..."
+                    autocomplete="off"
+                >
 
-        <!-- CHAT FILTER -->
-
-        <div class="chat-filters">
-
-
-            <button
-                class="chat-filter active"
-            >
-
-                Alle
-
-            </button>
+            </div>
 
 
-            <button
-                class="chat-filter"
-            >
+            <!-- Chat Filter -->
 
-                Ungelesen
+            <div class="filter-row">
 
-            </button>
+                <button
+                    class="filter-button active"
+                    onclick="setFilter(this)"
+                >
+                    Alle
+                </button>
 
+                <button
+                    class="filter-button"
+                    onclick="setFilter(this)"
+                >
+                    Ungelesen
+                </button>
 
-            <button
-                class="chat-filter"
-            >
+                <button
+                    class="filter-button"
+                    onclick="setFilter(this)"
+                >
+                    Favoriten
+                </button>
 
-                Favoriten
+                <button
+                    class="filter-button"
+                    onclick="setFilter(this)"
+                >
+                    Archiviert
+                </button>
 
-            </button>
-
-
-            <button
-                class="chat-filter"
-            >
-
-                Archiviert
-
-            </button>
-
-
-        </div>
-
-
-
-        <!--
-            HIER KOMMEN SPÄTER DIE ECHTEN CHATS HIN.
-        -->
-
-        <div
-            class="empty-chats glass"
-        >
-
-            <div>
+            </div>
 
 
-                <div class="empty-chats-icon">
+            <!-- Keine Chats -->
 
+            <div class="empty-box">
+
+                <div class="empty-icon">
                     💬
-
                 </div>
 
-
-                <div class="empty-chats-title">
-
+                <div class="empty-title">
                     Noch keine Chats
-
                 </div>
 
-
-                <div class="empty-chats-text">
-
-                    Deine begonnenen
-                    RP-Geschichten werden
-                    später hier angezeigt.
-
+                <div class="empty-text">
+                    Sobald du mit einem Charakter eine Geschichte
+                    beginnst, erscheint dein Chat hier.
                 </div>
-
 
             </div>
 
-        </div>
+        </main>
 
 
-    </main>
+        <!-- =====================================
+             PROFIL
+        ====================================== -->
 
-
-
-    <!-- =====================================================
-         SEITE 3
-         PROFIL
-    ====================================================== -->
-
-    <main
-        id="pageProfile"
-        class="page"
-    >
-
-
-        <div class="profile-title">
-
-            Du in der Geschichte
-
-        </div>
-
-
-
-        <!-- PROFILKARTE -->
-
-        <div
-            class="profile-card glass"
+        <main
+            id="pageProfile"
+            class="page"
         >
 
+            <div class="greeting">
+                Dein persönlicher Bereich
+            </div>
 
-            <div class="profile-picture">
+            <div class="main-question">
+                Du in der Geschichte
+            </div>
+
+
+            <!-- Profil -->
+
+            <div class="profile-card">
+
+                <div class="profile-top">
+
+                    <div class="profile-avatar">
+                        👤
+                    </div>
+
+                    <div class="profile-info">
+
+                        <div
+                            class="profile-name"
+                            id="profileName"
+                        >
+                            Spieler
+                        </div>
+
+                        <div class="profile-status">
+                            Deine RP-Identität
+                        </div>
+
+                    </div>
+
+                </div>
 
 
                 <button
                     class="edit-button"
                     onclick="editProfile()"
                 >
-
-                    ✎
-
+                    Profil bearbeiten
                 </button>
 
+            </div>
+
+
+            <!-- Story Einstellungen -->
+
+            <div class="section-title">
+                Story-Einstellungen
+            </div>
+
+            <div class="settings-card">
+
+                <div class="setting-row">
+
+                    <div class="setting-left">
+
+                        <div class="setting-name">
+                            Story-Einstellungen
+                        </div>
+
+                        <div class="setting-description">
+                            Folgt in Kürze
+                        </div>
+
+                    </div>
+
+                    <div class="setting-arrow">
+                        ›
+                    </div>
+
+                </div>
 
             </div>
 
 
-            <div class="profile-lines">
+            <!-- App Einstellungen -->
 
-
-                <div
-                    class="profile-line"
-                ></div>
-
-
-                <div
-                    class="profile-line"
-                ></div>
-
-
-                <div
-                    class="profile-line"
-                ></div>
-
-
+            <div class="section-title">
+                App
             </div>
 
+            <div class="settings-card">
 
-        </div>
+                <div
+                    class="setting-row"
+                    onclick="appSettings()"
+                >
 
+                    <div class="setting-left">
 
+                        <div class="setting-name">
+                            App-Einstellungen
+                        </div>
 
-        <!-- STORY EINSTELLUNGEN -->
+                        <div class="setting-description">
+                            Einstellungen der Anwendung
+                        </div>
 
-        <div class="section-title">
+                    </div>
 
-            Story-Einstellungen
-
-        </div>
-
-
-
-        <div
-            class="setting-row glass"
-            onclick="futureFeature()"
-        >
-
-
-            <div class="setting-left">
-
-
-                <div class="setting-icon">
-
-                    🕒
+                    <div class="setting-arrow">
+                        ›
+                    </div>
 
                 </div>
 
 
-                <span>
+                <div
+                    class="setting-row"
+                    onclick="adultSettings()"
+                >
 
-                    Folgt in Kürze
+                    <div class="setting-left">
 
-                </span>
+                        <div class="setting-name">
+                            18+ Einstellungen
+                        </div>
 
+                        <div class="setting-description">
+                            Inhalte und Altersfreigabe
+                        </div>
 
-            </div>
+                    </div>
 
-
-            <div class="setting-arrow">
-
-                ›
-
-            </div>
-
-
-        </div>
-
-
-
-        <div
-            class="setting-row glass"
-            onclick="futureFeature()"
-        >
-
-
-            <div class="setting-left">
-
-
-                <div class="setting-icon">
-
-                    ⚙️
+                    <div class="setting-arrow">
+                        ›
+                    </div>
 
                 </div>
 
-
-                <span>
-
-                    App-Einstellungen
-
-                </span>
-
-
             </div>
 
+        </main>
 
-            <div class="setting-arrow">
-
-                ›
-
-            </div>
+    </div>
 
 
-        </div>
+    <!-- =========================================
+         BOTTOM NAVIGATION
+    ========================================== -->
 
+    <nav class="bottom-navigation">
 
-
-        <div
-            class="setting-row glass"
-            onclick="futureFeature()"
+        <button
+            id="navDiscover"
+            class="nav-button active"
+            onclick="changePage('discover')"
         >
 
-
-            <div class="setting-left">
-
-
-                <div class="setting-icon">
-
-                    🔞
-
-                </div>
-
-
-                <span>
-
-                    18+ Einstellungen
-
-                </span>
-
-
+            <div class="nav-icon">
+                ✦
             </div>
 
-
-            <div class="setting-arrow">
-
-                ›
-
+            <div class="nav-label">
+                Entdecken
             </div>
 
+        </button>
 
-        </div>
 
+        <button
+            id="navChats"
+            class="nav-button"
+            onclick="changePage('chats')"
+        >
 
-    </main>
+            <div class="nav-icon">
+                💬
+            </div>
 
+            <div class="nav-label">
+                Chats
+            </div>
 
-</div>
+        </button>
 
 
+        <button
+            id="navProfile"
+            class="nav-button"
+            onclick="changePage('profile')"
+        >
 
-<!-- =========================================================
-     UNTERE NAVIGATION
-========================================================= -->
+            <div class="nav-icon">
+                👤
+            </div>
 
-<nav class="bottom-navigation">
+            <div class="nav-label">
+                Profil
+            </div>
 
+        </button>
 
-    <!-- AKTIVER BEREICH -->
+    </nav>
 
-    <div
-        id="navActive"
-        class="nav-active"
-    ></div>
 
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================== -->
 
+    <script>
 
-    <!-- ENTDECKEN -->
+        /* =====================================
+           TELEGRAM
+        ====================================== */
 
-    <div
-        id="navDiscover"
-        class="nav-item active"
-        onclick="changePage('discover')"
-    >
+        const tg = window.Telegram?.WebApp;
 
-        <div class="nav-icon">
+        if (tg) {
+            tg.ready();
+            tg.expand();
+        }
 
-            ◇
 
-        </div>
+        /* =====================================
+           BENUTZERNAME
+        ====================================== */
 
-
-        <div>
-
-            Entdecken
-
-        </div>
-
-    </div>
-
-
-
-    <!-- CHATS -->
-
-    <div
-        id="navChats"
-        class="nav-item"
-        onclick="changePage('chats')"
-    >
-
-        <div class="nav-icon">
-
-            💬
-
-        </div>
-
-
-        <div>
-
-            Chats
-
-        </div>
-
-    </div>
-
-
-
-    <!-- PROFIL -->
-
-    <div
-        id="navProfile"
-        class="nav-item"
-        onclick="changePage('profile')"
-    >
-
-        <div class="nav-icon">
-
-            ♙
-
-        </div>
-
-
-        <div>
-
-            Profil
-
-        </div>
-
-    </div>
-
-
-</nav>
-
-
-
-<script>
-
-/* =========================================================
-   TELEGRAM
-========================================================= */
-
-const telegram =
-    window.Telegram?.WebApp;
-
-
-if (telegram) {
-
-    try {
-
-        telegram.ready();
-
-        telegram.expand();
-
-
-        telegram.setHeaderColor(
-            "#03020b"
-        );
-
-
-        telegram.setBackgroundColor(
-            "#03020b"
-        );
-
-
-        /*
-            Telegram-Benutzer auslesen
-        */
-
-        if (
-            telegram.initDataUnsafe &&
-            telegram.initDataUnsafe.user
-        ) {
+        function loadTelegramUser() {
 
             const user =
-                telegram
-                    .initDataUnsafe
-                    .user;
+                tg?.initDataUnsafe?.user;
+
+            if (!user) {
+                return;
+            }
+
+            const firstName =
+                user.first_name || "Spieler";
 
 
-            const username =
-                document.getElementById(
-                    "username"
+            document.getElementById(
+                "userName"
+            ).textContent = firstName;
+
+
+            document.getElementById(
+                "profileName"
+            ).textContent = firstName;
+        }
+
+        loadTelegramUser();
+
+
+        /* =====================================
+           SEITENWECHSEL
+        ====================================== */
+
+        function changePage(page) {
+
+            const pages = [
+                "pageDiscover",
+                "pageChats",
+                "pageProfile"
+            ];
+
+            pages.forEach(function(id) {
+
+                document
+                    .getElementById(id)
+                    .classList.remove("active");
+
+            });
+
+
+            document
+                .getElementById(
+                    "page" +
+                    page.charAt(0).toUpperCase() +
+                    page.slice(1)
+                )
+                .classList.add("active");
+
+
+            const navButtons = [
+                "navDiscover",
+                "navChats",
+                "navProfile"
+            ];
+
+            navButtons.forEach(function(id) {
+
+                document
+                    .getElementById(id)
+                    .classList.remove("active");
+
+            });
+
+
+            document
+                .getElementById(
+                    "nav" +
+                    page.charAt(0).toUpperCase() +
+                    page.slice(1)
+                )
+                .classList.add("active");
+
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+
+
+        /* =====================================
+           FILTER
+        ====================================== */
+
+        function setFilter(button) {
+
+            const parent =
+                button.parentElement;
+
+            const buttons =
+                parent.querySelectorAll(
+                    ".filter-button"
                 );
 
+            buttons.forEach(function(item) {
+                item.classList.remove("active");
+            });
 
-            username.textContent =
-                user.first_name ||
-                "Spieler";
+            button.classList.add("active");
+        }
+
+
+        /* =====================================
+           TABS
+        ====================================== */
+
+        function setTab(button) {
+
+            const parent =
+                button.parentElement;
+
+            const tabs =
+                parent.querySelectorAll(".tab");
+
+            tabs.forEach(function(item) {
+                item.classList.remove("active");
+            });
+
+            button.classList.add("active");
+        }
+
+
+        /* =====================================
+           PROFIL
+        ====================================== */
+
+        function editProfile() {
+
+            alert(
+                "Die Profilbearbeitung kommt später."
+            );
 
         }
 
-    }
 
-    catch (error) {
+        /* =====================================
+           APP EINSTELLUNGEN
+        ====================================== */
 
-        console.log(
-            "Telegram WebApp Fehler:",
-            error
-        );
+        function appSettings() {
 
-    }
-
-}
-
-
-
-/* =========================================================
-   SEITE WECHSELN
-========================================================= */
-
-function changePage(page) {
-
-
-    /*
-       Alle Seiten ausblenden
-    */
-
-    document
-        .querySelectorAll(".page")
-        .forEach(
-            pageElement => {
-
-                pageElement.classList.remove(
-                    "active"
-                );
-
-            }
-        );
-
-
-    /*
-       Navigation zurücksetzen
-    */
-
-    document
-        .querySelectorAll(".nav-item")
-        .forEach(
-            navigationElement => {
-
-                navigationElement.classList.remove(
-                    "active"
-                );
-
-            }
-        );
-
-
-    /*
-       ENTDECKEN
-    */
-
-    if (page === "discover") {
-
-
-        document
-            .getElementById(
-                "pageDiscover"
-            )
-            .classList.add(
-                "active"
+            alert(
+                "Die App-Einstellungen kommen später."
             );
 
+        }
 
-        document
-            .getElementById(
-                "navDiscover"
-            )
-            .classList.add(
-                "active"
+
+        /* =====================================
+           18+ EINSTELLUNGEN
+        ====================================== */
+
+        function adultSettings() {
+
+            alert(
+                "Die 18+ Einstellungen kommen später."
             );
 
+        }
 
-        moveNavigation(0);
-
-    }
-
-
-    /*
-       CHATS
-    */
-
-    if (page === "chats") {
-
-
-        document
-            .getElementById(
-                "pageChats"
-            )
-            .classList.add(
-                "active"
-            );
-
-
-        document
-            .getElementById(
-                "navChats"
-            )
-            .classList.add(
-                "active"
-            );
-
-
-        moveNavigation(1);
-
-    }
-
-
-    /*
-       PROFIL
-    */
-
-    if (page === "profile") {
-
-
-        document
-            .getElementById(
-                "pageProfile"
-            )
-            .classList.add(
-                "active"
-            );
-
-
-        document
-            .getElementById(
-                "navProfile"
-            )
-            .classList.add(
-                "active"
-            );
-
-
-        moveNavigation(2);
-
-    }
-
-
-    /*
-       Nach oben scrollen
-    */
-
-    window.scrollTo({
-
-        top: 0,
-
-        behavior: "smooth"
-
-    });
-
-}
-
-
-
-/* =========================================================
-   NAVIGATION ANIMATION
-========================================================= */
-
-function moveNavigation(index) {
-
-
-    const indicator =
-        document.getElementById(
-            "navActive"
-        );
-
-
-    if (index === 0) {
-
-        indicator.style.transform =
-            "translateX(0)";
-
-    }
-
-
-    if (index === 1) {
-
-        indicator.style.transform =
-            "translateX(100%)";
-
-    }
-
-
-    if (index === 2) {
-
-        indicator.style.transform =
-            "translateX(200%)";
-
-    }
-
-}
-
-
-
-/* =========================================================
-   FILTER
-========================================================= */
-
-function toggleFilter(button) {
-
-    button.classList.toggle(
-        "active"
-    );
-
-}
-
-
-
-/* =========================================================
-   SORTIERUNG
-========================================================= */
-
-function openSortMenu() {
-
-    alert(
-        "Die Sortierung wird später eingerichtet."
-    );
-
-}
-
-
-
-/* =========================================================
-   ENTDECKEN TABS
-========================================================= */
-
-function selectDiscoverTab(
-    selected
-) {
-
-
-    document
-        .querySelectorAll(
-            ".tabs .tab"
-        )
-        .forEach(
-            tab => {
-
-                tab.classList.remove(
-                    "active"
-                );
-
-            }
-        );
-
-
-    selected.classList.add(
-        "active"
-    );
-
-}
-
-
-
-/* =========================================================
-   PROFIL BEARBEITEN
-========================================================= */
-
-function editProfile() {
-
-    alert(
-        "Die Profilbearbeitung wird später eingerichtet."
-    );
-
-}
-
-
-
-/* =========================================================
-   ZUKÜNFTIGE FUNKTIONEN
-========================================================= */
-
-function futureFeature() {
-
-    alert(
-        "Diese Funktion wird später eingerichtet."
-    );
-
-}
-
-
-
-/* =========================================================
-   START
-========================================================= */
-
-changePage(
-    "discover"
-);
-
-</script>
-
+    </script>
 
 </body>
-
 </html>
