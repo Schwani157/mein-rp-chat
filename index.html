@@ -3,1279 +3,1128 @@
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    >
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
 
-    <title>CYBER AI RP</title>
+<title>CYBER AI RP</title>
 
-    <!-- Telegram Mini App -->
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 
-    <style>
+<style>
 
-        /* =========================================================
-           GRUNDLAGEN
-        ========================================================= */
+/* =========================================================
+   GRUNDLAGEN
+========================================================= */
 
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
 
+html,
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+}
 
-        html {
-            min-height: 100%;
-            background: #020208;
-        }
+body {
 
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
 
-        body {
+    color: #ffffff;
 
-            margin: 0;
-            padding: 0;
+    min-height: 100vh;
 
-            min-height: 100vh;
+    overflow-x: hidden;
 
-            font-family:
-                -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                Roboto,
-                Helvetica,
-                Arial,
-                sans-serif;
+    /*
+       DEIN CYBER-GALAXY-HINTERGRUND
+    */
 
-            color: #ffffff;
+    background-color: #03020b;
 
-            overflow-x: hidden;
+    background-image:
+        linear-gradient(
+            rgba(2, 1, 10, 0.12),
+            rgba(2, 1, 10, 0.12)
+        ),
+        url("./images/HintergrundCyperAi.png");
 
-            background-color: #020208;
+    background-size: cover;
 
-            /*
-             * Start-Hintergrund
-             * Wird später automatisch geändert.
-             */
-            background-image:
-                url("./images/entdecken.jpg");
+    background-position: center top;
 
-            background-size: cover;
+    background-attachment: fixed;
 
-            background-position:
-                center top;
+    background-repeat: no-repeat;
+}
 
-            background-attachment: fixed;
 
-            background-repeat: no-repeat;
+/* =========================================================
+   APP
+========================================================= */
 
-            transition:
-                background-image 0.35s ease;
-        }
+.app {
 
+    width: 100%;
 
-        button,
-        input {
-            font-family: inherit;
-        }
+    max-width: 500px;
 
+    min-height: 100vh;
 
-        button {
-            border: none;
-        }
+    margin: 0 auto;
 
+    padding:
+        calc(18px + env(safe-area-inset-top))
+        15px
+        calc(105px + env(safe-area-inset-bottom))
+        15px;
 
-        /* =========================================================
-           HAUPTCONTAINER
-        ========================================================= */
+}
 
-        .container {
 
-            width: 100%;
+/* =========================================================
+   HEADER
+========================================================= */
 
-            max-width: 500px;
+.app-header {
 
-            min-height: 100vh;
+    margin-bottom: 10px;
 
-            margin: 0 auto;
+}
 
-            padding:
-                calc(15px + env(safe-area-inset-top))
-                15px
-                105px
-                15px;
-        }
+.logo {
 
+    font-size: 22px;
 
-        /* =========================================================
-           SCREENS
-        ========================================================= */
+    font-weight: 900;
 
-        .view-screen {
+    letter-spacing: 0.5px;
 
-            display: none;
+    text-shadow:
+        0 0 12px rgba(255,255,255,0.25);
 
-            animation:
-                screenFade 0.25s ease;
-        }
+}
 
+.logo-ai {
 
-        .view-screen.active {
+    color: #ff35d0;
 
-            display: block;
-        }
+    text-shadow:
+        0 0 12px #ff00cc;
 
+}
 
-        @keyframes screenFade {
+.logo-rp {
 
-            from {
+    color: #a765ff;
 
-                opacity: 0;
+    text-shadow:
+        0 0 12px #8c32ff;
 
-                transform:
-                    translateY(5px);
-            }
+}
 
-            to {
+.subtitle {
 
-                opacity: 1;
+    margin-top: 2px;
 
-                transform:
-                    translateY(0);
-            }
-        }
+    font-size: 11px;
 
+    color: #e1dcec;
 
-        /* =========================================================
-           BRANDING
-        ========================================================= */
+    text-shadow:
+        0 2px 8px rgba(0,0,0,0.9);
 
-        .app-branding {
+}
 
-            font-size: 18px;
 
-            font-weight: 900;
+/* =========================================================
+   SEITEN
+========================================================= */
 
-            letter-spacing: 1px;
+.page {
 
-            margin-bottom: 3px;
+    display: none;
 
-            text-shadow:
-                0 2px 12px
-                rgba(0, 0, 0, 0.5);
-        }
+    animation:
+        pageIn 0.25s ease;
 
+}
 
-        .app-branding span {
+.page.active {
 
-            color: #ff00ff;
+    display: block;
 
-            text-shadow:
-                0 0 8px #ff00ff,
-                0 0 18px
-                rgba(255, 0, 255, 0.7);
-        }
+}
 
+@keyframes pageIn {
 
-        .app-subtitle {
+    from {
 
-            font-size: 10px;
+        opacity: 0;
 
-            color: #dedee8;
+        transform:
+            translateY(5px);
 
-            margin-bottom: 20px;
+    }
 
-            text-transform: uppercase;
+    to {
 
-            letter-spacing: 0.4px;
+        opacity: 1;
 
-            text-shadow:
-                0 2px 8px
-                rgba(0, 0, 0, 0.7);
-        }
+        transform:
+            translateY(0);
 
+    }
 
-        /* =========================================================
-           WILLKOMMEN
-        ========================================================= */
+}
 
-        .user-welcome-zone {
 
-            margin-bottom: 20px;
+/* =========================================================
+   WILLKOMMEN
+========================================================= */
 
-            text-shadow:
-                0 2px 10px
-                rgba(0, 0, 0, 0.7);
-        }
+.welcome {
 
+    margin-top: 32px;
 
-        .user-welcome-zone h1 {
+    margin-bottom: 22px;
 
-            margin: 0;
+}
 
-            font-size: 24px;
+.welcome h1 {
 
-            font-weight: 800;
-        }
+    margin: 0;
 
+    font-size: 27px;
 
-        .status-dot-line {
+    font-weight: 800;
 
-            display: flex;
+}
 
-            align-items: center;
+.welcome-divider {
 
-            gap: 7px;
+    color: #ff21c4;
 
-            margin-top: 5px;
+}
 
-            font-size: 13px;
-        }
+.online-line {
 
+    display: flex;
 
-        .pink-dot {
+    align-items: center;
 
-            width: 8px;
+    gap: 8px;
 
-            height: 8px;
+    margin-top: 5px;
 
-            border-radius: 50%;
+    font-size: 14px;
 
-            background: #ff00ff;
+    color: #f0ecf7;
 
-            box-shadow:
-                0 0 8px #ff00ff,
-                0 0 16px
-                rgba(255, 0, 255, 0.6);
-        }
+}
 
+.online-dot {
 
-        /* =========================================================
-           SUCHE
-        ========================================================= */
+    width: 9px;
 
-        .search-wrapper {
+    height: 9px;
 
-            position: relative;
+    border-radius: 50%;
 
-            display: flex;
+    background: #ff1fc4;
 
-            gap: 8px;
+    box-shadow:
+        0 0 10px #ff1fc4;
 
-            margin-bottom: 15px;
-        }
+}
 
 
-        .search-bar {
+/* =========================================================
+   GLASS-EFFEKT
+========================================================= */
 
-            flex: 1;
+.glass {
 
-            min-width: 0;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,0.11),
+            rgba(255,255,255,0.035)
+        );
 
-            height: 44px;
+    border:
+        1px solid
+        rgba(255,255,255,0.24);
 
-            padding:
-                0 15px
-                0 43px;
+    box-shadow:
+        0 12px 35px
+        rgba(0,0,0,0.38),
 
-            border-radius: 25px;
+        inset 0 0 30px
+        rgba(255,255,255,0.025);
 
-            outline: none;
+    backdrop-filter:
+        blur(18px);
 
-            color: #ffffff;
+    -webkit-backdrop-filter:
+        blur(18px);
 
-            font-size: 14px;
+}
 
-            background:
-                rgba(10, 8, 25, 0.70);
 
-            border:
-                1px solid
-                rgba(255,255,255,0.25);
+/* =========================================================
+   SUCHFELD
+========================================================= */
 
-            box-shadow:
-                0 8px 25px
-                rgba(0,0,0,0.25);
+.search-row {
 
-            backdrop-filter:
-                blur(15px);
+    display: flex;
 
-            -webkit-backdrop-filter:
-                blur(15px);
-        }
+    align-items: center;
 
+    gap: 8px;
 
-        .search-bar::placeholder {
+    margin-bottom: 15px;
 
-            color:
-                rgba(230,230,255,0.75);
-        }
+}
 
+.search-box {
 
-        .search-bar:focus {
+    position: relative;
 
-            border-color:
-                rgba(255,0,255,0.65);
+    flex: 1;
 
-            box-shadow:
-                0 0 18px
-                rgba(255,0,255,0.20);
-        }
+}
 
+.search-box input {
 
-        .search-icon-placeholder {
+    width: 100%;
 
-            position: absolute;
+    height: 50px;
 
-            left: 16px;
+    padding:
+        0 16px 0 47px;
 
-            top: 12px;
+    border-radius: 27px;
 
-            font-size: 17px;
+    border:
+        1px solid
+        rgba(255,255,255,0.25);
 
-            color:
-                #c4c4df;
+    outline: none;
 
-            pointer-events: none;
-        }
+    color: white;
 
+    font-size: 14px;
 
-        /* =========================================================
-           RUNDE FILTER
-        ========================================================= */
+    background:
+        rgba(8,4,24,0.68);
 
-        .round-filter-btn {
+    backdrop-filter:
+        blur(18px);
 
-            width: 44px;
+    -webkit-backdrop-filter:
+        blur(18px);
 
-            height: 44px;
+}
 
-            flex-shrink: 0;
+.search-box input::placeholder {
 
-            border-radius: 50%;
+    color: #c8c2d9;
 
-            display: flex;
+}
 
-            align-items: center;
+.search-icon {
 
-            justify-content: center;
+    position: absolute;
 
-            color: #ffffff;
+    left: 17px;
 
-            font-size: 16px;
+    top: 12px;
 
-            background:
-                rgba(10,8,25,0.72);
+    font-size: 22px;
 
-            border:
-                1px solid
-                rgba(255,255,255,0.25);
+    color: #d2cce1;
 
-            backdrop-filter:
-                blur(15px);
+}
 
-            -webkit-backdrop-filter:
-                blur(15px);
 
-            box-shadow:
-                0 6px 20px
-                rgba(0,0,0,0.25);
+/* =========================================================
+   FILTER BUTTONS
+========================================================= */
 
-            transition:
-                transform 0.2s ease,
-                background 0.2s ease;
-        }
+.round-button {
 
+    width: 50px;
 
-        .round-filter-btn:active {
+    height: 50px;
 
-            transform:
-                scale(0.92);
-        }
+    flex-shrink: 0;
 
+    border-radius: 50%;
 
-        .round-filter-btn.pink-bg {
+    border:
+        1px solid
+        rgba(255,255,255,0.25);
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #ff1fae,
-                    #a52cff
-                );
+    color: white;
 
-            border-color:
-                transparent;
+    background:
+        rgba(7,4,22,0.68);
 
-            box-shadow:
-                0 0 18px
-                rgba(255,0,200,0.35);
-        }
+    font-size: 19px;
 
+    display: flex;
 
-        /* =========================================================
-           TABS
-        ========================================================= */
+    align-items: center;
 
-        .filter-row-sub {
+    justify-content: center;
 
-            display: flex;
+    cursor: pointer;
 
-            justify-content:
-                space-between;
+    backdrop-filter:
+        blur(15px);
 
-            align-items: center;
+    -webkit-backdrop-filter:
+        blur(15px);
 
-            margin-bottom: 20px;
-        }
+}
 
+.round-button.active {
 
-        .sub-tabs {
+    background:
+        linear-gradient(
+            135deg,
+            #ff2bc1,
+            #9d31ff
+        );
 
-            display: flex;
+    border-color:
+        transparent;
 
-            gap: 8px;
-        }
+    box-shadow:
+        0 0 20px
+        rgba(255,0,210,0.35);
 
+}
 
-        .sub-tab {
 
-            padding:
-                8px 18px;
+/* =========================================================
+   TABS
+========================================================= */
 
-            border-radius: 20px;
+.tabs {
 
-            color: #ffffff;
+    display: flex;
 
-            font-size: 13px;
+    gap: 10px;
 
-            font-weight: 700;
+    margin-bottom: 20px;
 
-            background:
-                rgba(10,8,25,0.70);
+}
 
-            border:
-                1px solid
-                rgba(255,255,255,0.20);
+.tab {
 
-            backdrop-filter:
-                blur(12px);
+    padding:
+        10px 22px;
 
-            -webkit-backdrop-filter:
-                blur(12px);
-        }
+    border-radius: 24px;
 
+    border:
+        1px solid
+        rgba(255,255,255,0.22);
 
-        .sub-tab.active {
+    color: #d8d2e6;
 
-            background:
-                linear-gradient(
-                    45deg,
-                    #ff1fae,
-                    #a52cff
-                );
+    background:
+        rgba(8,4,24,0.62);
 
-            border-color:
-                transparent;
+    font-size: 13px;
 
-            box-shadow:
-                0 0 16px
-                rgba(255,0,200,0.3);
-        }
+    font-weight: 700;
 
+    cursor: pointer;
 
-        .sub-tab.inactive {
+}
 
-            color:
-                #d5d5e5;
-        }
+.tab.active {
 
+    color: white;
 
-        /* =========================================================
-           CHARAKTER GRID
-        ========================================================= */
+    border-color:
+        transparent;
 
-        .character-grid {
+    background:
+        linear-gradient(
+            135deg,
+            #ff2bc1,
+            #a131ff
+        );
 
-            display: grid;
+    box-shadow:
+        0 0 20px
+        rgba(255,0,210,0.30);
 
-            grid-template-columns:
-                repeat(2, minmax(0,1fr));
+}
 
-            gap: 14px;
 
-            margin-bottom: 30px;
-        }
+/* =========================================================
+   ENTDECKEN
+========================================================= */
 
+.empty-discover {
 
-        .transparent-card {
+    min-height: 390px;
 
-            position: relative;
+    border-radius: 26px;
 
-            min-height: 260px;
+    display: flex;
 
-            overflow: hidden;
+    align-items: center;
 
-            border-radius: 24px;
+    justify-content: center;
 
-            cursor: pointer;
+    text-align: center;
 
-            background:
-                rgba(15,8,35,0.45);
+    padding: 30px;
 
-            border:
-                1px solid
-                rgba(255,255,255,0.28);
+    position: relative;
 
-            box-shadow:
-                0 10px 35px
-                rgba(0,0,0,0.40);
+    overflow: hidden;
 
-            backdrop-filter:
-                blur(12px);
+}
 
-            -webkit-backdrop-filter:
-                blur(12px);
+.empty-discover::before {
 
-            transition:
-                transform 0.2s ease,
-                border-color 0.2s ease;
-        }
+    content: "";
 
+    position: absolute;
 
-        .transparent-card:hover {
+    width: 250px;
 
-            transform:
-                translateY(-2px);
+    height: 250px;
 
-            border-color:
-                rgba(255,0,255,0.8);
-        }
+    border-radius: 50%;
 
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,0,210,0.25),
+            transparent 70%
+        );
 
-        .transparent-card:active {
+    top: 20%;
 
-            transform:
-                scale(0.98);
-        }
+    left: 20%;
 
+    filter: blur(20px);
 
-        .card-plus-icon {
+}
 
-            position: absolute;
+.empty-content {
 
-            top: 50%;
-            left: 50%;
+    position: relative;
 
-            transform:
-                translate(-50%,-50%);
+    z-index: 2;
 
-            width: 65px;
-            height: 65px;
+}
 
-            display: flex;
+.empty-icon {
 
-            align-items: center;
-            justify-content: center;
+    font-size: 45px;
 
-            border-radius: 50%;
+    color: #d78cff;
 
-            font-size: 34px;
+    margin-bottom: 15px;
 
-            color: #ffffff;
+    text-shadow:
+        0 0 18px
+        rgba(210,100,255,0.8);
 
-            background:
-                rgba(20,10,40,0.40);
+}
 
-            border:
-                1px solid
-                rgba(255,255,255,0.30);
+.empty-title {
 
-            box-shadow:
-                0 0 25px
-                rgba(180,80,255,0.25);
-        }
+    font-size: 18px;
 
+    font-weight: 800;
 
-        .fav-heart-btn {
+    margin-bottom: 8px;
 
-            position: absolute;
+}
 
-            top: 12px;
+.empty-text {
 
-            right: 12px;
+    color: #d2ccdf;
 
-            width: 34px;
-            height: 34px;
+    font-size: 13px;
 
-            border-radius: 50%;
+    line-height: 1.5;
 
-            color: #ffffff;
+}
 
-            background:
-                rgba(0,0,0,0.40);
 
-            border:
-                1px solid
-                rgba(255,255,255,0.25);
+/* =========================================================
+   CHATS
+========================================================= */
 
-            z-index: 5;
-        }
+.page-title {
 
+    margin-top: 32px;
 
-        .fav-heart-btn.favorite {
+    margin-bottom: 18px;
 
-            color: #ff2ca8;
+    font-size: 28px;
 
-            text-shadow:
-                0 0 10px #ff2ca8;
-        }
+    font-weight: 800;
 
+}
 
-        .card-text-zone {
+.chat-search {
 
-            position: absolute;
+    margin-bottom: 18px;
 
-            left: 0;
-            right: 0;
-            bottom: 0;
+}
 
-            padding: 14px;
+.chat-filters {
 
-            background:
-                linear-gradient(
-                    0deg,
-                    rgba(3,2,12,0.95),
-                    rgba(3,2,12,0.40),
-                    transparent
-                );
-        }
+    display: flex;
 
+    gap: 9px;
 
-        .char-name {
+    overflow-x: auto;
 
-            font-size: 16px;
+    padding-bottom: 5px;
 
-            font-weight: 800;
-        }
+    margin-bottom: 22px;
 
+}
 
-        .char-status-row {
+.chat-filter {
 
-            display: flex;
+    flex-shrink: 0;
 
-            align-items: center;
+    padding:
+        10px 20px;
 
-            gap: 5px;
+    border-radius: 24px;
 
-            margin-top: 4px;
+    border:
+        1px solid
+        rgba(255,255,255,0.23);
 
-            font-size: 11px;
+    background:
+        rgba(8,4,24,0.65);
 
-            color:
-                #d5d5e2;
-        }
+    color: #dcd6e9;
 
+    font-size: 13px;
 
-        .char-dot {
+    font-weight: 700;
 
-            width: 6px;
-            height: 6px;
+}
 
-            border-radius: 50%;
+.chat-filter.active {
 
-            background:
-                #ff22b7;
+    color: white;
 
-            box-shadow:
-                0 0 8px
-                rgba(255,34,183,0.7);
-        }
+    border-color:
+        transparent;
 
+    background:
+        linear-gradient(
+            135deg,
+            #ff2bc1,
+            #9e30ff
+        );
 
-        .scan-line {
+}
 
-            position: absolute;
 
-            left: 0;
+/* =========================================================
+   LEERE CHATS
+========================================================= */
 
-            width: 100%;
+.empty-chats {
 
-            height: 2px;
+    min-height: 380px;
 
-            top: 0;
+    border-radius: 26px;
 
-            background:
-                linear-gradient(
-                    90deg,
-                    transparent,
-                    #ff00ff,
-                    transparent
-                );
+    display: flex;
 
-            opacity: 0.4;
+    align-items: center;
 
-            animation:
-                scanMove 4s linear infinite;
-        }
+    justify-content: center;
 
+    text-align: center;
 
-        @keyframes scanMove {
+    padding: 30px;
 
-            0% {
-                top: 0%;
-            }
+}
 
-            50% {
-                top: 100%;
-            }
+.empty-chats-icon {
 
-            100% {
-                top: 0%;
-            }
-        }
+    font-size: 45px;
 
+    margin-bottom: 14px;
 
-        /* =========================================================
-           CHATS
-        ========================================================= */
+    color: #c58bff;
 
-        .chat-list-container {
+    text-shadow:
+        0 0 18px
+        rgba(190,90,255,0.7);
 
-            margin-bottom: 30px;
-        }
+}
 
+.empty-chats-title {
 
-        .chat-item {
+    font-size: 18px;
 
-            display: flex;
+    font-weight: 800;
 
-            align-items: center;
+    margin-bottom: 7px;
 
-            gap: 14px;
+}
 
-            padding: 15px;
+.empty-chats-text {
 
-            margin-bottom: 12px;
+    color: #cec8dc;
 
-            border-radius: 24px;
+    font-size: 13px;
 
-            background:
-                rgba(15,8,35,0.55);
+}
 
-            border:
-                1px solid
-                rgba(255,255,255,0.25);
 
-            backdrop-filter:
-                blur(14px);
+/* =========================================================
+   PROFIL
+========================================================= */
 
-            -webkit-backdrop-filter:
-                blur(14px);
-        }
+.profile-title {
 
+    margin-top: 32px;
 
-        .chat-avatar {
+    margin-bottom: 18px;
 
-            width: 58px;
-            height: 58px;
+    font-size: 27px;
 
-            border-radius: 50%;
+    font-weight: 800;
 
-            display: flex;
+}
 
-            align-items: center;
-            justify-content: center;
+.profile-card {
 
-            flex-shrink: 0;
+    display: flex;
 
-            background:
-                rgba(0,0,0,0.50);
+    gap: 18px;
 
-            border:
-                2px solid
-                #b993ff;
+    padding: 18px;
 
-            font-size: 25px;
-        }
+    border-radius: 26px;
 
+    min-height: 180px;
 
-        .chat-info {
+    margin-bottom: 28px;
 
-            flex: 1;
+}
 
-            min-width: 0;
-        }
+.profile-picture {
 
+    position: relative;
 
-        .chat-name {
+    width: 105px;
 
-            font-weight: 800;
+    height: 140px;
 
-            font-size: 16px;
+    flex-shrink: 0;
 
-            color:
-                #20eaff;
-        }
+    border-radius: 18px;
 
+    overflow: hidden;
 
-        .chat-preview {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,0.15),
+            rgba(30,10,55,0.55)
+        );
 
-            margin-top: 4px;
+    border:
+        1px solid
+        rgba(255,255,255,0.28);
 
-            font-size: 12px;
+}
 
-            color:
-                #deddea;
+.profile-picture::before {
 
-            white-space: nowrap;
+    content: "";
 
-            overflow: hidden;
+    position: absolute;
 
-            text-overflow: ellipsis;
-        }
+    inset: 0;
 
+    background:
+        radial-gradient(
+            circle at 50% 35%,
+            rgba(255,255,255,0.22),
+            transparent 25%
+        ),
+        linear-gradient(
+            145deg,
+            rgba(160,60,255,0.25),
+            rgba(20,30,100,0.25)
+        );
 
-        .chat-date {
+}
 
-            align-self:
-                flex-start;
+.edit-button {
 
-            font-size: 11px;
+    position: absolute;
 
-            color:
-                #ddd5f0;
-        }
+    right: 8px;
 
+    bottom: 8px;
 
-        .no-chats-placeholder {
+    width: 32px;
 
-            padding: 30px;
+    height: 32px;
 
-            text-align: center;
+    border-radius: 50%;
 
-            border-radius: 24px;
+    border:
+        1px solid
+        rgba(255,255,255,0.25);
 
-            color:
-                #d7d2e5;
+    color: white;
 
-            background:
-                rgba(15,8,35,0.55);
+    background:
+        rgba(0,0,0,0.65);
 
-            border:
-                1px solid
-                rgba(255,255,255,0.22);
+    z-index: 2;
 
-            backdrop-filter:
-                blur(15px);
+    cursor: pointer;
 
-            -webkit-backdrop-filter:
-                blur(15px);
-        }
+}
 
+.profile-lines {
 
-        /* =========================================================
-           PROFIL
-        ========================================================= */
+    flex: 1;
 
-        .section-headline {
+    display: flex;
 
-            font-size: 18px;
+    flex-direction: column;
 
-            font-weight: 800;
+    justify-content: center;
 
-            margin:
-                25px 0 12px;
+    gap: 13px;
 
-            text-shadow:
-                0 2px 10px
-                rgba(0,0,0,0.7);
-        }
+}
 
+.profile-line {
 
-        .story-profile-box {
+    height: 12px;
 
-            display: flex;
+    border-radius: 10px;
 
-            gap: 18px;
+    background:
+        rgba(255,255,255,0.16);
 
-            padding: 18px;
+}
 
-            border-radius: 24px;
+.profile-line:nth-child(1) {
 
-            background:
-                rgba(15,8,35,0.55);
+    width: 55%;
 
-            border:
-                1px solid
-                rgba(255,255,255,0.25);
+}
 
-            backdrop-filter:
-                blur(15px);
+.profile-line:nth-child(2) {
 
-            -webkit-backdrop-filter:
-                blur(15px);
-        }
+    width: 90%;
 
+}
 
-        .user-pic-container {
+.profile-line:nth-child(3) {
 
-            width: 110px;
+    width: 65%;
 
-            height: 145px;
+}
 
-            flex-shrink: 0;
 
-            position: relative;
+/* =========================================================
+   STORY EINSTELLUNGEN
+========================================================= */
 
-            overflow: hidden;
+.section-title {
 
-            border-radius: 18px;
+    margin-bottom: 12px;
 
-            background:
-                rgba(255,255,255,0.12);
+    font-size: 20px;
 
-            border:
-                1px solid
-                rgba(255,255,255,0.25);
-        }
+    font-weight: 800;
 
+}
 
-        .user-pic-bg-dummy {
+.setting-row {
 
-            width: 100%;
-            height: 100%;
+    display: flex;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(255,255,255,0.15),
-                    rgba(0,0,0,0.30)
-                );
-        }
+    align-items: center;
 
+    justify-content: space-between;
 
-        .edit-pencil-btn {
+    padding: 16px;
 
-            position: absolute;
+    min-height: 68px;
 
-            right: 8px;
+    border-radius: 22px;
 
-            bottom: 8px;
+    margin-bottom: 12px;
 
-            width: 32px;
-            height: 32px;
+    cursor: pointer;
 
-            border-radius: 50%;
+}
 
-            color: #ffffff;
+.setting-left {
 
-            background:
-                rgba(0,0,0,0.65);
+    display: flex;
 
-            border:
-                1px solid
-                rgba(255,255,255,0.25);
-        }
+    align-items: center;
 
+    gap: 13px;
 
-        .status-bars-stack {
+    font-size: 14px;
 
-            flex: 1;
+    font-weight: 650;
 
-            display: flex;
+}
 
-            flex-direction: column;
+.setting-icon {
 
-            justify-content: center;
+    width: 40px;
 
-            gap: 11px;
-        }
+    height: 40px;
 
+    flex-shrink: 0;
 
-        .horizontal-dummy-bar {
+    display: flex;
 
-            width: 100%;
+    align-items: center;
 
-            height: 12px;
+    justify-content: center;
 
-            border-radius: 8px;
+    border-radius: 50%;
 
-            background:
-                rgba(255,255,255,0.20);
-        }
+    background:
+        rgba(255,255,255,0.10);
 
+    border:
+        1px solid
+        rgba(255,255,255,0.18);
 
-        .horizontal-dummy-bar:nth-child(2) {
+}
 
-            width: 85%;
+.setting-arrow {
 
-            background:
-                rgba(255,255,255,0.13);
-        }
+    font-size: 24px;
 
+    color: #ded8ea;
 
-        .horizontal-dummy-bar:nth-child(3) {
+}
 
-            width: 60%;
 
-            background:
-                rgba(255,255,255,0.09);
-        }
+/* =========================================================
+   BOTTOM NAVIGATION
+========================================================= */
 
+.bottom-navigation {
 
-        /* =========================================================
-           EINSTELLUNGEN
-        ========================================================= */
+    position: fixed;
 
-        .setting-clickable-row {
+    left: 15px;
 
-            display: flex;
+    right: 15px;
 
-            align-items: center;
+    bottom:
+        calc(14px + env(safe-area-inset-bottom));
 
-            justify-content: space-between;
+    max-width: 470px;
 
-            padding: 16px;
+    height: 68px;
 
-            margin-bottom: 12px;
+    margin: auto;
 
-            border-radius: 20px;
+    display: flex;
 
-            background:
-                rgba(15,8,35,0.55);
+    border-radius: 35px;
 
-            border:
-                1px solid
-                rgba(255,255,255,0.22);
+    overflow: hidden;
 
-            backdrop-filter:
-                blur(15px);
+    background:
+        rgba(7,4,18,0.91);
 
-            -webkit-backdrop-filter:
-                blur(15px);
+    border:
+        1px solid
+        rgba(255,255,255,0.22);
 
-            cursor: pointer;
-        }
+    box-shadow:
+        0 15px 40px
+        rgba(0,0,0,0.65);
 
+    backdrop-filter:
+        blur(22px);
 
-        .setting-left-side {
+    -webkit-backdrop-filter:
+        blur(22px);
 
-            display: flex;
+    z-index: 9999;
 
-            align-items: center;
+}
 
-            gap: 12px;
 
-            font-size: 15px;
+/* =========================================================
+   AKTIVER NAV-BEREICH
+========================================================= */
 
-            font-weight: 600;
-        }
+.nav-active {
 
+    position: absolute;
 
-        .clock-icon-wrap {
+    top: 5px;
 
-            width: 38px;
-            height: 38px;
+    bottom: 5px;
 
-            border-radius: 50%;
+    left: 5px;
 
-            display: flex;
+    width:
+        calc(33.333% - 10px);
 
-            align-items: center;
-            justify-content: center;
+    border-radius: 30px;
 
-            background:
-                rgba(255,255,255,0.10);
+    background:
+        linear-gradient(
+            135deg,
+            #ff26bc,
+            #9631ff
+        );
 
-            border:
-                1px solid
-                rgba(255,255,255,0.18);
-        }
+    box-shadow:
+        0 0 25px
+        rgba(255,0,210,0.38);
 
+    transition:
+        transform 0.3s ease;
 
-        .arrow-right-indicator {
+}
 
-            font-size: 18px;
 
-            color:
-                #ffffff;
-        }
+/* =========================================================
+   NAVIGATION BUTTONS
+========================================================= */
 
+.nav-item {
 
-        /* =========================================================
-           BOTTOM NAVIGATION
-        ========================================================= */
+    position: relative;
 
-        .bottom-nav {
+    z-index: 2;
 
-            position: fixed;
+    flex: 1;
 
-            left: 15px;
-            right: 15px;
+    display: flex;
 
-            bottom:
-                calc(15px + env(safe-area-inset-bottom));
+    flex-direction: column;
 
-            height: 65px;
+    align-items: center;
 
-            max-width: 470px;
+    justify-content: center;
 
-            margin: auto;
+    gap: 3px;
 
-            display: flex;
+    color: #c9c3d8;
 
-            z-index: 999;
+    font-size: 12px;
 
-            border-radius: 32px;
+    font-weight: 700;
 
-            overflow: hidden;
+    cursor: pointer;
 
-            background:
-                rgba(8,6,20,0.88);
+}
 
-            border:
-                1px solid
-                rgba(255,255,255,0.22);
+.nav-item.active {
 
-            box-shadow:
-                0 12px 35px
-                rgba(0,0,0,0.60);
+    color: white;
 
-            backdrop-filter:
-                blur(20px);
+}
 
-            -webkit-backdrop-filter:
-                blur(20px);
-        }
+.nav-icon {
 
+    font-size: 23px;
 
-        .nav-slider {
+    line-height: 1;
 
-            position: absolute;
+}
 
-            top: 5px;
 
-            left: 0;
+/* =========================================================
+   KLEINE HANDYS
+========================================================= */
 
-            width:
-                calc(33.333% - 10px);
+@media (max-width: 390px) {
 
-            height: 55px;
+    .app {
 
-            border-radius: 28px;
+        padding-left: 11px;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #ff22b5,
-                    #9c2cff
-                );
+        padding-right: 11px;
 
-            box-shadow:
-                0 0 25px
-                rgba(255,0,220,0.30);
+    }
 
-            z-index: 1;
+    .round-button {
 
-            transform:
-                translateX(5px);
+        width: 44px;
 
-            transition:
-                transform 0.3s
-                cubic-bezier(
-                    0.25,
-                    0.8,
-                    0.25,
-                    1
-                );
-        }
+        height: 44px;
 
+    }
 
-        .nav-link {
+    .tab {
 
-            position: relative;
+        padding:
+            9px 16px;
 
-            z-index: 2;
+    }
 
-            flex: 1;
+}
 
-            display: flex;
 
-            align-items: center;
+/* =========================================================
+   GRÖSSERE BILDSCHIRME
+========================================================= */
 
-            justify-content: center;
+@media (min-width: 700px) {
 
-            height: 100%;
+    .app {
 
-            color:
-                #c7c4d5;
+        max-width: 520px;
 
-            font-size: 12px;
+    }
 
-            font-weight: 700;
+}
 
-            cursor: pointer;
-
-            transition:
-                color 0.2s ease;
-        }
-
-
-        .nav-link.active {
-
-            color: #ffffff;
-
-            text-shadow:
-                0 0 8px
-                rgba(255,255,255,0.5);
-        }
-
-
-        /* =========================================================
-           MOBILE
-        ========================================================= */
-
-        @media (max-width: 390px) {
-
-            .container {
-
-                padding-left: 12px;
-
-                padding-right: 12px;
-            }
-
-
-            .character-grid {
-
-                gap: 10px;
-            }
-
-
-            .round-filter-btn {
-
-                width: 40px;
-                height: 40px;
-            }
-
-
-            .sub-tab {
-
-                padding:
-                    8px 13px;
-            }
-
-
-            .character-grid
-            .transparent-card {
-
-                min-height: 230px;
-            }
-        }
-
-    </style>
+</style>
 
 </head>
 
@@ -1283,26 +1132,29 @@
 <body>
 
 
-    <!-- =========================================================
-         HAUPTCONTAINER
-    ========================================================== -->
+<!-- =========================================================
+     APP
+========================================================= -->
 
-    <div class="container">
+<div class="app">
 
 
-        <!-- =====================================================
-             BRANDING
-        ====================================================== -->
+    <!-- =====================================================
+         GEMEINSAMER HEADER
+    ====================================================== -->
 
-        <div class="app-branding">
+    <header class="app-header">
 
-            <span>✦</span>
-            CYBER AI RP
+        <div class="logo">
+
+            ✦ CYBER
+            <span class="logo-ai">AI</span>
+            <span class="logo-rp">RP</span>
 
         </div>
 
 
-        <div class="app-subtitle">
+        <div class="subtitle">
 
             Deine Charaktere.
             Deine Geschichten.
@@ -1310,34 +1162,43 @@
 
         </div>
 
+    </header>
 
-        <!-- =====================================================
-             WILLKOMMEN
-        ====================================================== -->
 
-        <div class="user-welcome-zone">
+
+    <!-- =====================================================
+         SEITE 1
+         ENTDECKEN
+    ====================================================== -->
+
+    <main
+        id="pageDiscover"
+        class="page active"
+    >
+
+
+        <!-- BEGRÜSSUNG -->
+
+        <div class="welcome">
 
             <h1>
 
                 Hallo
-                <span>|</span>
 
-                <span
-                    id="username"
-                    style="
-                        color:#ffffff;
-                        font-weight:800;
-                    "
-                >
+                <span class="welcome-divider">
+                    |
+                </span>
+
+                <span id="username">
                     Spieler
                 </span>
 
             </h1>
 
 
-            <div class="status-dot-line">
+            <div class="online-line">
 
-                <div class="pink-dot"></div>
+                <span class="online-dot"></span>
 
                 Lust zu chatten?
 
@@ -1346,303 +1207,123 @@
         </div>
 
 
-        <!-- =====================================================
-             ENTDECKEN
-        ====================================================== -->
 
-        <div
-            id="screen-entdecken"
-            class="view-screen active"
-        >
+        <!-- SUCHE -->
+
+        <div class="search-row">
 
 
-            <!-- SUCHE -->
+            <div class="search-box">
 
-            <div class="search-wrapper">
-
-                <div class="search-icon-placeholder">
+                <span class="search-icon">
                     🔍
-                </div>
+                </span>
 
 
                 <input
-                    id="searchInput"
-                    class="search-bar"
                     type="text"
                     placeholder="Wen suchst du?"
                 >
 
-
-                <button
-                    class="round-filter-btn pink-bg"
-                    onclick="filterGender('female')"
-                >
-                    ♀
-                </button>
-
-
-                <button
-                    class="round-filter-btn"
-                    onclick="filterGender('male')"
-                >
-                    ♂
-                </button>
-
-
-                <button
-                    class="round-filter-btn"
-                    onclick="showAllCharacters()"
-                >
-                    ⇅
-                </button>
-
             </div>
 
 
-            <!-- TABS -->
-
-            <div class="filter-row-sub">
-
-                <div class="sub-tabs">
-
-                    <button
-                        id="officialTab"
-                        class="sub-tab active"
-                        onclick="showOfficial()"
-                    >
-                        Offiziell
-                    </button>
-
-
-                    <button
-                        id="favoriteTab"
-                        class="sub-tab inactive"
-                        onclick="showFavorites()"
-                    >
-                        Favoriten
-                    </button>
-
-                </div>
-
-
-                <button
-                    class="round-filter-btn"
-                    style="
-                        width:36px;
-                        height:36px;
-                    "
-                    onclick="alert('Weitere Filter folgen.')"
-                >
-                    ⚡
-                </button>
-
-            </div>
-
-
-            <!-- CHARAKTERE -->
-
-            <div
-                id="characterGrid"
-                class="character-grid"
+            <button
+                id="femaleFilter"
+                class="round-button active"
+                onclick="toggleFilter(this)"
             >
 
+                ♀
 
-                <!-- CHARAKTER 1 -->
-
-                <div
-                    class="transparent-card"
-                    data-name="Luna"
-                    data-gender="female"
-                    onclick="openCharacter('Luna')"
-                >
-
-                    <div class="card-plus-icon">
-                        +
-                    </div>
+            </button>
 
 
-                    <button
-                        class="fav-heart-btn"
-                        onclick="
-                            toggleFavorite(
-                                event,
-                                this
-                            )
-                        "
-                    >
-                        ♡
-                    </button>
+            <button
+                id="maleFilter"
+                class="round-button"
+                onclick="toggleFilter(this)"
+            >
+
+                ♂
+
+            </button>
 
 
-                    <div class="scan-line"></div>
+            <button
+                class="round-button"
+                onclick="openSortMenu()"
+            >
+
+                ⇅
+
+            </button>
 
 
-                    <div class="card-text-zone">
-
-                        <div class="char-name">
-                            Luna
-                        </div>
+        </div>
 
 
-                        <div class="char-status-row">
 
-                            <div class="char-dot"></div>
+        <!-- OFFIZIELL / FAVORITEN -->
 
-                            Online
-
-                        </div>
-
-                    </div>
-
-                </div>
+        <div class="tabs">
 
 
-                <!-- CHARAKTER 2 -->
+            <button
+                class="tab active"
+                onclick="selectDiscoverTab(this)"
+            >
 
-                <div
-                    class="transparent-card"
-                    data-name="Mia"
-                    data-gender="female"
-                    onclick="openCharacter('Mia')"
-                >
+                Offiziell
 
-                    <div class="card-plus-icon">
-                        +
-                    </div>
+            </button>
 
 
-                    <button
-                        class="fav-heart-btn"
-                        onclick="
-                            toggleFavorite(
-                                event,
-                                this
-                            )
-                        "
-                    >
-                        ♡
-                    </button>
+            <button
+                class="tab"
+                onclick="selectDiscoverTab(this)"
+            >
+
+                Favoriten
+
+            </button>
 
 
-                    <div class="scan-line"></div>
+        </div>
 
 
-                    <div class="card-text-zone">
 
-                        <div class="char-name">
-                            Mia
-                        </div>
+        <!--
+            HIER KOMMEN SPÄTER DIE CHARAKTERE HIN.
+
+            Vorerst bleibt dieser Bereich leer.
+        -->
+
+        <div
+            class="empty-discover glass"
+        >
+
+            <div class="empty-content">
 
 
-                        <div class="char-status-row">
+                <div class="empty-icon">
 
-                            <div class="char-dot"></div>
-
-                            Online
-
-                        </div>
-
-                    </div>
+                    ◇
 
                 </div>
 
 
-                <!-- CHARAKTER 3 -->
+                <div class="empty-title">
 
-                <div
-                    class="transparent-card"
-                    data-name="Alex"
-                    data-gender="male"
-                    onclick="openCharacter('Alex')"
-                >
-
-                    <div class="card-plus-icon">
-                        +
-                    </div>
-
-
-                    <button
-                        class="fav-heart-btn"
-                        onclick="
-                            toggleFavorite(
-                                event,
-                                this
-                            )
-                        "
-                    >
-                        ♡
-                    </button>
-
-
-                    <div class="scan-line"></div>
-
-
-                    <div class="card-text-zone">
-
-                        <div class="char-name">
-                            Alex
-                        </div>
-
-
-                        <div class="char-status-row">
-
-                            <div class="char-dot"></div>
-
-                            Online
-
-                        </div>
-
-                    </div>
+                    Noch keine Charaktere
 
                 </div>
 
 
-                <!-- CHARAKTER 4 -->
+                <div class="empty-text">
 
-                <div
-                    class="transparent-card"
-                    data-name="Noah"
-                    data-gender="male"
-                    onclick="openCharacter('Noah')"
-                >
-
-                    <div class="card-plus-icon">
-                        +
-                    </div>
-
-
-                    <button
-                        class="fav-heart-btn"
-                        onclick="
-                            toggleFavorite(
-                                event,
-                                this
-                            )
-                        "
-                    >
-                        ♡
-                    </button>
-
-
-                    <div class="scan-line"></div>
-
-
-                    <div class="card-text-zone">
-
-                        <div class="char-name">
-                            Noah
-                        </div>
-
-
-                        <div class="char-status-row">
-
-                            <div class="char-dot"></div>
-
-                            Online
-
-                        </div>
-
-                    </div>
+                    Die Charaktere werden später
+                    hier erscheinen.
 
                 </div>
 
@@ -1652,1124 +1333,782 @@
         </div>
 
 
-        <!-- =====================================================
-             CHATS
-        ====================================================== -->
+    </main>
+
+
+
+    <!-- =====================================================
+         SEITE 2
+         CHATS
+    ====================================================== -->
+
+    <main
+        id="pageChats"
+        class="page"
+    >
+
+
+        <div class="page-title">
+
+            Chats
+
+        </div>
+
+
+
+        <!-- CHAT SUCHE -->
 
         <div
-            id="screen-chats"
-            class="view-screen"
+            class="search-box chat-search"
         >
 
+            <span class="search-icon">
 
-            <div
-                class="search-wrapper"
+                🔍
+
+            </span>
+
+
+            <input
+                type="text"
+                placeholder="Chats durchsuchen ..."
             >
 
-                <div class="search-icon-placeholder">
-                    🔍
-                </div>
+        </div>
 
 
-                <input
-                    class="search-bar"
-                    type="text"
-                    placeholder="Chats durchsuchen ..."
-                    oninput="searchChats(this.value)"
-                >
 
-            </div>
+        <!-- CHAT FILTER -->
+
+        <div class="chat-filters">
 
 
-            <div
-                class="filter-row-sub"
+            <button
+                class="chat-filter active"
             >
 
-                <div class="sub-tabs">
+                Alle
 
-                    <button
-                        class="sub-tab active"
-                    >
-                        Alle
-                    </button>
+            </button>
 
 
-                    <button
-                        class="sub-tab inactive"
-                    >
-                        Ungelesen
-                    </button>
-
-
-                    <button
-                        class="sub-tab inactive"
-                    >
-                        Favoriten
-                    </button>
-
-
-                    <button
-                        class="sub-tab inactive"
-                    >
-                        Archiviert
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <div
-                id="chatList"
-                class="chat-list-container"
+            <button
+                class="chat-filter"
             >
 
-                <!-- BEISPIEL CHAT -->
+                Ungelesen
 
-                <div class="chat-item">
-
-                    <div class="chat-avatar">
-                        👤
-                    </div>
+            </button>
 
 
-                    <div class="chat-info">
+            <button
+                class="chat-filter"
+            >
 
-                        <div class="chat-name">
-                            Name
-                        </div>
+                Favoriten
 
-
-                        <div class="chat-preview">
-                            Nachrichten Vorschau steht hier ...
-                        </div>
-
-                    </div>
+            </button>
 
 
-                    <div class="chat-date">
-                        14:02
-                    </div>
+            <button
+                class="chat-filter"
+            >
 
-                </div>
+                Archiviert
 
-
-                <div class="chat-item">
-
-                    <div class="chat-avatar">
-                        👤
-                    </div>
+            </button>
 
 
-                    <div class="chat-info">
-
-                        <div class="chat-name">
-                            Name
-                        </div>
+        </div>
 
 
-                        <div class="chat-preview">
-                            Nachrichten Vorschau steht hier ...
-                        </div>
 
-                    </div>
+        <!--
+            HIER KOMMEN SPÄTER DIE ECHTEN CHATS HIN.
+        -->
+
+        <div
+            class="empty-chats glass"
+        >
+
+            <div>
 
 
-                    <div class="chat-date">
-                        Gestern
-                    </div>
+                <div class="empty-chats-icon">
+
+                    💬
 
                 </div>
 
 
-                <div class="no-chats-placeholder">
+                <div class="empty-chats-title">
 
-                    Weitere Chats erscheinen
-                    hier, sobald du ein RP
-                    startest.
+                    Noch keine Chats
 
                 </div>
+
+
+                <div class="empty-chats-text">
+
+                    Deine begonnenen
+                    RP-Geschichten werden
+                    später hier angezeigt.
+
+                </div>
+
 
             </div>
 
         </div>
 
 
-        <!-- =====================================================
-             PROFIL
-        ====================================================== -->
+    </main>
+
+
+
+    <!-- =====================================================
+         SEITE 3
+         PROFIL
+    ====================================================== -->
+
+    <main
+        id="pageProfile"
+        class="page"
+    >
+
+
+        <div class="profile-title">
+
+            Du in der Geschichte
+
+        </div>
+
+
+
+        <!-- PROFILKARTE -->
 
         <div
-            id="screen-profil"
-            class="view-screen"
+            class="profile-card glass"
         >
 
 
-            <div class="section-headline">
+            <div class="profile-picture">
 
-                Du in der Geschichte
+
+                <button
+                    class="edit-button"
+                    onclick="editProfile()"
+                >
+
+                    ✎
+
+                </button>
+
 
             </div>
 
 
-            <div
-                class="story-profile-box"
-            >
+            <div class="profile-lines">
 
 
                 <div
-                    class="user-pic-container"
-                >
-
-                    <div
-                        class="user-pic-bg-dummy"
-                    ></div>
-
-
-                    <button
-                        class="edit-pencil-btn"
-                        onclick="
-                            editProfile()
-                        "
-                    >
-                        ✎
-                    </button>
-
-                </div>
+                    class="profile-line"
+                ></div>
 
 
                 <div
-                    class="status-bars-stack"
-                >
-
-                    <div
-                        class="horizontal-dummy-bar"
-                    ></div>
+                    class="profile-line"
+                ></div>
 
 
-                    <div
-                        class="horizontal-dummy-bar"
-                    ></div>
+                <div
+                    class="profile-line"
+                ></div>
 
-
-                    <div
-                        class="horizontal-dummy-bar"
-                    ></div>
-
-                </div>
 
             </div>
 
 
-            <div class="section-headline">
+        </div>
 
-                Story-Einstellungen
+
+
+        <!-- STORY EINSTELLUNGEN -->
+
+        <div class="section-title">
+
+            Story-Einstellungen
+
+        </div>
+
+
+
+        <div
+            class="setting-row glass"
+            onclick="futureFeature()"
+        >
+
+
+            <div class="setting-left">
+
+
+                <div class="setting-icon">
+
+                    🕒
+
+                </div>
+
+
+                <span>
+
+                    Folgt in Kürze
+
+                </span>
+
 
             </div>
 
 
-            <div
-                class="setting-clickable-row"
-                onclick="
-                    openSettings()
-                "
-            >
+            <div class="setting-arrow">
 
-                <div
-                    class="setting-left-side"
-                >
-
-                    <div
-                        class="clock-icon-wrap"
-                    >
-                        🕒
-                    </div>
-
-
-                    <span>
-                        Folgt in Kürze
-                    </span>
-
-                </div>
-
-
-                <div
-                    class="arrow-right-indicator"
-                >
-                    ➔
-                </div>
+                ›
 
             </div>
 
 
-            <div
-                class="setting-clickable-row"
-                onclick="
-                    alert(
-                        'App-Einstellungen folgen.'
-                    )
-                "
-            >
-
-                <div
-                    class="setting-left-side"
-                >
-
-                    <div
-                        class="clock-icon-wrap"
-                    >
-                        ⚙️
-                    </div>
+        </div>
 
 
-                    <span>
-                        App-Einstellungen
-                    </span>
+
+        <div
+            class="setting-row glass"
+            onclick="futureFeature()"
+        >
+
+
+            <div class="setting-left">
+
+
+                <div class="setting-icon">
+
+                    ⚙️
 
                 </div>
 
 
-                <div
-                    class="arrow-right-indicator"
-                >
-                    ➔
-                </div>
+                <span>
+
+                    App-Einstellungen
+
+                </span>
+
 
             </div>
 
 
-            <div
-                class="setting-clickable-row"
-                onclick="
-                    alert(
-                        'CYBER AI RP ist für Erwachsene ab 18 Jahren.'
-                    )
-                "
-            >
+            <div class="setting-arrow">
 
-                <div
-                    class="setting-left-side"
-                >
-
-                    <div
-                        class="clock-icon-wrap"
-                    >
-                        🔞
-                    </div>
-
-
-                    <span>
-                        18+ Bereich
-                    </span>
-
-                </div>
-
-
-                <div
-                    class="arrow-right-indicator"
-                >
-                    ➔
-                </div>
+                ›
 
             </div>
+
+
+        </div>
+
+
+
+        <div
+            class="setting-row glass"
+            onclick="futureFeature()"
+        >
+
+
+            <div class="setting-left">
+
+
+                <div class="setting-icon">
+
+                    🔞
+
+                </div>
+
+
+                <span>
+
+                    18+ Einstellungen
+
+                </span>
+
+
+            </div>
+
+
+            <div class="setting-arrow">
+
+                ›
+
+            </div>
+
+
+        </div>
+
+
+    </main>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     UNTERE NAVIGATION
+========================================================= -->
+
+<nav class="bottom-navigation">
+
+
+    <!-- AKTIVER BEREICH -->
+
+    <div
+        id="navActive"
+        class="nav-active"
+    ></div>
+
+
+
+    <!-- ENTDECKEN -->
+
+    <div
+        id="navDiscover"
+        class="nav-item active"
+        onclick="changePage('discover')"
+    >
+
+        <div class="nav-icon">
+
+            ◇
+
+        </div>
+
+
+        <div>
+
+            Entdecken
 
         </div>
 
     </div>
 
 
-    <!-- =========================================================
-         BOTTOM NAVIGATION
-    ========================================================== -->
 
-    <nav class="bottom-nav">
+    <!-- CHATS -->
 
+    <div
+        id="navChats"
+        class="nav-item"
+        onclick="changePage('chats')"
+    >
 
-        <div
-            id="nav-slider"
-            class="nav-slider"
-        ></div>
+        <div class="nav-icon">
 
-
-        <div
-            class="nav-link active"
-            onclick="
-                switchView(
-                    0,
-                    'screen-entdecken',
-                    this
-                )
-            "
-        >
-
-            <span>
-                ◇
-                <br>
-                Entdecken
-            </span>
+            💬
 
         </div>
 
 
-        <div
-            class="nav-link"
-            onclick="
-                switchView(
-                    1,
-                    'screen-chats',
-                    this
-                )
-            "
-        >
+        <div>
 
-            <span>
-                💬
-                <br>
-                Chats
-            </span>
+            Chats
+
+        </div>
+
+    </div>
+
+
+
+    <!-- PROFIL -->
+
+    <div
+        id="navProfile"
+        class="nav-item"
+        onclick="changePage('profile')"
+    >
+
+        <div class="nav-icon">
+
+            ♙
 
         </div>
 
 
-        <div
-            class="nav-link"
-            onclick="
-                switchView(
-                    2,
-                    'screen-profil',
-                    this
-                )
-            "
-        >
+        <div>
 
-            <span>
-                ♙
-                <br>
-                Profil
-            </span>
+            Profil
 
         </div>
 
-
-    </nav>
-
-
-    <!-- =========================================================
-         JAVASCRIPT
-    ========================================================== -->
-
-    <script>
+    </div>
 
 
-        /* =====================================================
-           TELEGRAM
-        ====================================================== */
-
-        const tg =
-            window.Telegram?.WebApp;
+</nav>
 
 
-        if (tg) {
 
-            try {
+<script>
 
-                tg.ready();
+/* =========================================================
+   TELEGRAM
+========================================================= */
 
-                tg.expand();
-
-
-                /*
-                 * Telegram-Farben
-                 */
-
-                tg.setHeaderColor(
-                    "#020208"
-                );
-
-                tg.setBackgroundColor(
-                    "#020208"
-                );
+const telegram =
+    window.Telegram?.WebApp;
 
 
-                /*
-                 * Telegram Benutzer
-                 */
+if (telegram) {
 
-                if (
-                    tg.initDataUnsafe &&
-                    tg.initDataUnsafe.user
-                ) {
+    try {
 
-                    const user =
-                        tg.initDataUnsafe.user;
+        telegram.ready();
+
+        telegram.expand();
 
 
-                    const username =
-                        document.getElementById(
-                            "username"
-                        );
+        telegram.setHeaderColor(
+            "#03020b"
+        );
 
 
-                    if (username) {
-
-                        username.innerText =
-                            user.first_name ||
-                            "Spieler";
-
-                    }
-
-                }
-
-            }
-
-            catch (error) {
-
-                console.log(
-                    "Telegram konnte nicht initialisiert werden.",
-                    error
-                );
-
-            }
-
-        }
-
-        else {
-
-            console.log(
-                "Normaler Browser-Modus."
-            );
-
-        }
+        telegram.setBackgroundColor(
+            "#03020b"
+        );
 
 
-        /* =====================================================
-           HINTERGRUND WECHSELN
-        ====================================================== */
+        /*
+            Telegram-Benutzer auslesen
+        */
 
-        function changeBackground(
-            screen
+        if (
+            telegram.initDataUnsafe &&
+            telegram.initDataUnsafe.user
         ) {
 
-
-            const body =
-                document.body;
-
-
-            if (
-                screen ===
-                "entdecken"
-            ) {
-
-                body.style.backgroundImage =
-                    'url("./images/entdecken.jpg")';
-
-            }
+            const user =
+                telegram
+                    .initDataUnsafe
+                    .user;
 
 
-            else if (
-                screen ===
-                "chats"
-            ) {
-
-                body.style.backgroundImage =
-                    'url("./images/chats.jpg")';
-
-            }
-
-
-            else if (
-                screen ===
-                "profil"
-            ) {
-
-                body.style.backgroundImage =
-                    'url("./images/profil.jpg")';
-
-            }
-
-        }
-
-
-        /* =====================================================
-           NAVIGATION
-        ====================================================== */
-
-        function switchView(
-            index,
-            screenId,
-            element
-        ) {
-
-
-            const slider =
+            const username =
                 document.getElementById(
-                    "nav-slider"
+                    "username"
                 );
 
 
-            /*
-             * Slider
-             */
+            username.textContent =
+                user.first_name ||
+                "Spieler";
 
-            if (
-                index === 0
-            ) {
+        }
 
-                slider.style.transform =
-                    "translateX(5px)";
+    }
 
-            }
+    catch (error) {
 
+        console.log(
+            "Telegram WebApp Fehler:",
+            error
+        );
 
-            else if (
-                index === 1
-            ) {
+    }
 
-                slider.style.transform =
-                    "translateX(calc(100% + 15px))";
-
-            }
+}
 
 
-            else if (
-                index === 2
-            ) {
 
-                slider.style.transform =
-                    "translateX(calc(200% + 25px))";
+/* =========================================================
+   SEITE WECHSELN
+========================================================= */
 
-            }
+function changePage(page) {
 
 
-            /*
-             * Navigation aktivieren
-             */
+    /*
+       Alle Seiten ausblenden
+    */
 
-            document
-                .querySelectorAll(
-                    ".nav-link"
-                )
-                .forEach(
-                    link =>
-                        link.classList.remove(
-                            "active"
-                        )
+    document
+        .querySelectorAll(".page")
+        .forEach(
+            pageElement => {
+
+                pageElement.classList.remove(
+                    "active"
                 );
 
+            }
+        );
 
-            element.classList.add(
+
+    /*
+       Navigation zurücksetzen
+    */
+
+    document
+        .querySelectorAll(".nav-item")
+        .forEach(
+            navigationElement => {
+
+                navigationElement.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    /*
+       ENTDECKEN
+    */
+
+    if (page === "discover") {
+
+
+        document
+            .getElementById(
+                "pageDiscover"
+            )
+            .classList.add(
                 "active"
             );
 
 
-            /*
-             * Screens wechseln
-             */
-
-            document
-                .querySelectorAll(
-                    ".view-screen"
-                )
-                .forEach(
-                    screen =>
-                        screen.classList.remove(
-                            "active"
-                        )
-                );
-
-
-            const target =
-                document.getElementById(
-                    screenId
-                );
-
-
-            if (target) {
-
-                target.classList.add(
-                    "active"
-                );
-
-            }
-
-
-            /*
-             * Hintergrund wechseln
-             */
-
-            if (
-                index === 0
-            ) {
-
-                changeBackground(
-                    "entdecken"
-                );
-
-            }
-
-
-            else if (
-                index === 1
-            ) {
-
-                changeBackground(
-                    "chats"
-                );
-
-            }
-
-
-            else if (
-                index === 2
-            ) {
-
-                changeBackground(
-                    "profil"
-                );
-
-            }
-
-
-            /*
-             * Seite nach oben
-             */
-
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-
-        }
-
-
-        /* =====================================================
-           CHARAKTER ÖFFNEN
-        ====================================================== */
-
-        function openCharacter(
-            name
-        ) {
-
-            alert(
-                "Du möchtest mit " +
-                name +
-                " chatten."
-            );
-
-        }
-
-
-        /* =====================================================
-           FAVORIT
-        ====================================================== */
-
-        function toggleFavorite(
-            event,
-            button
-        ) {
-
-
-            event.stopPropagation();
-
-
-            button.classList.toggle(
-                "favorite"
+        document
+            .getElementById(
+                "navDiscover"
+            )
+            .classList.add(
+                "active"
             );
 
 
-            if (
-                button.classList.contains(
-                    "favorite"
-                )
-            ) {
+        moveNavigation(0);
 
-                button.innerText =
-                    "♥";
-
-            }
-
-            else {
-
-                button.innerText =
-                    "♡";
-
-            }
-
-        }
+    }
 
 
-        /* =====================================================
-           SUCHE
-        ====================================================== */
+    /*
+       CHATS
+    */
 
-        const searchInput =
-            document.getElementById(
-                "searchInput"
+    if (page === "chats") {
+
+
+        document
+            .getElementById(
+                "pageChats"
+            )
+            .classList.add(
+                "active"
             );
 
 
-        if (searchInput) {
-
-            searchInput.addEventListener(
-                "input",
-                function () {
-
-
-                    const search =
-                        this.value
-                            .toLowerCase()
-                            .trim();
-
-
-                    document
-                        .querySelectorAll(
-                            ".transparent-card"
-                        )
-                        .forEach(
-                            card => {
-
-
-                                const name =
-                                    (
-                                        card.dataset.name ||
-                                        ""
-                                    )
-                                    .toLowerCase();
-
-
-                                if (
-                                    name.includes(
-                                        search
-                                    )
-                                ) {
-
-                                    card.style.display =
-                                        "";
-
-                                }
-
-                                else {
-
-                                    card.style.display =
-                                        "none";
-
-                                }
-
-                            }
-                        );
-
-                }
+        document
+            .getElementById(
+                "navChats"
+            )
+            .classList.add(
+                "active"
             );
 
-        }
 
+        moveNavigation(1);
 
-        /* =====================================================
-           GESCHLECHT FILTER
-        ====================================================== */
+    }
 
-        function filterGender(
-            gender
-        ) {
 
+    /*
+       PROFIL
+    */
 
-            document
-                .querySelectorAll(
-                    ".transparent-card"
-                )
-                .forEach(
-                    card => {
+    if (page === "profile") {
 
 
-                        if (
-                            card.dataset.gender ===
-                            gender
-                        ) {
-
-                            card.style.display =
-                                "";
-
-                        }
-
-                        else {
-
-                            card.style.display =
-                                "none";
-
-                        }
-
-                    }
-                );
-
-
-            /*
-             * Suchfeld leeren
-             */
-
-            if (searchInput) {
-
-                searchInput.value =
-                    "";
-
-            }
-
-        }
-
-
-        /* =====================================================
-           ALLE CHARAKTERE
-        ====================================================== */
-
-        function showAllCharacters() {
-
-
-            document
-                .querySelectorAll(
-                    ".transparent-card"
-                )
-                .forEach(
-                    card => {
-
-                        card.style.display =
-                            "";
-
-                    }
-                );
-
-
-            if (searchInput) {
-
-                searchInput.value =
-                    "";
-
-            }
-
-        }
-
-
-        /* =====================================================
-           OFFIZIELL
-        ====================================================== */
-
-        function showOfficial() {
-
-
-            showAllCharacters();
-
-
-            document
-                .getElementById(
-                    "officialTab"
-                )
-                .classList.add(
-                    "active"
-                );
-
-
-            document
-                .getElementById(
-                    "officialTab"
-                )
-                .classList.remove(
-                    "inactive"
-                );
-
-
-            document
-                .getElementById(
-                    "favoriteTab"
-                )
-                .classList.remove(
-                    "active"
-                );
-
-
-            document
-                .getElementById(
-                    "favoriteTab"
-                )
-                .classList.add(
-                    "inactive"
-                );
-
-        }
-
-
-        /* =====================================================
-           FAVORITEN ANZEIGEN
-        ====================================================== */
-
-        function showFavorites() {
-
-
-            document
-                .querySelectorAll(
-                    ".transparent-card"
-                )
-                .forEach(
-                    card => {
-
-
-                        const heart =
-                            card.querySelector(
-                                ".fav-heart-btn"
-                            );
-
-
-                        if (
-                            heart &&
-                            heart.classList.contains(
-                                "favorite"
-                            )
-                        ) {
-
-                            card.style.display =
-                                "";
-
-                        }
-
-                        else {
-
-                            card.style.display =
-                                "none";
-
-                        }
-
-                    }
-                );
-
-
-            document
-                .getElementById(
-                    "favoriteTab"
-                )
-                .classList.add(
-                    "active"
-                );
-
-
-            document
-                .getElementById(
-                    "favoriteTab"
-                )
-                .classList.remove(
-                    "inactive"
-                );
-
-
-            document
-                .getElementById(
-                    "officialTab"
-                )
-                .classList.remove(
-                    "active"
-                );
-
-
-            document
-                .getElementById(
-                    "officialTab"
-                )
-                .classList.add(
-                    "inactive"
-                );
-
-        }
-
-
-        /* =====================================================
-           CHAT SUCHE
-        ====================================================== */
-
-        function searchChats(
-            value
-        ) {
-
-
-            const search =
-                value
-                    .toLowerCase()
-                    .trim();
-
-
-            document
-                .querySelectorAll(
-                    ".chat-item"
-                )
-                .forEach(
-                    chat => {
-
-
-                        const name =
-                            chat
-                                .querySelector(
-                                    ".chat-name"
-                                )
-                                ?.innerText
-                                .toLowerCase() ||
-                            "";
-
-
-                        if (
-                            name.includes(
-                                search
-                            )
-                        ) {
-
-                            chat.style.display =
-                                "";
-
-                        }
-
-                        else {
-
-                            chat.style.display =
-                                "none";
-
-                        }
-
-                    }
-                );
-
-        }
-
-
-        /* =====================================================
-           PROFIL BEARBEITEN
-        ====================================================== */
-
-        function editProfile() {
-
-            alert(
-                "Die Profilbearbeitung kommt als nächster Schritt."
+        document
+            .getElementById(
+                "pageProfile"
+            )
+            .classList.add(
+                "active"
             );
 
-        }
 
-
-        /* =====================================================
-           STORY EINSTELLUNGEN
-        ====================================================== */
-im
-        function openSettings() {
-
-            alert(
-                "Die Story-Einstellungen kommen als nächster Schritt."
+        document
+            .getElementById(
+                "navProfile"
+            )
+            .classList.add(
+                "active"
             );
 
-        }
+
+        moveNavigation(2);
+
+    }
 
 
-        /* =====================================================
-           START-HINTERGRUND
-        ====================================================== */
+    /*
+       Nach oben scrollen
+    */
 
-        changeBackground(
-            "entdecken"
+    window.scrollTo({
+
+        top: 0,
+
+        behavior: "smooth"
+
+    });
+
+}
+
+
+
+/* =========================================================
+   NAVIGATION ANIMATION
+========================================================= */
+
+function moveNavigation(index) {
+
+
+    const indicator =
+        document.getElementById(
+            "navActive"
         );
 
 
-    </script>
+    if (index === 0) {
+
+        indicator.style.transform =
+            "translateX(0)";
+
+    }
+
+
+    if (index === 1) {
+
+        indicator.style.transform =
+            "translateX(100%)";
+
+    }
+
+
+    if (index === 2) {
+
+        indicator.style.transform =
+            "translateX(200%)";
+
+    }
+
+}
+
+
+
+/* =========================================================
+   FILTER
+========================================================= */
+
+function toggleFilter(button) {
+
+    button.classList.toggle(
+        "active"
+    );
+
+}
+
+
+
+/* =========================================================
+   SORTIERUNG
+========================================================= */
+
+function openSortMenu() {
+
+    alert(
+        "Die Sortierung wird später eingerichtet."
+    );
+
+}
+
+
+
+/* =========================================================
+   ENTDECKEN TABS
+========================================================= */
+
+function selectDiscoverTab(
+    selected
+) {
+
+
+    document
+        .querySelectorAll(
+            ".tabs .tab"
+        )
+        .forEach(
+            tab => {
+
+                tab.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    selected.classList.add(
+        "active"
+    );
+
+}
+
+
+
+/* =========================================================
+   PROFIL BEARBEITEN
+========================================================= */
+
+function editProfile() {
+
+    alert(
+        "Die Profilbearbeitung wird später eingerichtet."
+    );
+
+}
+
+
+
+/* =========================================================
+   ZUKÜNFTIGE FUNKTIONEN
+========================================================= */
+
+function futureFeature() {
+
+    alert(
+        "Diese Funktion wird später eingerichtet."
+    );
+
+}
+
+
+
+/* =========================================================
+   START
+========================================================= */
+
+changePage(
+    "discover"
+);
+
+</script>
 
 
 </body>
