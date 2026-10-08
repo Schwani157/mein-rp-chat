@@ -2,6 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
+
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
@@ -12,20 +13,37 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
     <style>
+
+        /* =========================================
+           GRUNDLAGEN
+        ========================================= */
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        html,
-        body {
+        html {
             width: 100%;
             min-height: 100%;
-            background: #03020b;
+
+            background-color: #03020b;
+
+            background-image:
+                url("./HintergrundCyperAi.jpg"),
+                url("https://raw.githubusercontent.com/Schwani157/mein-rp-chat/main/HintergrundCyperAi.jpg");
+
+            background-size: cover;
+            background-position: center top;
+            background-repeat: no-repeat;
         }
 
+
         body {
+            width: 100%;
+            min-height: 100vh;
+
             font-family:
                 -apple-system,
                 BlinkMacSystemFont,
@@ -36,24 +54,13 @@
                 sans-serif;
 
             color: #ffffff;
+
             overflow-x: hidden;
-        }
 
-        /* =========================================
-           HINTERGRUND
-        ========================================= */
+            background-color: #03020b;
 
-        .background-layer {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-
-            background:
-                linear-gradient(
-                    rgba(2, 1, 10, 0.12),
-                    rgba(2, 1, 10, 0.12)
-                ),
+            background-image:
+                url("./HintergrundCyperAi.jpg"),
                 url("https://raw.githubusercontent.com/Schwani157/mein-rp-chat/main/HintergrundCyperAi.jpg");
 
             background-size: cover;
@@ -61,34 +68,95 @@
             background-repeat: no-repeat;
         }
 
+
+        /* =========================================
+           FESTE HINTERGRUND-EBENE
+        ========================================= */
+
+        .background-layer {
+
+            position: fixed;
+
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            width: 100vw;
+            height: 100vh;
+
+            z-index: 0;
+
+            pointer-events: none;
+
+            background-color: #03020b;
+
+            background-image:
+                linear-gradient(
+                    rgba(2, 1, 10, 0.12),
+                    rgba(2, 1, 10, 0.12)
+                ),
+                url("./HintergrundCyperAi.jpg"),
+                url("https://raw.githubusercontent.com/Schwani157/mein-rp-chat/main/HintergrundCyperAi.jpg");
+
+            background-size:
+                cover,
+                cover,
+                cover;
+
+            background-position:
+                center top,
+                center top,
+                center top;
+
+            background-repeat:
+                no-repeat,
+                no-repeat,
+                no-repeat;
+        }
+
+
         /* =========================================
            APP
         ========================================= */
 
         .app {
+
             position: relative;
+
             z-index: 1;
 
             width: 100%;
+
             min-height: 100vh;
 
             padding-bottom: 95px;
         }
+
 
         /* =========================================
            HEADER
         ========================================= */
 
         .top-header {
+
             width: 100%;
-            padding: 22px 20px 10px;
+
+            padding:
+                22px
+                20px
+                10px;
 
             text-align: center;
         }
 
+
         .logo {
+
             font-size: 22px;
+
             font-weight: 800;
+
             letter-spacing: 1.5px;
 
             text-shadow:
@@ -96,103 +164,149 @@
                 0 0 20px rgba(166, 110, 255, 0.4);
         }
 
+
         .logo span {
+
             color: #c58cff;
         }
 
+
         .subtitle {
+
             margin-top: 5px;
 
             font-size: 11px;
-            color: rgba(255, 255, 255, 0.65);
+
+            color:
+                rgba(255, 255, 255, 0.65);
 
             letter-spacing: 0.4px;
         }
+
 
         /* =========================================
            SEITEN
         ========================================= */
 
         .page {
+
             display: none;
 
             width: 100%;
-            padding: 8px 16px 20px;
+
+            padding:
+                8px
+                16px
+                20px;
         }
 
+
         .page.active {
+
             display: block;
         }
+
 
         /* =========================================
            TITEL
         ========================================= */
 
         .page-title {
+
             margin-top: 12px;
+
             margin-bottom: 18px;
 
             font-size: 28px;
+
             font-weight: 800;
         }
 
+
         .greeting {
+
             margin-top: 15px;
 
             font-size: 15px;
-            color: rgba(255, 255, 255, 0.72);
+
+            color:
+                rgba(255, 255, 255, 0.72);
         }
 
+
         .greeting strong {
+
             color: #ffffff;
         }
 
+
         .main-question {
+
             margin-top: 3px;
 
             font-size: 27px;
+
             font-weight: 800;
         }
+
 
         /* =========================================
            SUCHFELD
         ========================================= */
 
         .search-box {
+
             display: flex;
+
             align-items: center;
 
             width: 100%;
+
             height: 48px;
 
             margin-top: 20px;
+
             margin-bottom: 16px;
 
-            padding: 0 15px;
+            padding:
+                0
+                15px;
 
-            border: 1px solid rgba(255, 255, 255, 0.13);
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.13);
+
             border-radius: 15px;
 
-            background: rgba(8, 6, 20, 0.62);
+            background:
+                rgba(8, 6, 20, 0.62);
 
             backdrop-filter: blur(15px);
+
             -webkit-backdrop-filter: blur(15px);
 
             box-shadow:
-                0 8px 25px rgba(0, 0, 0, 0.18);
+                0 8px 25px
+                rgba(0, 0, 0, 0.18);
         }
 
+
         .search-icon {
+
             margin-right: 10px;
 
             font-size: 18px;
+
             opacity: 0.7;
         }
 
+
         .search-box input {
+
             width: 100%;
 
             border: none;
+
             outline: none;
 
             background: transparent;
@@ -202,16 +316,22 @@
             font-size: 14px;
         }
 
+
         .search-box input::placeholder {
-            color: rgba(255, 255, 255, 0.48);
+
+            color:
+                rgba(255, 255, 255, 0.48);
         }
+
 
         /* =========================================
            FILTER
         ========================================= */
 
         .filter-row {
+
             display: flex;
+
             gap: 8px;
 
             width: 100%;
@@ -219,161 +339,225 @@
             margin-bottom: 20px;
 
             overflow-x: auto;
+
             scrollbar-width: none;
         }
 
+
         .filter-row::-webkit-scrollbar {
+
             display: none;
         }
 
+
         .filter-button {
+
             flex-shrink: 0;
 
-            padding: 9px 14px;
+            padding:
+                9px
+                14px;
 
-            border: 1px solid rgba(255, 255, 255, 0.13);
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.13);
+
             border-radius: 12px;
 
-            background: rgba(8, 6, 20, 0.58);
+            background:
+                rgba(8, 6, 20, 0.58);
 
-            color: rgba(255, 255, 255, 0.72);
+            color:
+                rgba(255, 255, 255, 0.72);
 
             font-size: 12px;
+
             font-weight: 600;
 
             cursor: pointer;
 
             backdrop-filter: blur(12px);
+
             -webkit-backdrop-filter: blur(12px);
         }
 
-        .filter-button.active {
-            background: rgba(176, 100, 255, 0.25);
 
-            border-color: rgba(205, 147, 255, 0.5);
+        .filter-button.active {
+
+            background:
+                rgba(176, 100, 255, 0.25);
+
+            border-color:
+                rgba(205, 147, 255, 0.5);
 
             color: #ffffff;
 
             box-shadow:
-                0 0 14px rgba(170, 100, 255, 0.18);
+                0 0 14px
+                rgba(170, 100, 255, 0.18);
         }
+
 
         /* =========================================
            EMPTY STATES
         ========================================= */
 
         .empty-box {
+
             display: flex;
+
             flex-direction: column;
+
             align-items: center;
+
             justify-content: center;
 
             min-height: 240px;
 
             padding: 30px;
 
-            border: 1px solid rgba(255, 255, 255, 0.11);
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.11);
+
             border-radius: 22px;
 
-            background: rgba(7, 5, 18, 0.52);
+            background:
+                rgba(7, 5, 18, 0.52);
 
             backdrop-filter: blur(15px);
+
             -webkit-backdrop-filter: blur(15px);
 
             text-align: center;
 
             box-shadow:
-                0 15px 35px rgba(0, 0, 0, 0.2);
+                0 15px 35px
+                rgba(0, 0, 0, 0.2);
         }
 
+
         .empty-icon {
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
 
             width: 62px;
+
             height: 62px;
 
             margin-bottom: 15px;
 
             border-radius: 20px;
 
-            background: rgba(176, 100, 255, 0.14);
+            background:
+                rgba(176, 100, 255, 0.14);
 
-            border: 1px solid rgba(200, 145, 255, 0.25);
+            border:
+                1px solid
+                rgba(200, 145, 255, 0.25);
 
             font-size: 27px;
         }
 
+
         .empty-title {
+
             font-size: 17px;
+
             font-weight: 700;
 
             margin-bottom: 7px;
         }
 
+
         .empty-text {
+
             max-width: 280px;
 
-            color: rgba(255, 255, 255, 0.56);
+            color:
+                rgba(255, 255, 255, 0.56);
 
             font-size: 13px;
+
             line-height: 1.5;
         }
+
 
         /* =========================================
            TABS
         ========================================= */
 
         .tabs {
+
             display: flex;
 
             width: 100%;
 
             margin-top: 4px;
+
             margin-bottom: 20px;
 
             padding: 4px;
 
             border-radius: 14px;
 
-            background: rgba(5, 4, 15, 0.58);
+            background:
+                rgba(5, 4, 15, 0.58);
 
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.1);
 
             backdrop-filter: blur(12px);
+
             -webkit-backdrop-filter: blur(12px);
         }
 
+
         .tab {
+
             flex: 1;
 
-            padding: 10px 5px;
+            padding:
+                10px
+                5px;
 
             border: none;
+
             border-radius: 10px;
 
             background: transparent;
 
-            color: rgba(255, 255, 255, 0.58);
+            color:
+                rgba(255, 255, 255, 0.58);
 
             font-size: 12px;
+
             font-weight: 600;
 
             cursor: pointer;
         }
 
+
         .tab.active {
-            background: rgba(175, 103, 255, 0.23);
+
+            background:
+                rgba(175, 103, 255, 0.23);
 
             color: #ffffff;
         }
+
 
         /* =========================================
            PROFIL
         ========================================= */
 
         .profile-card {
+
             width: 100%;
 
             margin-top: 18px;
@@ -382,29 +566,43 @@
 
             border-radius: 22px;
 
-            border: 1px solid rgba(255, 255, 255, 0.13);
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.13);
 
-            background: rgba(7, 5, 18, 0.58);
+            background:
+                rgba(7, 5, 18, 0.58);
 
             backdrop-filter: blur(16px);
+
             -webkit-backdrop-filter: blur(16px);
 
             box-shadow:
-                0 18px 40px rgba(0, 0, 0, 0.22);
+                0 18px 40px
+                rgba(0, 0, 0, 0.22);
         }
 
+
         .profile-top {
+
             display: flex;
+
             align-items: center;
+
             gap: 15px;
         }
 
+
         .profile-avatar {
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
 
             width: 62px;
+
             height: 62px;
 
             flex-shrink: 0;
@@ -418,171 +616,244 @@
                     rgba(80, 120, 255, 0.35)
                 );
 
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.2);
 
             font-size: 27px;
         }
 
+
         .profile-info {
+
             min-width: 0;
         }
 
+
         .profile-name {
+
             font-size: 18px;
+
             font-weight: 750;
         }
 
+
         .profile-status {
+
             margin-top: 4px;
 
             font-size: 12px;
 
-            color: rgba(255, 255, 255, 0.55);
+            color:
+                rgba(255, 255, 255, 0.55);
         }
 
+
         .edit-button {
+
             width: 100%;
 
             margin-top: 18px;
 
             padding: 12px;
 
-            border: 1px solid rgba(255, 255, 255, 0.14);
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.14);
+
             border-radius: 13px;
 
-            background: rgba(255, 255, 255, 0.07);
+            background:
+                rgba(255, 255, 255, 0.07);
 
             color: #ffffff;
 
             font-size: 13px;
+
             font-weight: 650;
 
             cursor: pointer;
         }
+
 
         /* =========================================
            EINSTELLUNGEN
         ========================================= */
 
         .section-title {
+
             margin-top: 25px;
+
             margin-bottom: 10px;
 
             font-size: 13px;
+
             font-weight: 700;
 
-            color: rgba(255, 255, 255, 0.55);
+            color:
+                rgba(255, 255, 255, 0.55);
 
             text-transform: uppercase;
+
             letter-spacing: 0.8px;
         }
 
+
         .settings-card {
+
             width: 100%;
 
             overflow: hidden;
 
             border-radius: 18px;
 
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.1);
 
-            background: rgba(7, 5, 18, 0.56);
+            background:
+                rgba(7, 5, 18, 0.56);
 
             backdrop-filter: blur(15px);
+
             -webkit-backdrop-filter: blur(15px);
         }
 
+
         .setting-row {
+
             display: flex;
+
             align-items: center;
+
             justify-content: space-between;
 
             min-height: 58px;
 
-            padding: 0 16px;
+            padding:
+                0
+                16px;
 
-            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            border-bottom:
+                1px solid
+                rgba(255, 255, 255, 0.07);
+
+            cursor: pointer;
         }
 
+
         .setting-row:last-child {
+
             border-bottom: none;
         }
 
+
         .setting-left {
+
             display: flex;
+
             flex-direction: column;
 
             gap: 3px;
         }
 
+
         .setting-name {
+
             font-size: 13px;
+
             font-weight: 650;
         }
 
+
         .setting-description {
+
             font-size: 11px;
 
-            color: rgba(255, 255, 255, 0.45);
+            color:
+                rgba(255, 255, 255, 0.45);
         }
 
+
         .setting-arrow {
-            color: rgba(255, 255, 255, 0.35);
+
+            color:
+                rgba(255, 255, 255, 0.35);
 
             font-size: 18px;
         }
+
 
         /* =========================================
            BOTTOM NAVIGATION
         ========================================= */
 
         .bottom-navigation {
+
             position: fixed;
 
             z-index: 20;
 
             left: 12px;
+
             right: 12px;
+
             bottom: 12px;
 
             height: 68px;
 
             display: flex;
+
             align-items: center;
+
             justify-content: space-around;
 
             padding: 5px;
 
             border-radius: 22px;
 
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.12);
 
-            background: rgba(5, 4, 16, 0.76);
+            background:
+                rgba(5, 4, 16, 0.76);
 
             backdrop-filter: blur(20px);
+
             -webkit-backdrop-filter: blur(20px);
 
             box-shadow:
-                0 12px 35px rgba(0, 0, 0, 0.35),
-                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+                0 12px 35px
+                rgba(0, 0, 0, 0.35),
+
+                inset 0 1px 0
+                rgba(255, 255, 255, 0.05);
         }
 
+
         .nav-button {
+
             position: relative;
 
             display: flex;
+
             flex-direction: column;
+
             align-items: center;
+
             justify-content: center;
 
             width: 33.33%;
+
             height: 58px;
 
             border: none;
 
             background: transparent;
 
-            color: rgba(255, 255, 255, 0.45);
+            color:
+                rgba(255, 255, 255, 0.45);
 
             cursor: pointer;
 
@@ -591,15 +862,21 @@
                 transform 0.2s ease;
         }
 
+
         .nav-button.active {
+
             color: #ffffff;
         }
 
+
         .nav-button:active {
+
             transform: scale(0.94);
         }
 
+
         .nav-icon {
+
             font-size: 21px;
 
             line-height: 1;
@@ -607,13 +884,17 @@
             margin-bottom: 5px;
         }
 
+
         .nav-label {
+
             font-size: 10px;
 
             font-weight: 650;
         }
 
+
         .nav-button.active::after {
+
             content: "";
 
             position: absolute;
@@ -621,6 +902,7 @@
             bottom: 1px;
 
             width: 25px;
+
             height: 3px;
 
             border-radius: 20px;
@@ -628,47 +910,87 @@
             background: #c58cff;
 
             box-shadow:
-                0 0 10px rgba(197, 140, 255, 0.8);
+                0 0 10px
+                rgba(197, 140, 255, 0.8);
         }
 
+
         /* =========================================
-           RESPONSIVE
+           LAPTOP / DESKTOP
         ========================================= */
 
         @media (min-width: 700px) {
 
             .app {
+
                 max-width: 700px;
+
                 margin: 0 auto;
             }
 
+
             .bottom-navigation {
+
                 left: 50%;
 
                 right: auto;
 
                 width: 676px;
 
-                transform: translateX(-50%);
+                transform:
+                    translateX(-50%);
             }
         }
+
+
+        /* =========================================
+           EXTRA DESKTOP BACKGROUND FIX
+        ========================================= */
+
+        @media (min-width: 1000px) {
+
+            html,
+            body {
+
+                background-size: cover;
+
+                background-position:
+                    center center;
+
+                background-attachment:
+                    fixed;
+            }
+
+
+            .background-layer {
+
+                background-size:
+                    cover;
+
+                background-position:
+                    center center;
+            }
+        }
+
     </style>
 </head>
+
 
 <body>
 
     <!-- =========================================
          HINTERGRUND
-    ========================================= -->
+    ========================================== -->
 
     <div class="background-layer"></div>
 
 
     <!-- =========================================
          APP
-    ========================================= -->
+    ========================================== -->
 
     <div class="app">
+
 
         <!-- =====================================
              HEADER
@@ -705,8 +1027,6 @@
             </div>
 
 
-            <!-- Suche -->
-
             <div class="search-box">
 
                 <div class="search-icon">
@@ -721,8 +1041,6 @@
 
             </div>
 
-
-            <!-- Geschlecht -->
 
             <div class="filter-row">
 
@@ -750,8 +1068,6 @@
             </div>
 
 
-            <!-- Tabs -->
-
             <div class="tabs">
 
                 <button
@@ -770,8 +1086,6 @@
 
             </div>
 
-
-            <!-- Noch keine Charaktere -->
 
             <div class="empty-box">
 
@@ -807,8 +1121,6 @@
             </div>
 
 
-            <!-- Suche -->
-
             <div class="search-box">
 
                 <div class="search-icon">
@@ -823,8 +1135,6 @@
 
             </div>
 
-
-            <!-- Chat Filter -->
 
             <div class="filter-row">
 
@@ -858,8 +1168,6 @@
 
             </div>
 
-
-            <!-- Keine Chats -->
 
             <div class="empty-box">
 
@@ -899,8 +1207,6 @@
             </div>
 
 
-            <!-- Profil -->
-
             <div class="profile-card">
 
                 <div class="profile-top">
@@ -937,11 +1243,10 @@
             </div>
 
 
-            <!-- Story Einstellungen -->
-
             <div class="section-title">
                 Story-Einstellungen
             </div>
+
 
             <div class="settings-card">
 
@@ -968,11 +1273,10 @@
             </div>
 
 
-            <!-- App Einstellungen -->
-
             <div class="section-title">
                 App
             </div>
+
 
             <div class="settings-card">
 
@@ -1036,6 +1340,7 @@
 
     <nav class="bottom-navigation">
 
+
         <button
             id="navDiscover"
             class="nav-button active"
@@ -1095,20 +1400,25 @@
 
     <script>
 
+
         /* =====================================
            TELEGRAM
         ====================================== */
 
-        const tg = window.Telegram?.WebApp;
+        const tg =
+            window.Telegram?.WebApp;
+
 
         if (tg) {
+
             tg.ready();
+
             tg.expand();
         }
 
 
         /* =====================================
-           BENUTZERNAME
+           TELEGRAM BENUTZER
         ====================================== */
 
         function loadTelegramUser() {
@@ -1116,23 +1426,30 @@
             const user =
                 tg?.initDataUnsafe?.user;
 
+
             if (!user) {
+
                 return;
             }
 
+
             const firstName =
-                user.first_name || "Spieler";
+                user.first_name ||
+                "Spieler";
 
 
-            document.getElementById(
-                "userName"
-            ).textContent = firstName;
+            document
+                .getElementById("userName")
+                .textContent =
+                firstName;
 
 
-            document.getElementById(
-                "profileName"
-            ).textContent = firstName;
+            document
+                .getElementById("profileName")
+                .textContent =
+                firstName;
         }
+
 
         loadTelegramUser();
 
@@ -1144,56 +1461,73 @@
         function changePage(page) {
 
             const pages = [
+
                 "pageDiscover",
                 "pageChats",
                 "pageProfile"
+
             ];
+
 
             pages.forEach(function(id) {
 
                 document
                     .getElementById(id)
-                    .classList.remove("active");
+                    .classList
+                    .remove("active");
 
             });
 
 
+            const pageId =
+                "page" +
+                page.charAt(0).toUpperCase() +
+                page.slice(1);
+
+
             document
-                .getElementById(
-                    "page" +
-                    page.charAt(0).toUpperCase() +
-                    page.slice(1)
-                )
-                .classList.add("active");
+                .getElementById(pageId)
+                .classList
+                .add("active");
 
 
             const navButtons = [
+
                 "navDiscover",
                 "navChats",
                 "navProfile"
+
             ];
+
 
             navButtons.forEach(function(id) {
 
                 document
                     .getElementById(id)
-                    .classList.remove("active");
+                    .classList
+                    .remove("active");
 
             });
 
 
+            const navId =
+                "nav" +
+                page.charAt(0).toUpperCase() +
+                page.slice(1);
+
+
             document
-                .getElementById(
-                    "nav" +
-                    page.charAt(0).toUpperCase() +
-                    page.slice(1)
-                )
-                .classList.add("active");
+                .getElementById(navId)
+                .classList
+                .add("active");
 
 
             window.scrollTo({
+
                 top: 0,
+
                 behavior: "smooth"
+
             });
         }
 
@@ -1207,16 +1541,23 @@
             const parent =
                 button.parentElement;
 
+
             const buttons =
                 parent.querySelectorAll(
                     ".filter-button"
                 );
 
+
             buttons.forEach(function(item) {
-                item.classList.remove("active");
+
+                item.classList
+                    .remove("active");
+
             });
 
-            button.classList.add("active");
+
+            button.classList
+                .add("active");
         }
 
 
@@ -1229,14 +1570,23 @@
             const parent =
                 button.parentElement;
 
+
             const tabs =
-                parent.querySelectorAll(".tab");
+                parent.querySelectorAll(
+                    ".tab"
+                );
+
 
             tabs.forEach(function(item) {
-                item.classList.remove("active");
+
+                item.classList
+                    .remove("active");
+
             });
 
-            button.classList.add("active");
+
+            button.classList
+                .add("active");
         }
 
 
@@ -1249,7 +1599,6 @@
             alert(
                 "Die Profilbearbeitung kommt später."
             );
-
         }
 
 
@@ -1262,7 +1611,6 @@
             alert(
                 "Die App-Einstellungen kommen später."
             );
-
         }
 
 
@@ -1275,8 +1623,8 @@
             alert(
                 "Die 18+ Einstellungen kommen später."
             );
-
         }
+
 
     </script>
 
