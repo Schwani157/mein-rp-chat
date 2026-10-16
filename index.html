@@ -926,73 +926,35 @@
            BOTTOM NAV
         ========================================= */
 
-        .bottom-nav {
-            position: fixed;
+        
+.bottom-nav {
+    position: fixed;
 
-            left: 10px;
-            right: 10px;
-            bottom: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
 
-            height: 65px;
+    height: 65px;
+    min-height: 65px;
 
-            display: flex;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 
-            align-items: center;
-            justify-content: space-around;
+    z-index: 9999;
 
-            z-index: 100;
+    visibility: visible;
+    opacity: 1;
 
-            background:
-                rgba(13,13,13,0.84);
+    background: rgba(13,13,13,0.92);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 20px;
 
-            border:
-                1px solid rgba(255,255,255,0.09);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
 
-            border-radius: 20px;
-
-            backdrop-filter: blur(18px);
-        }
-
-        .nav-button {
-            width: 33%;
-
-            height: 100%;
-
-            display: flex;
-
-            flex-direction: column;
-
-            align-items: center;
-            justify-content: center;
-
-            gap: 4px;
-
-            border: none;
-
-            background: transparent;
-
-            color:
-                rgba(255,255,255,0.42);
-
-            cursor: pointer;
-        }
-
-        .nav-button.active {
-            color: #ffffff;
-        }
-
-        .nav-icon {
-            font-size: 20px;
-
-            line-height: 1;
-        }
-
-        .nav-label {
-            font-size: 10px;
-
-            font-weight: 600;
-        }
-
+    box-sizing: border-box;
+}
 
         /* =========================================
            ALTERSBESTÄTIGUNG
