@@ -1838,71 +1838,27 @@
                    SEITENWECHSEL
                 ===================================== */
 
-                function changePage(page) {
+                
+function changePage(page) {
+    document.querySelectorAll(".page").forEach(function (element) {
+        element.classList.remove("active");
+    });
 
-                    document
-                        .querySelectorAll(".page")
-                        .forEach(
-                            function (element) {
+    const target = document.getElementById("page-" + page);
 
-                                element.classList.remove(
-                                    "active"
-                                );
+    if (target) {
+        target.classList.add("active");
+    }
 
-                            }
-                        );
+    document.querySelectorAll(".nav-button").forEach(function (button) {
+        button.classList.toggle(
+            "active",
+            button.dataset.page === page
+        );
+    });
 
-
-                    const target =
-                        document.getElementById(
-                            "page-" + page
-                        );
-
-
-                    if (target) {
-
-                        target.classList.add(
-                            "active"
-                        );
-
-                    }
-
-
-                    document
-                        .querySelectorAll(".nav-button")
-                        .forEach(
-                            function (button) {
-
-                                button.classList.remove(
-                                    "active"
-                                );
-
-                            }
-                        );
-
-
-                    const nav =
-                        document.getElementById(
-                            "nav-" + page
-                        );
-
-
-                    if (nav) {
-
-                        nav.classList.add(
-                            "active"
-                        );
-
-                    }
-
-
-                    window.scrollTo(
-                        0,
-                        0
-                    );
-
-                }
-
+    window.scrollTo(0, 0);
+}
 
                 /* =====================================
                    NAVIGATION
