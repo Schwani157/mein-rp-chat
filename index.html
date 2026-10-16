@@ -990,9 +990,9 @@
 
 .nav-button.active {
     color: #ffffff;
-    background: transparent;
+    background: rgba(255, 255, 255, 0.12) !important;
+    border-radius: 16px;
 }
-
 
 .nav-icon {
     width: 24px;
@@ -1856,7 +1856,9 @@ function changePage(page) {
         target.classList.add("active");
     }
 
-    document.querySelectorAll(".nav-button").forEach(function (button) {
+    document
+        .querySelectorAll(".nav-button")
+        .forEach(function (button) {
         button.classList.toggle(
             "active",
             button.dataset.page === page
