@@ -1501,63 +1501,54 @@
              BOTTOM NAV
         ========================================== -->
 
-        <nav
-            id="bottom-nav"
-            class="bottom-nav"
-        >
+       
+<nav id="bottom-nav" class="bottom-nav" aria-label="Hauptnavigation">
 
-            <button
-                class="nav-button active"
-                id="nav-discover"
-                data-page="discover"
-            >
+    <button
+        type="button"
+        class="nav-button active"
+        id="nav-discover"
+        data-page="discover"
+        aria-label="Entdecken"
+        aria-current="page"
+    >
+        <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"></circle>
+            <path d="m16 16 4 4"></path>
+        </svg>
+        <span class="nav-label">Entdecken</span>
+    </button>
 
-               <span class="nav-icon">⌕</span>
-                    
-                </span>
+    <button
+        type="button"
+        class="nav-button"
+        id="nav-chats"
+        data-page="chats"
+        aria-label="Chats"
+    >
+        <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H5l1.5-3A7.5 7.5 0 1 1 20 11.5Z"></path>
+            <path d="M8 10h8M8 13h5"></path>
+        </svg>
+        <span class="nav-label">Chats</span>
+    </button>
 
-                <span class="nav-label">
-                    Entdecken
-                </span>
+    <button
+        type="button"
+        class="nav-button"
+        id="nav-profile"
+        data-page="profile"
+        aria-label="Profil"
+    >
+        <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="8" r="4"></circle>
+            <path d="M4.5 21a7.5 7.5 0 0 1 15 0"></path>
+        </svg>
+        <span class="nav-label">Profil</span>
+    </button>
 
-            </button>
-
-
-            <button
-                class="nav-button"
-                id="nav-chats"
-                data-page="chats"
-            >
-
-                <span class="nav-icon">▢</span>
-                    
-                </span>
-
-                <span class="nav-icon">○</span>
-                    Chats
-                </span>
-
-            </button>
-
-
-            <button
-                class="nav-button"
-                id="nav-profile"
-                data-page="profile"
-            >
-
-                <span class="nav-icon">♙</span>
-                    
-                </span>
-
-                <span class="nav-label">
-                    Profil
-                </span>
-
-            </button>
-
-        </nav>
-
+</nav>
+    
     </div>
 
 
