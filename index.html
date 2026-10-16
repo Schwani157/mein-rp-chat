@@ -956,6 +956,7 @@
     box-sizing: border-box;
 }
             
+
 .nav-button {
     flex: 1;
     width: 33.333%;
@@ -967,21 +968,25 @@
     justify-content: center;
     gap: 4px;
 
+    margin: 0;
     padding: 0;
-    border: none;
-    border-radius: 0;
-    outline: none;
-    box-shadow: none;
 
     appearance: none;
     -webkit-appearance: none;
 
-    background: transparent;
-    color: rgba(255,255,255,0.42);
+    border: 0;
+    border-radius: 0;
+    outline: none;
+    box-shadow: none;
+
+    background: none !important;
+    color: rgba(255, 255, 255, 0.42);
 
     font-family: inherit;
+    font-size: inherit;
     cursor: pointer;
 }
+
 
 .nav-button.active {
     color: #ffffff;
